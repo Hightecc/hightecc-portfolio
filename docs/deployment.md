@@ -32,7 +32,7 @@ Caddy reverse-proxies `hightecc.com` to `127.0.0.1:8001`, defined in `/etc/caddy
 
 `.github/workflows/preview.yml` triggers on `pull_request` events (`opened`, `synchronize`, `reopened`, `closed`).
 
-**Previews are gated to PRs authored by the repo owner on same-repo branches.** Every job (including `quality`) checks both `github.event.pull_request.user.login == github.repository_owner` and `github.event.pull_request.head.repo.full_name == github.repository`. Fork PRs and PRs from any other author skip the workflow entirely. No jobs run.
+**Previews are gated to PRs authored by `basilebong` on same-repo branches.** Every job (including `quality`) checks both `github.event.pull_request.user.login == 'basilebong'` and `github.event.pull_request.head.repo.full_name == github.repository`. The login is spelled out because the repo lives in the `Hightecc` org, so `github.repository_owner` is the org and never equals a PR author. Fork PRs and PRs from any other author skip the workflow entirely. No jobs run.
 
 For eligible PRs:
 
@@ -154,7 +154,7 @@ sudo caddy validate --config /etc/caddy/Caddyfile
 
 The repo is public; the host is private. Things to keep in mind:
 
-- **Only PRs authored by the repo owner (on same-repo branches) get previews.** The workflow gates every job on `github.event.pull_request.user.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository`. Anything else (forks, other authors) skips the workflow entirely. `quality` is also gated, so fork PRs run nothing here.
+- **Only PRs authored by `basilebong` (on same-repo branches) get previews.** The workflow gates every job on `github.event.pull_request.user.login == 'basilebong' && github.event.pull_request.head.repo.full_name == github.repository`. Anything else (forks, other authors) skips the workflow entirely. `quality` is also gated, so fork PRs run nothing here.
 - **Preview code runs in a hardened container.** `mem_limit=512m`, `cpus=0.5`, `pids_limit=256`, `cap_drop: ALL`, `no-new-privileges:true`. Bound to `127.0.0.1` only.
 - **Sudoers is one line.** The deploy user can only `systemctl reload caddy`, nothing else with elevated privileges.
 - **Image source is locked.** `preview-manage.sh` refuses any `IMAGE` not starting with `ghcr.io/basilebong/hightecc-portfolio:`.
