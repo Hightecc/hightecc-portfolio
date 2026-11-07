@@ -26,10 +26,6 @@ export async function Contact() {
             className={styles.img}
           />
           <div className={styles.content}>
-            <p className={styles.eyebrow}>
-              <span className={styles.dot} aria-hidden />
-              {t("eyebrow")}
-            </p>
             <h2 className={styles.heading}>
               {t.rich("heading", {
                 em: (chunks) => <em>{chunks}</em>,

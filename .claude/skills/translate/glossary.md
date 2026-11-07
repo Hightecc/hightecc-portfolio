@@ -15,12 +15,6 @@ These appear unchanged in every locale.
 - `Sophienstraße 26, 80333 München` (insurance address in impressum)
 - `Markel Insurance SE`, `Markel Pro IT v2`
 
-### Tech tokens (live in `src/lib/tech.ts`, never in messages)
-- `Use Cases`, `Process Audit`, `Roadmap`, `Enablement`
-- `Claude`, `OpenAI`, `RAG`, `Eval`, `Tracing`
-- `Tooling-Audit`, `Workflows`, `Integrations`, `Agents`
-- `TypeScript`, `React`, `Python`, `React Native`, `Postgres`
-
 ### Legal references
 - `§ 5 DDG`, `§ 7 Abs. 1 DDG`, `§§ 8 bis 10 DDG`, `§ 18 Abs. 2 MStV`, `§ 19 UStG`
 - `Kleinunternehmerregelung`

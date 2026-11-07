@@ -14,37 +14,6 @@
   text-align: center;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mute);
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  background: var(--brand);
-}
-
-.num {
-  color: var(--ink);
-}
-
-.kicker {
-  padding-left: 10px;
-  border-left: 1px solid var(--line-2);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
 .title {
   font-family: var(--font-display);
   font-weight: 300;

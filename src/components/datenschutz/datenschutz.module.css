@@ -28,10 +28,7 @@
 }
 
 .block dt {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 13px;
   color: var(--mute);
 }
 

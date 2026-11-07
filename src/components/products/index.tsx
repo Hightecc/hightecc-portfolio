@@ -23,9 +23,6 @@ export async function Products() {
   return (
     <section>
       <SectionHead
-        num="05"
-        name={t("section.name")}
-        kicker={t("section.kicker")}
         title={t.rich("section.title", {
           em: (chunks) => <em>{chunks}</em>,
         })}

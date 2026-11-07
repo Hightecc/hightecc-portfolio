@@ -77,30 +77,6 @@
   box-shadow: 0 0 12px 1px var(--threshold-glow);
 }
 
-.eyebrow {
-  position: absolute;
-  top: 96px;
-  left: 50%;
-  z-index: 2;
-  transform: translateX(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(245, 244, 240, 0.75);
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  background: var(--brand);
-}
-
 .display {
   margin: 0;
   font-family: var(--font-display);
@@ -139,18 +115,6 @@
   margin-top: 8px;
 }
 
-.credit {
-  position: absolute;
-  right: 0;
-  bottom: 24px;
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mute-2);
-}
-
 @media (max-width: 720px) {
   .hero {
     padding: 0 16px 40px;
@@ -166,18 +130,6 @@
     margin: 0 -16px -18svh;
   }
 
-  .eyebrow {
-    position: static;
-    transform: none;
-    order: 1;
-    align-self: center;
-    margin-bottom: 14px;
-  }
-
-  .content {
-    order: 2;
-  }
-
   .photo::after {
     background:
       linear-gradient(to bottom, rgba(10, 10, 9, 0.55) 0%, rgba(10, 10, 9, 0) 20%),
@@ -186,11 +138,5 @@
 
   .display {
     font-size: clamp(2.75rem, 13vw, 4rem);
-  }
-
-  .credit {
-    position: static;
-    margin-top: 28px;
-    text-align: center;
   }
 }

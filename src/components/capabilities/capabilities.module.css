@@ -7,39 +7,54 @@
 }
 
 .cap {
+  position: relative;
   height: 100%;
-  min-height: 320px;
-  padding: 28px 32px 32px;
+  min-height: 400px;
+  display: flex;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--surface);
+}
+
+.img {
+  z-index: 0;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.cap:hover .img {
+  transform: scale(1.04);
+}
+
+.cap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 9, 0.92) 0%,
+    rgba(10, 10, 9, 0.55) 45%,
+    rgba(10, 10, 9, 0.05) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  border-radius: var(--radius-card);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  transition:
-    border-color 0.25s,
-    background 0.25s;
-}
-
-.cap:hover {
-  border-color: var(--line-2);
-  background: var(--surface-2);
-}
-
-.index {
-  margin-bottom: auto;
-  padding-bottom: 40px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--brand);
+  gap: 12px;
 }
 
 .title {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: 32px;
+  font-size: 34px;
   line-height: 1.05;
   letter-spacing: -0.035em;
   color: var(--ink);
@@ -50,24 +65,14 @@
   max-width: 48ch;
   font-size: 15px;
   line-height: 1.6;
-  color: var(--mute);
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding-top: 4px;
+  color: rgba(245, 244, 240, 0.75);
 }
 
 .note {
-  margin: 48px auto 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
+  margin: 56px auto 0;
+  max-width: 60ch;
   font-size: 15px;
+  line-height: 1.6;
   color: var(--mute);
   text-align: center;
 }
@@ -77,20 +82,12 @@
   font-weight: 500;
 }
 
-.noteTag {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--brand);
-}
-
 @media (max-width: 720px) {
   .cap {
-    min-height: 0;
-    padding: 24px;
+    min-height: 360px;
   }
 
-  .index {
-    padding-bottom: 24px;
+  .content {
+    padding: 24px;
   }
 }

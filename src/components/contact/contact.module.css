@@ -53,24 +53,6 @@
   gap: 22px;
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(245, 244, 240, 0.75);
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  background: var(--brand);
-}
-
 .heading {
   margin: 0;
   font-family: var(--font-display);
@@ -104,11 +86,8 @@
 
 .note {
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mute);
+  font-size: 13px;
+  color: rgba(245, 244, 240, 0.6);
 }
 
 @media (max-width: 720px) {

@@ -63,7 +63,6 @@ This skill is for translating *content*. It does not invent new keys, rename key
 ## Hard rules
 
 - **Never** translate the German legal block inside `src/components/impressum/index.tsx`. That JSX is verbatim statutory wording and is the same on `/de/impressum` and `/en/impressum`. Only `impressum.preface`, `impressum.section.*` are translatable.
-- **Never** translate values in `src/lib/tech.ts` (`capabilityTags`, `capabilityIndex`). Those are DNT tech tokens and brand-mandated index letters.
 - **Never** rename keys, reorder keys, or restructure nesting in `en.ts`. The shape must match `de.ts` exactly. That is enforced by TypeScript.
 - **Never** add `as const` to `en.ts`. It uses `MessageShape` (widened strings) so that EN literals don't need to equal DE literals.
 - **Never** introduce a locale-preference cookie or `localStorage` write. The site footer claim "Keine Cookies. Kein Tracking. Keine Banner." is load-bearing brand copy.

@@ -27,11 +27,6 @@ export async function Hero() {
         />
       </div>
 
-      <p className={styles.eyebrow}>
-        <span className={styles.dot} aria-hidden />
-        {t("eyebrow")}
-      </p>
-
       <Container className={styles.content}>
         <Row>
           <Col span={12} md={8} mdStart={3}>
@@ -62,9 +57,6 @@ export async function Hero() {
             </div>
           </Col>
         </Row>
-        <p className={styles.credit}>
-          {t("imageLabel")} · {t("imageValue")}
-        </p>
       </Container>
     </header>
   );

@@ -29,8 +29,18 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
+  position: relative;
   padding-top: 24px;
-  border-top: 1px solid var(--line);
+}
+
+.row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--seam-h-soft);
 }
 
 .footer a {

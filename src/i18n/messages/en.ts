@@ -2,7 +2,6 @@ import type { MessageShape } from "./shape";
 
 const messages: MessageShape = {
   nav: {
-    industries: "Industries",
     work: "Approach",
     what: "Services",
     about: "About",
@@ -25,9 +24,6 @@ const messages: MessageShape = {
     },
   },
   hero: {
-    eyebrow: "AI consulting & implementation · Cologne",
-    imageLabel: "Image",
-    imageValue: "AI-generated",
     headline: {
       line1: "AI",
       line2: "that <amp>lands</amp>",
@@ -43,48 +39,8 @@ const messages: MessageShape = {
       "AI is changing how work gets done in every industry. Many companies are facing it and wondering where to start.",
     after: "I help with the first step. And every one after that.",
   },
-  industries: {
-    section: {
-      name: "Industries",
-      kicker: "Examples",
-      title: "AI lands in every industry. <em>Each in its own way.</em>",
-      lede: "A few examples of where AI is already taking work off people's plates. Your case probably looks different. That's exactly what we'll talk about in the intro call.",
-    },
-    produktion: {
-      label: "Manufacturing",
-      body: "Maintenance logs, shift handovers, quality reports: AI reads them, summarizes, and flags what stands out.",
-      alt: "At dawn, a production worker steps through the open gate into a brightly lit factory hall.",
-    },
-    logistik: {
-      label: "Logistics",
-      body: "Capture delivery notes, freight documents, and emails automatically instead of typing them in.",
-      alt: "At dawn, a warehouse worker walks through a half-open roller door into a lit warehouse.",
-    },
-    praxis: {
-      label: "Medical practice",
-      body: "Less work on appointment requests, callbacks, and documentation so there's more time for patients.",
-      alt: "Early in the morning, a doctor walks through the front door of an old townhouse into her practice, where the lights are already on.",
-    },
-    landwirtschaft: {
-      label: "Agriculture",
-      body: "Applications, record-keeping, and orders: less paperwork, more time in the barn.",
-      alt: "At dawn, a farmer steps out of the lit cowshed into the snowy farmyard.",
-    },
-    handwerk: {
-      label: "Trades",
-      body: "Write up quotes, site measurements, and invoices faster. From scribbled note to finished quote.",
-      alt: "A master carpenter carries a board across the threshold of his lit workshop, with snow outside.",
-    },
-    kanzlei: {
-      label: "Tax & law firms",
-      body: "Sort receipts, prepare client inquiries, speed up research. The advice itself stays with you.",
-      alt: "Early in the morning, a woman walks down a dark corridor toward the only lit meeting room.",
-    },
-  },
   about: {
     section: {
-      name: "About",
-      kicker: "Hey, I'm Basile",
       title: "Tech is never boring. <em>That's exactly why</em> I'm here.",
     },
     lede: "I've been building digital products for as long as I can remember. <em>Anything you can build, I'm curious about.</em> <muted>Web, mobile, automations, AI features. I love turning ideas into something tangible. And almost as much, I love the other side: business, sales, the question of whether the product actually lands with people. Because building a product is one thing. Hitting goals with it is another.</muted>",
@@ -102,13 +58,10 @@ const messages: MessageShape = {
   },
   pillars: {
     section: {
-      name: "Approach",
-      kicker: "Three principles",
       title: "What you book me for <em>(and not just for code).</em>",
       lede: 'The real value rarely lives in the code alone. Here\'s what makes the difference between "project running" and "project failing".',
     },
     one: {
-      num: "01",
       title: "Communication <em>that leaves no guesswork.</em>",
       body: "Clear and open, no jargon to impress. I'd rather ask again until I've understood what really matters to you. Communication as a tool, not an afterthought.",
       items: [
@@ -118,13 +71,11 @@ const messages: MessageShape = {
       ],
     },
     two: {
-      num: "02",
       title: "Cut down to <em>the essentials.</em>",
       body: "I break large initiatives into release-ready slices. Something real is running after a few weeks, not months. Budgets don't tip over in the dark, and every decision is confirmed by real feedback, not assumptions.",
       items: ["MVP with a clear core", "Early in users' hands", "Iteration, not Big Bang"],
     },
     three: {
-      num: "03",
       title: "Planning with a <em>business head.</em>",
       body: "I don't just think in code and tech stack. I think in milestones, budgets, and hypotheses. Every week of work should answer a question for your business, not just close a ticket.",
       items: ["ROI-driven backlog", "Release plans that hold", "Critical paths first"],
@@ -132,8 +83,6 @@ const messages: MessageShape = {
   },
   capabilities: {
     section: {
-      name: "Services",
-      kicker: "If you're curious",
       title: "Where I usually <em>operate.</em>",
       lede: "Short, because it shouldn't be the focus: these are the areas I go deep in. Choose by problem, not by tool.",
     },
@@ -154,12 +103,9 @@ const messages: MessageShape = {
       desc: "Production-ready web apps, clean backends, and cross-platform apps. For when the idea needs to become a product.",
     },
     note: "Other stacks? <strong>Worth asking.</strong> The right tool is decided by the problem, not by the resume.",
-    noteTag: "NOTE",
   },
   products: {
     section: {
-      name: "Own products",
-      kicker: "In progress",
       title: "On the side, I'm building <em>something of my own.</em>",
     },
     heading: "No name yet. <em>Clear direction.</em>",
@@ -176,7 +122,6 @@ const messages: MessageShape = {
     },
   },
   contact: {
-    eyebrow: "Contact",
     heading: "Tell me about <em>your project.</em>",
     lede: "Where do you stand right now? Together we'll figure out whether and where AI makes sense for you.",
     linkedinLabel: "LinkedIn",
@@ -185,8 +130,6 @@ const messages: MessageShape = {
   },
   impressum: {
     section: {
-      name: "Legal notice",
-      kicker: "Information pursuant to § 5 DDG",
       title: "Who's behind <em>Hightecc</em>.",
     },
     preface:
@@ -194,8 +137,6 @@ const messages: MessageShape = {
   },
   datenschutz: {
     section: {
-      name: "Privacy",
-      kicker: "Information pursuant to Art. 13 GDPR",
       title: "How I handle <em>your data</em>.",
     },
     preface:

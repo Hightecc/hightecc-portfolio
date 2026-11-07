@@ -7,30 +7,47 @@
 }
 
 .pillar {
+  position: relative;
   height: 100%;
-  min-height: 440px;
-  padding: 32px 32px 36px;
+  min-height: 600px;
+  display: flex;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--surface);
+}
+
+.img {
+  z-index: 0;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.pillar:hover .img {
+  transform: scale(1.04);
+}
+
+.pillar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 9, 0.94) 0%,
+    rgba(10, 10, 9, 0.82) 48%,
+    rgba(10, 10, 9, 0.25) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  border-radius: var(--radius-card);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  transition:
-    border-color 0.25s,
-    background 0.25s;
-}
-
-.pillar:hover {
-  border-color: var(--line-2);
-  background: var(--surface-2);
-}
-
-.num {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--brand);
+  gap: 18px;
 }
 
 .title {
@@ -46,22 +63,21 @@
 
 .title em {
   font-style: normal;
-  color: var(--mute);
+  color: rgba(245, 244, 240, 0.6);
 }
 
 .body {
-  flex: 1;
   margin: 0;
   font-size: 15px;
   line-height: 1.6;
-  color: var(--mute);
+  color: rgba(245, 244, 240, 0.72);
 }
 
 .list {
+  position: relative;
   list-style: none;
-  margin: 0;
+  margin: 4px 0 0;
   padding: 20px 0 0;
-  border-top: 1px solid var(--line-2);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -69,23 +85,22 @@
   color: var(--ink);
 }
 
-.list li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.list li::before {
+.list::before {
   content: "";
-  flex: none;
-  width: 5px;
-  height: 5px;
-  background: var(--brand);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--seam-h-soft);
 }
 
 @media (max-width: 720px) {
   .pillar {
-    min-height: 0;
-    padding: 28px 24px;
+    min-height: 520px;
+  }
+
+  .content {
+    padding: 24px;
   }
 }

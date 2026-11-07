@@ -1,43 +1,58 @@
 # Imagery
 
-One photographic series carries the brand: **the threshold at first light**. People in German industries, caught mid-step as they cross from the blue dark into a space where the lights have just come on. The image never says "AI". It shows the moment of stepping into something new, which is the moment our audience is in.
+Two photographic series carry the brand. Both are AI-generated.
 
-All images are AI-generated and labelled as such on the page (`hero.meta.imageLabel` / `imageValue`).
+1. **The threshold at first light** (hero, contact): one person crossing a threshold into light, on the central axis of a symmetric composition. The image never says "AI". It shows the moment of stepping into something new.
+2. **Work in motion** (card backgrounds): people at work in German companies, photographed with a slow shutter so they streak into warm trails of light. These sit behind text, so they stay soft and abstract.
 
-## Rules
+## Mood
 
-1. **First light only.** Blue hour before sunrise, winter. The dark side is deep blue, the lit side is warm golden-white.
-2. **One threshold, one person, mid-step.** A physical threshold (strip curtain, roller door, swing door, doorframe). One foot on each side. The light changes exactly at the threshold.
-3. **Strict symmetry.** Frontal, one-point composition, threshold centered, both halves of the frame mirrored. Calm and precise, in the tradition of German typological architecture photography. No whimsy, no pastel.
+Upbeat, never gloomy. Sunrise with warm golden light, not the cold blue before dawn; spring rather than snow. People are active: walking in, working, talking.
+
+## Threshold rules
+
+1. **Sunrise.** Low, warm sunlight; the lit side glows golden.
+2. **One threshold, one person, mid-step.** A physical threshold (strip curtain, door, gate). The light changes at the threshold.
+3. **Strict symmetry.** Frontal, one-point composition, threshold centered, both halves mirrored. Calm and precise.
 4. **Seen from behind or the side.** Nobody looks at the camera.
-5. **Room for type.** Leave calm negative space (usually the ground) where headlines can sit without covering the person.
-6. **No text.** No logos, brand marks, licence plates, or readable signage. Check every image for invented lettering before shipping.
-7. **Vary the threshold and the industry,** never the light or the composition rule. Repetition of the rule reads as a series; repetition of the scene reads as a template.
+5. **Room for type.** Calm negative space (usually the ground) where headlines sit without covering the person.
 
-## Style line
+## Motion rules
 
-Appended to every prompt, unchanged:
+1. **Slow shutter, panning.** Strong horizontal motion blur; one area only slightly sharper.
+2. **Warm morning light** through windows, bright interiors.
+3. **Readable behind text.** Cards add a dark gradient from the bottom, so keep the lower half calm.
 
-> Shot on a Fujifilm X-T5 with Classic Chrome film simulation, 35mm lens, natural available light, muted desaturated colors, slightly lifted blacks, soft highlight rolloff, fine organic film grain, documentary photography, quiet and unstaged, set in Germany, no text, no logos, no people looking at camera.
+## Both series
 
-Model: `gemini-3-pro-image`, `aspectRatio` 16:9, `imageSize` 2K. Image edits (e.g. removing invented lettering) go through the same model with the source image attached.
+- **No text.** No logos, brand marks, licence plates, readable signs, or lettering on clothing. Check every image for invented lettering before shipping; edit it out with the same model if needed.
+- **Style line,** appended to every prompt:
 
-## Series
+> Shot on Fujifilm with a Pro 400H color film look: warm golden morning sunlight, airy and optimistic, soft natural contrast, gentle organic film grain, documentary photography, unstaged, set in Germany, no text, no logos, no lettering on clothing, no readable signs, nobody looking at the camera.
 
-| # | Industry | Threshold | File |
-| - | -------- | --------- | ---- |
-| 1 | Metalworking | Heavy PVC strip curtain at the hall entrance, worker pushing through | `threshold-metalworks.jpg` (hero) |
-| 2 | Manufacturing | Open sectional door into a long lit assembly hall | `threshold-produktion.jpg` |
-| 3 | Logistics | Roller door at a loading dock, worker walking into the lit warehouse | `threshold-logistik.jpg` |
-| 4 | Medical practice | Front door of an old sandstone townhouse, doctor stepping into the lit practice | `threshold-praxis.jpg` |
-| 5 | Agriculture | Reversed: farmer stepping out of the lit barn into the blue yard | `threshold-landwirtschaft.jpg` |
-| 6 | Trades | Carpenter carrying a board through the open workshop doors | `threshold-handwerk.jpg` |
-| 7 | Tax & law | Dark corridor, one lit meeting room behind a glass door | `threshold-kanzlei.jpg` |
-| 8 | Contact | Reversed: man stepping out of a lit lobby into the blue morning | `threshold-kontakt.jpg` |
+- **Motion prefix,** prepended for the card series:
 
-All files live in `src/assets/imagery/`, generated at 2K and resized to 2400px wide (JPEG q82). Manufacturing and logistics are the weakest on rule 3 (symmetry): regenerate those first when refreshing the set.
+> Photographed with a slow shutter speed while panning, strong horizontal motion blur, people and objects streak into soft trails of color and light, abstract enough to sit behind text, with one area only slightly sharper.
 
-Generate one image at a time and review it against the rules before the next.
+Model: `gemini-3-pro-image`, `imageSize` 2K; 16:9 for full-bleed and wide cards, 4:5 for tall cards.
+
+## Files
+
+All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
+
+| File | Use | Width |
+| ---- | --- | ----- |
+| `threshold-metalworks.jpg` | Hero: worker through a strip curtain at sunrise | 2400 |
+| `threshold-kontakt.jpg` | Contact: woman stepping out of a lobby into spring sunlight | 2400 |
+| `motion-kommunikation.jpg` | Approach card 1: colleagues talking at a workbench | 1200 |
+| `motion-essenz.jpg` | Approach card 2: hands assembling parts | 1200 |
+| `motion-business.jpg` | Approach card 3: walking past a planning wall | 1200 |
+| `motion-orientierung.jpg` | Services card A: walking through a production hall with a tablet | 1600 |
+| `motion-integration.jpg` | Services card B: office team at screens | 1600 |
+| `motion-automation.jpg` | Services card C: parcels on a conveyor | 1600 |
+| `motion-web.jpg` | Services card D: phone in a train station concourse | 1600 |
+
+The hero was made in two steps: the original blue-hour prompt below, then an edit to sunrise.
 
 ## Hero prompt (image 1)
 

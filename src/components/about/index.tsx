@@ -11,9 +11,6 @@ export async function About() {
   return (
     <section id="about">
       <SectionHead
-        num="04"
-        name={t("section.name")}
-        kicker={t("section.kicker")}
         title={t.rich("section.title", {
           em: (chunks) => <em>{chunks}</em>,
         })}
