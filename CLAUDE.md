@@ -24,7 +24,7 @@ shadcn/ui on top of Tailwind v4 and the Next.js 16 App Router. Dark, single-them
 
 Design tokens live in `globals.css` as two parallel sets: shadcn tokens that drive the UI primitives, and landing-only tokens that drive the section styles. Both are exposed via `@theme inline`. Fonts come from `next/font/google` in the root layout and are wired in as CSS variables: Inter Tight (light, `--font-display`) for headlines, Inter for body, JetBrains Mono only for small labels. Orange (`--brand`) is an accent, never a fill; `--primary` is the off-white of the pill buttons.
 
-The visual language follows the threshold photo series described in `docs/imagery.md`: full-bleed or rounded (`--radius-card`) photo cards, light two-tone headlines where `<em>` renders the grey second half, and pill-shaped buttons and tabs.
+The visual language follows the threshold photo series described in `docs/imagery.md`: full-bleed or rounded (`--radius-card`) photo cards, light two-tone headlines where `<em>` renders the grey second half, and pill-shaped buttons and tabs. Hero compositions sit on the central axis of the symmetric photos, and the thin glowing light seam (`--threshold`) marks a threshold: below the hero CTAs, and between the "before" and "after" halves of the statement.
 
 Copy lives in `src/i18n/messages/{de,en}.ts`. DE is the source of truth; EN is type-checked against DE via the `MessageShape` helper and validated by `pnpm i18n:check`. Section components consume `getTranslations()` / `t.rich()` from `next-intl/server`. `src/lib/site.ts` holds only the shared identity (name, owner, nav, contact URLs, canonical site URL).
 

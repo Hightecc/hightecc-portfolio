@@ -37,7 +37,9 @@ const messages = {
     },
   },
   statement: {
-    text: "KI verändert gerade, wie in jeder Branche gearbeitet wird. Viele Unternehmen stehen davor und fragen sich, wo sie anfangen sollen. Ich helfe beim ersten Schritt. Und bei allen danach.",
+    before:
+      "KI verändert gerade, wie in jeder Branche gearbeitet wird. Viele Unternehmen stehen davor und fragen sich, wo sie anfangen sollen.",
+    after: "Ich helfe beim ersten Schritt. Und bei allen danach.",
   },
   industries: {
     section: {

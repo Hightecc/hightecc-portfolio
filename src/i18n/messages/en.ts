@@ -39,7 +39,9 @@ const messages: MessageShape = {
     },
   },
   statement: {
-    text: "AI is changing how work gets done in every industry. Many companies are facing it and wondering where to start. I help with the first step. And every one after that.",
+    before:
+      "AI is changing how work gets done in every industry. Many companies are facing it and wondering where to start.",
+    after: "I help with the first step. And every one after that.",
   },
   industries: {
     section: {

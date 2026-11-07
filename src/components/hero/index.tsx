@@ -27,25 +27,21 @@ export async function Hero() {
         />
       </div>
 
+      <p className={styles.eyebrow}>
+        <span className={styles.dot} aria-hidden />
+        {t("eyebrow")}
+      </p>
+
       <Container className={styles.content}>
-        <Row rowGap={32} className={styles.row}>
-          <Col span={12} md={7}>
-            <p className={styles.eyebrow}>
-              <span className={styles.dot} aria-hidden />
-              {t("eyebrow")}
-            </p>
-            <h1 className={styles.display}>
-              <span className={styles.line}>{t("headline.line1")}</span>{" "}
-              <span className={styles.line}>
+        <Row>
+          <Col span={12} md={8} mdStart={3}>
+            <div className={styles.axis}>
+              <h1 className={styles.display}>
+                {t("headline.line1")}{" "}
                 {t.rich("headline.line2", {
                   amp: (chunks) => <span className={styles.amp}>{chunks}</span>,
                 })}
-              </span>
-            </h1>
-          </Col>
-
-          <Col span={12} md={4} mdStart={9}>
-            <div className={styles.aside}>
+              </h1>
               <p className={styles.sub}>
                 {t.rich("sub", {
                   strong: (chunks) => <strong>{chunks}</strong>,
@@ -62,12 +58,13 @@ export async function Hero() {
                   <Link href="#work">{t("cta.secondary")}</Link>
                 </Button>
               </div>
-              <p className={styles.credit}>
-                {t("imageLabel")} · {t("imageValue")}
-              </p>
+              <span className={styles.plumb} aria-hidden />
             </div>
           </Col>
         </Row>
+        <p className={styles.credit}>
+          {t("imageLabel")} · {t("imageValue")}
+        </p>
       </Container>
     </header>
   );
