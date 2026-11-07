@@ -1,0 +1,33 @@
+name: Branch Cleanup
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  delete-head-branch:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref != github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete head branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -uo pipefail
+          output=$(gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/refs/heads/${BRANCH}" 2>&1)
+          status=$?
+          if [ "$status" -eq 0 ]; then
+            echo "deleted ${BRANCH}"
+            exit 0
+          fi
+          # 422 "Reference does not exist" means GitHub's own auto-delete or a person got there first.
+          if grep -qE 'HTTP 404|HTTP 422|Reference does not exist' <<<"$output"; then
+            echo "${BRANCH} already gone"
+            exit 0
+          fi
+          echo "$output" >&2
+          exit "$status"
