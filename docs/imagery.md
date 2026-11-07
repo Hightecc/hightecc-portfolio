@@ -5,9 +5,18 @@ Two photographic series carry the brand. Both are AI-generated.
 1. **The threshold at first light** (hero, contact): one person crossing a threshold into light, on the central axis of a symmetric composition. The image never says "AI". It shows the moment of stepping into something new.
 2. **Work in motion** (card backgrounds): people at work in German companies, photographed with a slow shutter so they streak into warm trails of light. These sit behind text, so they stay soft and abstract.
 
+## Casting
+
+Germany's workforce, not a stock-photo default. Across the series, and within any image with several people:
+
+- **Gender:** at least half women; never only men.
+- **Origin:** roughly 70% white, 30% people of colour (Black, Middle Eastern, South and East Asian, mixed), in ordinary roles, not as tokens.
+- **Age:** apprentices to people near retirement.
+- **Write it into the prompt.** Image models default to white men, so name the people explicitly (e.g. "a Black woman in her thirties", "an older Turkish-German man").
+
 ## Mood
 
-Upbeat, never gloomy. Sunrise with warm golden light, not the cold blue before dawn; spring rather than snow. People are active: walking in, working, talking.
+Upbeat, never lonely. First light (blue dawn outside, warm light just switched on inside) works, as long as the scene is alive: colleagues already working inside, others arriving outside, people greeting each other, holding a door, talking. Show people in profile or three-quarter view, upright and engaged, rather than a single figure from behind.
 
 ## Threshold rules
 
