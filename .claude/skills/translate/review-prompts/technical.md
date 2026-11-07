@@ -28,7 +28,7 @@ If the DE source contains `{name}`, `{count, plural, …}`, or any other ICU pla
 Cross-reference against `glossary.md`. For each DNT term in the DE source:
 - The exact same string must appear in the EN draft, in the same position relative to surrounding tags.
 
-Tech tokens (`Python`, `Django`, `Claude`, etc.) live in `src/lib/tech.ts`, not in translations, so they should not appear in either de.ts or en.ts. If they do, flag it as misplaced content.
+Product and tool names (`Claude`, `OpenAI`, etc.) stay as written in both locales.
 
 ### 4. Mandated translations
 

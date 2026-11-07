@@ -11,9 +11,6 @@ export async function About() {
   return (
     <section id="about">
       <SectionHead
-        num="01"
-        name={t("section.name")}
-        kicker={t("section.kicker")}
         title={t.rich("section.title", {
           em: (chunks) => <em>{chunks}</em>,
         })}
@@ -21,7 +18,7 @@ export async function About() {
 
       <Container>
         <Row rowGap={48}>
-          <Col span={12} md={6} className={styles.narrative}>
+          <Col span={12} md={7} className={styles.narrative}>
             <p className={styles.lede}>
               {t.rich("lede", {
                 em: (chunks) => <em>{chunks}</em>,
@@ -30,7 +27,7 @@ export async function About() {
             </p>
           </Col>
 
-          <Col span={12} md={6}>
+          <Col span={12} md={4} mdStart={9}>
             <aside className={styles.credo}>
               <div className={styles.credoRow}>
                 <div className={styles.credoK}>{t("credo.credoK")}</div>
@@ -49,8 +46,6 @@ export async function About() {
                 <div className={styles.credoV}>{t("credo.languagesV")}</div>
               </div>
             </aside>
-
-            <p className={styles.body}>{t("body")}</p>
           </Col>
         </Row>
       </Container>

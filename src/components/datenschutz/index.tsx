@@ -14,9 +14,6 @@ export async function Datenschutz() {
   return (
     <section id="datenschutz">
       <SectionHead
-        num="06"
-        name={t("section.name")}
-        kicker={t("section.kicker")}
         title={t.rich("section.title", {
           em: (chunks) => <em>{chunks}</em>,
         })}

@@ -1,17 +1,16 @@
 const messages = {
   nav: {
-    about: "01 · Über",
-    work: "02 · Arbeit",
-    what: "03 · Was",
-    contact: "04 · Kontakt",
+    work: "Arbeitsweise",
+    what: "Leistungen",
+    about: "Über mich",
     cta: "Let's talk",
     menu: "Menü",
   },
   metadata: {
     home: {
-      title: "Hightecc · Basile Bong · Softwareentwicklung",
+      title: "Hightecc · Basile Bong · KI-Beratung & Umsetzung",
       description:
-        "Freelance Softwareentwicklung. Outcome-orientiert, klar kommuniziert, pünktlich geliefert.",
+        "KI-Beratung für Unternehmen, die nicht wissen, wo sie anfangen sollen. Klar erklärt, ehrlich bewertet, sauber umgesetzt.",
     },
     impressum: {
       title: "Impressum · Hightecc",
@@ -23,32 +22,23 @@ const messages = {
     },
   },
   hero: {
-    meta: {
-      indexLabel: "Index",
-      indexValue: "001 · Basile Bong",
-      disciplineLabel: "Discipline",
-      disciplineValue: "Freelance Software Engineer",
-      locationLabel: "Location",
-      locationValue: "Köln, DE",
-      fmtLabel: "FMT 2026",
-      fmtValue: "Freelance · Remote + Köln",
-      scrollLabel: "Scroll",
-      scrollValue: "04 Kapitel · ~2 min",
-    },
     headline: {
-      line1: "Ideen",
-      line2: "die <amp>live</amp> gehen",
+      line1: "Erstklassige Arbeit verdient",
+      line2: "erstklassige <amp>Software</amp>.",
     },
-    sub: "Ich bin Basile. Ich helfe Unternehmer·innen dabei, <strong>technische Projekte umzusetzen</strong>: mit klarer Kommunikation, intelligenter Planung und dem richtigen Tempo. Bis sie live gehen.",
+    sub: "Ich bin Basile. Ich helfe Unternehmer·innen, <strong>KI dort einzusetzen, wo sie wirklich hilft</strong>: vom ersten Überblick bis zur Lösung, die im Alltag läuft. Ohne Hype, mit klarer Kommunikation und dem richtigen Tempo.",
     cta: {
-      primary: "Projekt besprechen",
+      primary: "Erstgespräch anfragen",
       secondary: "So arbeite ich",
     },
   },
+  statement: {
+    before:
+      "KI verändert gerade, wie in jeder Branche gearbeitet wird. Viele Unternehmen stehen davor und fragen sich, wo sie anfangen sollen.",
+    after: "Ich helfe beim ersten Schritt. Und bei allen danach.",
+  },
   about: {
     section: {
-      name: "Über",
-      kicker: "Hey, ich bin Basile",
       title: "Tech ist nie langweilig. <em>Genau deshalb</em> bin ich dabei.",
     },
     lede: "Ich baue digitale Produkte, so lange ich denken kann. <em>Alles, was man bauen kann, interessiert mich.</em> <muted>Web, Mobile, Automatisierungen, KI-Features. Ich liebe es, Ideen in etwas Greifbares zu verwandeln. Und fast genauso sehr mag ich die andere Seite: Business, Sales, die Frage, ob das Produkt am Ende wirklich bei Menschen ankommt. Denn ein Produkt bauen ist das eine. Ziele damit erreichen das andere.</muted>",
@@ -62,23 +52,18 @@ const messages = {
       languagesK: "Sprachen",
       languagesV: "Deutsch · Français · English",
     },
-    body: "Was mich antreibt: Tech ist nie zu Ende. Sie entwickelt sich weiter, sie steht an vorderster Front von Veränderungen, die unsere Gesellschaft formen. Ich bin überzeugter AI-Believer, Automation-Fan, und glaube daran, dass gute Software Leben spürbar besser macht. Nicht in Pitch-Deck-Sprache, sondern konkret: weniger Reibung, weniger Warten, mehr Möglichkeiten.",
   },
   pillars: {
     section: {
-      name: "Arbeitsweise",
-      kicker: "Drei Prinzipien",
       title: "Wofür Du mich buchst <em>(und nicht nur für Code).</em>",
       lede: 'Der eigentliche Wert liegt selten im Code allein. Hier ist, was den Unterschied zwischen „Projekt läuft" und „Projekt kippt" macht.',
     },
     one: {
-      num: "01",
       title: "Kommunikation, <em>die nicht rätseln lässt.</em>",
       body: "Klar und offen, ohne Fach-Jargon zum Beeindrucken. Ich frage lieber nach, bis ich verstanden habe, was Dir wirklich wichtig ist. Kommunikation als Tool, nicht als Nebensache.",
       items: ["Zuhören vor Vorschlagen", "Klartext statt Buzzwords", "Fragen, wenn's unklar ist"],
     },
     two: {
-      num: "02",
       title: "Auf's <em>Essenzielle</em> runterbrechen.",
       body: "Ich zerlege große Vorhaben in Release-fähige Stücke. Schon nach wenigen Wochen läuft etwas Echtes, nicht erst nach Monaten. So kippt kein Budget im Dunkeln, und jede Entscheidung wird durch echtes Feedback bestätigt, nicht durch Annahmen.",
       items: [
@@ -88,7 +73,6 @@ const messages = {
       ],
     },
     three: {
-      num: "03",
       title: "Planung mit <em>Business-Kopf.</em>",
       body: "Ich denke nicht nur in Code und Tech-Stack, sondern in Meilensteinen, Budgets und Hypothesen. Jede Woche Arbeit soll eine Frage Deines Business beantworten, nicht nur ein Ticket schließen.",
       items: ["ROI-getriebener Backlog", "Release-Pläne, die halten", "Kritische Pfade zuerst"],
@@ -96,34 +80,29 @@ const messages = {
   },
   capabilities: {
     section: {
-      name: "Was",
-      kicker: "Wenn's Dich interessiert",
       title: "Womit ich meistens <em>unterwegs bin.</em>",
       lede: "Kurz, weil's nicht im Zentrum stehen sollte: Das sind die Bereiche, in denen ich tief unterwegs bin. Wähle nach Problem, nicht nach Tool.",
     },
     a: {
-      title: "Web & APIs",
-      desc: "Produktfertige Web-Apps und saubere Backends. Von MVP bis skalierbare Enterprise-Lösung.",
+      title: "KI-Orientierung",
+      desc: "Wo lohnt sich KI in Deinem Unternehmen, und wo nicht? Ich schaue mir Prozesse und Team an und sage Dir ehrlich, womit Du anfängst.",
     },
     b: {
-      title: "Mobile Apps",
-      desc: "Cross-Platform (iOS / Android) mit einer Codebase. Schnell am Markt, wartbar im Alltag.",
-    },
-    c: {
       title: "KI-Integration",
       desc: "LLM-Features, die im Produkt funktionieren. Inkl. Monitoring, Guardrails und ehrlicher Evaluierung.",
     },
+    c: {
+      title: "Automation",
+      desc: "Internes Tooling unter die Lupe nehmen, Engpässe finden, Automationen bauen. Damit Dein Team weniger klickt und mehr schafft.",
+    },
     d: {
-      title: "Tech-Beratung & Automation",
-      desc: "Internes Tooling unter die Lupe nehmen, Engpässe finden, Automationen vorschlagen. Damit Dein Team weniger klickt und mehr ausliefert.",
+      title: "Web & Mobile",
+      desc: "Produktfertige Web-Apps, saubere Backends und Cross-Platform-Apps. Wenn aus der Idee ein Produkt werden soll.",
     },
     note: "Andere Stacks? <strong>Fragen lohnt sich.</strong> Das richtige Werkzeug entscheidet sich am Problem, nicht am Lebenslauf.",
-    noteTag: "NOTE",
   },
   products: {
     section: {
-      name: "Eigene Produkte",
-      kicker: "In Arbeit",
       title: "Nebenher baue ich etwas <em>eigenes.</em>",
     },
     heading: "Noch ohne Namen. <em>Mit klarer Richtung.</em>",
@@ -141,24 +120,19 @@ const messages = {
   },
   contact: {
     heading: "Erzähl mir von <em>Deinem Projekt.</em>",
-    mailK: "01 · Mail",
-    mailM: "Schnellste Antwort",
-    linkedinK: "02 · LinkedIn",
-    linkedinV: "/in/basilebong",
-    linkedinM: "Vernetzen & schreiben",
+    lede: "Wo stehst Du gerade? Gemeinsam finden wir heraus, ob und wo KI bei Dir Sinn ergibt.",
+    linkedinLabel: "LinkedIn",
+    mailNote: "Per Mail geht's am schnellsten",
+    alt: "Ein Mann tritt aus einer erleuchteten Eingangshalle hinaus in den blauen Wintermorgen.",
   },
   impressum: {
     section: {
-      name: "Impressum",
-      kicker: "Angaben gemäß § 5 DDG",
       title: "Wer hinter <em>Hightecc</em> steht.",
     },
     preface: "",
   },
   datenschutz: {
     section: {
-      name: "Datenschutz",
-      kicker: "Angaben nach Art. 13 DSGVO",
       title: "Wie ich mit <em>Daten</em> umgehe.",
     },
     preface: "",

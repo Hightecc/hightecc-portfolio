@@ -15,17 +15,14 @@ These appear unchanged in every locale.
 - `Sophienstraße 26, 80333 München` (insurance address in impressum)
 - `Markel Insurance SE`, `Markel Pro IT v2`
 
-### Tech tokens (live in `src/lib/tech.ts`, never in messages)
-- `Python`, `Django`, `TypeScript`, `React`, `Postgres`
-- `React Native`, `Expo`, `Flutter`
-- `Claude`, `OpenAI`, `RAG`, `Eval`, `Tracing`
-- `Tooling-Audit`, `Automation`, `Workflows`, `Integrations`
-
 ### Legal references
 - `§ 5 DDG`, `§ 7 Abs. 1 DDG`, `§§ 8 bis 10 DDG`, `§ 18 Abs. 2 MStV`, `§ 19 UStG`
 - `Kleinunternehmerregelung`
 - `Diensteanbieter`
 - The full body of the German legal text in `src/components/impressum/index.tsx` (the `<dl><dt>…</dt><dd>…</dd></dl>` blocks). It stays in German on both `/de/impressum` and `/en/impressum`.
+
+### Already English in DE
+- `Let's talk`
 
 ### Languages list (always in this exact form)
 - `Deutsch · Français · English`
@@ -39,6 +36,22 @@ When the DE source contains the term on the left, the EN translation uses the te
 | `KI`                          | `AI`                                   |
 | `KI-Features`                 | `AI features`                          |
 | `KI-Integration`              | `AI integration`                       |
+| `KI-Orientierung`             | `AI assessment`                        |
+| `KI-Beratung`                 | `AI consulting`                        |
+| `KI-generiert`                | `AI-generated`                         |
+| `Erstgespräch`                | `intro call`                           |
+| `Branche` / `Branchen`        | `industry` / `industries`              |
+| `Arbeitsweise` (nav, section) | `Approach`                             |
+| `Leistungen` (nav, section)   | `Services`                             |
+| `Über mich` (nav)             | `About`                                |
+| `Produktion` (industry)       | `Manufacturing`                        |
+| `Logistik` (industry)         | `Logistics`                            |
+| `Arztpraxis` (industry)       | `Medical practice`                     |
+| `Landwirtschaft` (industry)   | `Agriculture`                          |
+| `Handwerk` (industry)         | `Trades`                               |
+| `Kanzlei` (industry)          | `Tax & law firms`                      |
+| `Patient·innen`               | `patients`                             |
+| `Mandant` / `Mandanten-`      | `client`                               |
 | `Köln`                        | `Cologne` (in body copy and meta)      |
 | `Köln, DE`                    | `Cologne, DE` (in body copy and meta)  |
 | `Softwareentwicklung`         | `software engineering`                 |
@@ -46,7 +59,7 @@ When the DE source contains the term on the left, the EN translation uses the te
 | `Impressum` (page title)      | `Legal notice`                         |
 | `Impressum` (footer link)     | `Legal notice`                         |
 | `Anbieterkennzeichnung`       | `provider information`                 |
-| `Unternehmer·innen`           | `founders`                             |
+| `Unternehmer·innen`           | `business owners`                      |
 | `Kund·innen-Projekten`        | `client projects`                      |
 | `Nutzer·innen`                | `users`                                |
 | `Big-Bang`                    | `Big Bang`                             |

@@ -2,92 +2,62 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  padding-right: 48px;
 }
 
 .lede {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(1.4rem, 2vw, 1.9rem);
-  line-height: 1.35;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
   color: var(--ink);
   text-wrap: pretty;
-  margin: 0;
 }
 
 .lede em {
-  color: var(--primary);
-  font-style: italic;
+  font-style: normal;
+  color: var(--threshold);
 }
 
 .lede .ledeMuted {
   color: var(--mute);
 }
 
-.body {
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--mute);
-  max-width: 560px;
-  text-wrap: pretty;
-  margin: 0;
-}
-
-.body em {
-  color: var(--ink);
-  font-style: normal;
-  font-weight: 500;
-}
-
 .credo {
   display: flex;
   flex-direction: column;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 8px 24px;
 }
 
 .credoRow {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  align-items: baseline;
-  padding: 18px 0 20px;
-  border-bottom: 1px solid var(--line);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 0;
 }
 
-.credoRow:last-child {
-  border-bottom: 0;
+.credoRow + .credoRow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--seam-h-soft);
 }
 
 .credoK {
-  grid-column: 1 / span 2;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 13px;
   color: var(--mute);
 }
 
 .credoV {
-  grid-column: 3 / span 4;
-  font-family: var(--font-serif);
-  font-size: 17px;
-  line-height: 1.35;
+  font-size: 16px;
+  line-height: 1.45;
   color: var(--ink);
-  font-weight: 400;
-}
-
-@media (max-width: 720px) {
-  .narrative {
-    padding-right: 0;
-  }
-
-  .credoRow {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-
-  .credoK,
-  .credoV {
-    grid-column: 1 / -1;
-  }
 }

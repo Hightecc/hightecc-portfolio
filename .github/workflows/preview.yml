@@ -17,12 +17,12 @@ env:
 
 jobs:
   quality:
-    if: github.event.action != 'closed' && github.event.pull_request.user.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.action != 'closed' && github.event.pull_request.user.login == 'basilebong' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
       - uses: pnpm/action-setup@a15d269cd4658e1107c09f1fabf4cbd7bd1f308a # v4.4.0
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: 24
           cache: pnpm
@@ -44,7 +44,7 @@ jobs:
 
   build:
     needs: quality
-    if: github.event.action != 'closed' && github.event.pull_request.user.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.action != 'closed' && github.event.pull_request.user.login == 'basilebong' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -83,7 +83,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.event.action != 'closed' && github.event.pull_request.user.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.action != 'closed' && github.event.pull_request.user.login == 'basilebong' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -182,7 +182,7 @@ jobs:
           fi
 
   teardown:
-    if: github.event.action == 'closed' && github.event.pull_request.user.login == github.repository_owner && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.action == 'closed' && github.event.pull_request.user.login == 'basilebong' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
