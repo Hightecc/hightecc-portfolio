@@ -2,10 +2,10 @@ import type { MessageShape } from "./shape";
 
 const messages: MessageShape = {
   nav: {
-    about: "01 · About",
-    work: "02 · Work",
-    what: "03 · What",
-    contact: "04 · Contact",
+    industries: "Industries",
+    work: "Approach",
+    what: "Services",
+    about: "About",
     cta: "Let's talk",
     menu: "Menu",
   },
@@ -25,18 +25,9 @@ const messages: MessageShape = {
     },
   },
   hero: {
-    meta: {
-      indexLabel: "Index",
-      indexValue: "001 · Basile Bong",
-      disciplineLabel: "Discipline",
-      disciplineValue: "AI Consulting · Engineering",
-      locationLabel: "Location",
-      locationValue: "Cologne, DE",
-      imageLabel: "Image",
-      imageValue: "AI-generated",
-      scrollLabel: "Scroll",
-      scrollValue: "04 chapters · ~2 min",
-    },
+    eyebrow: "AI consulting & implementation · Cologne",
+    imageLabel: "Image",
+    imageValue: "AI-generated",
     headline: {
       line1: "AI",
       line2: "that <amp>lands</amp>",
@@ -45,6 +36,47 @@ const messages: MessageShape = {
     cta: {
       primary: "Request an intro call",
       secondary: "How I work",
+    },
+  },
+  statement: {
+    text: "AI is changing how work gets done in every industry. Many companies are facing it and wondering where to start. I help with the first step. And every one after that.",
+  },
+  industries: {
+    section: {
+      name: "Industries",
+      kicker: "Examples",
+      title: "AI lands in every industry. <em>Each in its own way.</em>",
+      lede: "A few examples of where AI is already taking work off people's plates. Your case probably looks different. That's exactly what we'll talk about in the intro call.",
+    },
+    produktion: {
+      label: "Manufacturing",
+      body: "Maintenance logs, shift handovers, quality reports: AI reads them, summarizes, and flags what stands out.",
+      alt: "At dawn, a production worker steps through the open gate into a brightly lit factory hall.",
+    },
+    logistik: {
+      label: "Logistics",
+      body: "Capture delivery notes, freight documents, and emails automatically instead of typing them in.",
+      alt: "At dawn, a warehouse worker walks through a half-open roller door into a lit warehouse.",
+    },
+    praxis: {
+      label: "Medical practice",
+      body: "Less work on appointment requests, callbacks, and documentation so there's more time for patients.",
+      alt: "Early in the morning, a doctor walks through the front door of an old townhouse into her practice, where the lights are already on.",
+    },
+    landwirtschaft: {
+      label: "Agriculture",
+      body: "Applications, record-keeping, and orders: less paperwork, more time in the barn.",
+      alt: "At dawn, a farmer steps out of the lit cowshed into the snowy farmyard.",
+    },
+    handwerk: {
+      label: "Trades",
+      body: "Write up quotes, site measurements, and invoices faster. From scribbled note to finished quote.",
+      alt: "A master carpenter carries a board across the threshold of his lit workshop, with snow outside.",
+    },
+    kanzlei: {
+      label: "Tax & law firms",
+      body: "Sort receipts, prepare client inquiries, speed up research. The advice itself stays with you.",
+      alt: "Early in the morning, a woman walks down a dark corridor toward the only lit meeting room.",
     },
   },
   about: {
@@ -98,7 +130,7 @@ const messages: MessageShape = {
   },
   capabilities: {
     section: {
-      name: "What",
+      name: "Services",
       kicker: "If you're curious",
       title: "Where I usually <em>operate.</em>",
       lede: "Short, because it shouldn't be the focus: these are the areas I go deep in. Choose by problem, not by tool.",
@@ -142,12 +174,12 @@ const messages: MessageShape = {
     },
   },
   contact: {
+    eyebrow: "Contact",
     heading: "Tell me about <em>your project.</em>",
-    mailK: "01 · Mail",
-    mailM: "Fastest reply",
-    linkedinK: "02 · LinkedIn",
-    linkedinV: "/in/basilebong",
-    linkedinM: "Connect & message",
+    lede: "Where do you stand right now? Together we'll figure out whether and where AI makes sense for you.",
+    linkedinLabel: "LinkedIn",
+    mailNote: "Email is the fastest way to reach me",
+    alt: "A man steps out of a lit entrance hall into the blue winter morning.",
   },
   impressum: {
     section: {

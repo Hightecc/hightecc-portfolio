@@ -1,4 +1,3 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
 import { Badge } from "@/components/ui/badge";
@@ -26,13 +25,11 @@ export async function Capabilities() {
       />
 
       <Container>
-        <Row className={styles.grid}>
+        <Row rowGap={12} className={styles.grid}>
           {keys.map((k) => (
-            <Col key={k} span={12} md={6} className={styles.cap}>
-              <div className={styles.index}>
-                <ArrowRight aria-hidden /> {capabilityIndex[k]}
-              </div>
-              <div className={styles.main}>
+            <Col key={k} span={12} md={6} className={styles.cell}>
+              <article className={styles.cap}>
+                <span className={styles.index}>{capabilityIndex[k]}</span>
                 <h3 className={styles.title}>{t(`${k}.title`)}</h3>
                 <p className={styles.desc}>{t(`${k}.desc`)}</p>
                 <div className={styles.tags}>
@@ -42,13 +39,13 @@ export async function Capabilities() {
                     </Badge>
                   ))}
                 </div>
-              </div>
+              </article>
             </Col>
           ))}
         </Row>
 
         <div className={styles.note}>
-          <span className={styles.noteTag}>{t("noteTag")}</span> &nbsp;·&nbsp;{" "}
+          <span className={styles.noteTag}>{t("noteTag")}</span>
           {t.rich("note", {
             strong: (chunks) => <strong>{chunks}</strong>,
           })}

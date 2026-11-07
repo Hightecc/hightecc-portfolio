@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono, Merriweather } from "next/font/google";
+import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -11,16 +11,16 @@ import { SITE_URL } from "@/lib/site";
 
 import "../globals.css";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500"],
 });
 
-const merriweather = Merriweather({
-  variable: "--font-merriweather",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
+  weight: ["300", "400"],
   style: ["normal", "italic"],
 });
 
@@ -74,14 +74,16 @@ export default async function LocaleLayout({
   return (
     <html
       lang={lang}
-      className={`${dmSans.variable} ${merriweather.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
     >
       <body>
         <NextIntlClientProvider>
           <a href="#main" className="skip-link">
             {t("skipLink")}
           </a>
-          <div className="grid-overlay" aria-hidden />
+          {process.env.NODE_ENV === "development" ? (
+            <div className="grid-overlay" aria-hidden />
+          ) : null}
           {children}
         </NextIntlClientProvider>
       </body>

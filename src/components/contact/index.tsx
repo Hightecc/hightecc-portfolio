@@ -1,6 +1,11 @@
+import Image from "next/image";
+
+import { ArrowRight, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import { Col, Container, Row } from "@/components/ui/grid";
+import kontakt from "@/assets/imagery/threshold-kontakt.jpg";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/grid";
 import { site } from "@/lib/site";
 
 import styles from "./contact.module.css";
@@ -11,37 +16,43 @@ export async function Contact() {
   return (
     <section id="contact" className={styles.section}>
       <Container>
-        <Row rowGap={40}>
-          <Col span={12} md={5}>
-            <div className={styles.head}>
-              <h2>
-                {t.rich("heading", {
-                  em: (chunks) => <em>{chunks}</em>,
-                })}
-              </h2>
+        <div className={styles.card}>
+          <Image
+            src={kontakt}
+            alt={t("alt")}
+            fill
+            sizes="(min-width: 1336px) 1280px, 100vw"
+            placeholder="blur"
+            className={styles.img}
+          />
+          <div className={styles.content}>
+            <p className={styles.eyebrow}>
+              <span className={styles.dot} aria-hidden />
+              {t("eyebrow")}
+            </p>
+            <h2 className={styles.heading}>
+              {t.rich("heading", {
+                em: (chunks) => <em>{chunks}</em>,
+              })}
+            </h2>
+            <p className={styles.lede}>{t("lede")}</p>
+            <div className={styles.actions}>
+              <Button asChild size="lg">
+                <a href={`mailto:${site.owner.email}`}>
+                  {site.owner.email}
+                  <ArrowRight aria-hidden />
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <a href={site.owner.linkedin} target="_blank" rel="noopener noreferrer">
+                  <LinkedinLogo aria-hidden />
+                  {t("linkedinLabel")}
+                </a>
+              </Button>
             </div>
-          </Col>
-
-          <Col span={12} md={6} mdStart={7}>
-            <div className={styles.list}>
-              <a className={styles.row} href={`mailto:${site.owner.email}`}>
-                <span className={styles.rowK}>{t("mailK")}</span>
-                <span className={styles.rowV}>{site.owner.email}</span>
-                <span className={styles.rowM}>{t("mailM")}</span>
-              </a>
-              <a
-                className={styles.row}
-                href={site.owner.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className={styles.rowK}>{t("linkedinK")}</span>
-                <span className={styles.rowV}>{t("linkedinV")}</span>
-                <span className={styles.rowM}>{t("linkedinM")}</span>
-              </a>
-            </div>
-          </Col>
-        </Row>
+            <p className={styles.note}>{t("mailNote")}</p>
+          </div>
+        </div>
       </Container>
     </section>
   );

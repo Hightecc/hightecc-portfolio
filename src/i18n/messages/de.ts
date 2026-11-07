@@ -1,9 +1,9 @@
 const messages = {
   nav: {
-    about: "01 · Über",
-    work: "02 · Arbeit",
-    what: "03 · Was",
-    contact: "04 · Kontakt",
+    industries: "Branchen",
+    work: "Arbeitsweise",
+    what: "Leistungen",
+    about: "Über mich",
     cta: "Let's talk",
     menu: "Menü",
   },
@@ -23,18 +23,9 @@ const messages = {
     },
   },
   hero: {
-    meta: {
-      indexLabel: "Index",
-      indexValue: "001 · Basile Bong",
-      disciplineLabel: "Discipline",
-      disciplineValue: "AI Consulting · Engineering",
-      locationLabel: "Location",
-      locationValue: "Köln, DE",
-      imageLabel: "Bild",
-      imageValue: "KI-generiert",
-      scrollLabel: "Scroll",
-      scrollValue: "04 Kapitel · ~2 min",
-    },
+    eyebrow: "KI-Beratung & Umsetzung · Köln",
+    imageLabel: "Bild",
+    imageValue: "KI-generiert",
     headline: {
       line1: "KI,",
       line2: "die <amp>ankommt</amp>",
@@ -43,6 +34,47 @@ const messages = {
     cta: {
       primary: "Erstgespräch anfragen",
       secondary: "So arbeite ich",
+    },
+  },
+  statement: {
+    text: "KI verändert gerade, wie in jeder Branche gearbeitet wird. Viele Unternehmen stehen davor und fragen sich, wo sie anfangen sollen. Ich helfe beim ersten Schritt. Und bei allen danach.",
+  },
+  industries: {
+    section: {
+      name: "Branchen",
+      kicker: "Beispiele",
+      title: "KI kommt in jeder Branche an. <em>Nur anders.</em>",
+      lede: "Ein paar Beispiele, wo KI heute schon Arbeit abnimmt. Dein Fall sieht vermutlich anders aus. Genau darüber sprechen wir im Erstgespräch.",
+    },
+    produktion: {
+      label: "Produktion",
+      body: "Wartungsprotokolle, Schichtübergaben, Qualitätsberichte: KI liest mit, fasst zusammen und meldet, was auffällt.",
+      alt: "Eine Produktionsmitarbeiterin tritt in der Morgendämmerung durch das offene Tor in eine hell erleuchtete Fertigungshalle.",
+    },
+    logistik: {
+      label: "Logistik",
+      body: "Lieferscheine, Frachtpapiere und E-Mails automatisch erfassen, statt sie abzutippen.",
+      alt: "Ein Lagermitarbeiter geht in der Morgendämmerung durch ein halb geöffnetes Rolltor in eine erleuchtete Lagerhalle.",
+    },
+    praxis: {
+      label: "Arztpraxis",
+      body: "Terminanfragen, Rückrufe und Dokumentation entlasten, damit mehr Zeit für Patient·innen bleibt.",
+      alt: "Eine Ärztin betritt am frühen Morgen durch die Haustür eines Altbaus die bereits erleuchtete Praxis.",
+    },
+    landwirtschaft: {
+      label: "Landwirtschaft",
+      body: "Anträge, Dokumentationspflichten und Bestellungen: weniger Papier, mehr Zeit im Stall.",
+      alt: "Ein Landwirt tritt in der Morgendämmerung aus dem erleuchteten Kuhstall auf den verschneiten Hof.",
+    },
+    handwerk: {
+      label: "Handwerk",
+      body: "Angebote, Aufmaße und Rechnungen schneller schreiben. Vom Notizzettel zum fertigen Angebot.",
+      alt: "Ein Tischlermeister trägt ein Brett über die Schwelle seiner erleuchteten Werkstatt, draußen liegt Schnee.",
+    },
+    kanzlei: {
+      label: "Kanzlei",
+      body: "Belege sortieren, Mandantenanfragen vorbereiten, Recherchen beschleunigen. Die Beratung bleibt bei Dir.",
+      alt: "Eine Frau geht am frühen Morgen durch einen dunklen Flur auf den einzigen erleuchteten Besprechungsraum zu.",
     },
   },
   about: {
@@ -96,7 +128,7 @@ const messages = {
   },
   capabilities: {
     section: {
-      name: "Was",
+      name: "Leistungen",
       kicker: "Wenn's Dich interessiert",
       title: "Womit ich meistens <em>unterwegs bin.</em>",
       lede: "Kurz, weil's nicht im Zentrum stehen sollte: Das sind die Bereiche, in denen ich tief unterwegs bin. Wähle nach Problem, nicht nach Tool.",
@@ -140,12 +172,12 @@ const messages = {
     },
   },
   contact: {
+    eyebrow: "Kontakt",
     heading: "Erzähl mir von <em>Deinem Projekt.</em>",
-    mailK: "01 · Mail",
-    mailM: "Schnellste Antwort",
-    linkedinK: "02 · LinkedIn",
-    linkedinV: "/in/basilebong",
-    linkedinM: "Vernetzen & schreiben",
+    lede: "Wo stehst Du gerade? Gemeinsam finden wir heraus, ob und wo KI bei Dir Sinn ergibt.",
+    linkedinLabel: "LinkedIn",
+    mailNote: "Per Mail geht's am schnellsten",
+    alt: "Ein Mann tritt aus einer erleuchteten Eingangshalle hinaus in den blauen Wintermorgen.",
   },
   impressum: {
     section: {

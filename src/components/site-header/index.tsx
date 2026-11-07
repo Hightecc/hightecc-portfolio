@@ -16,10 +16,10 @@ export async function SiteHeader() {
 
   // @lingual/i18n-check's static parser can't resolve t(item.key) below; these
   // comments declare the literal keys so unused-key detection works.
+  // i18n-check t("industries")
   // i18n-check t("about")
   // i18n-check t("work")
   // i18n-check t("what")
-  // i18n-check t("contact")
   const navItems = site.nav.map((item) => ({ href: item.href, label: t(item.key) }));
 
   return (
@@ -43,7 +43,7 @@ export async function SiteHeader() {
           <Col span={9} md={3} mdStart={10} className={styles.cta}>
             <div className={styles.desktopCta}>
               <LocaleSwitcher />
-              <Button asChild variant="outline">
+              <Button asChild>
                 <Link href="/#contact">
                   {t("cta")} <ArrowRight aria-hidden />
                 </Link>

@@ -4,37 +4,42 @@
 /*
  * Two parallel token sets live side-by-side:
  * - shadcn (--background, --primary, --muted, …) drives src/components/ui/*.
- * - Landing-only (--ink, --line, --threshold, …) drives the wireframe section styles.
+ * - Landing-only (--ink, --brand, --surface, …) drives the section styles.
  * Both are exposed so CSS and Tailwind utilities can reference them.
  */
 :root {
   --background: #0a0a09;
-  --foreground: #ffffff;
-  --card: #0a0a09;
-  --card-foreground: #ffffff;
+  --foreground: #f5f4f0;
+  --card: #121211;
+  --card-foreground: #f5f4f0;
   --popover: #141413;
-  --popover-foreground: #ffffff;
-  --primary: #ff6b35;
-  --primary-foreground: #ffffff;
-  --secondary: #1f1f1d;
-  --secondary-foreground: #ffffff;
-  --muted: #1f1f1d;
+  --popover-foreground: #f5f4f0;
+  --primary: #f5f4f0;
+  --primary-foreground: #0a0a09;
+  --secondary: #1c1c1a;
+  --secondary-foreground: #f5f4f0;
+  --muted: #1c1c1a;
   --muted-foreground: #8a8a85;
   --accent: #ff8555;
-  --accent-foreground: #ffffff;
+  --accent-foreground: #0a0a09;
   --destructive: oklch(0.65 0.22 27);
-  --border: #1f1f1d;
-  --input: #2a2a27;
+  --border: #262624;
+  --input: #2e2e2b;
   --ring: #ff6b35;
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  --ink: #ffffff;
+  --ink: #f5f4f0;
   --mute: #8a8a85;
   --mute-2: #55554f;
   --line: #1f1f1d;
   --line-2: #2a2a27;
-  --threshold: #f4efe6;
-  --threshold-glow: rgba(244, 239, 230, 0.35);
+  --surface: #121211;
+  --surface-2: #1a1a18;
+  --brand: #ff6b35;
+  --threshold: #f4e6cc;
+  --threshold-glow: rgba(244, 222, 180, 0.35);
+  --radius-card: 18px;
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
 @theme inline {
@@ -56,9 +61,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-brand: var(--brand);
 
-  --font-sans: var(--font-dm-sans), system-ui, Arial, Helvetica, sans-serif;
-  --font-serif: var(--font-merriweather), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, Arial, Helvetica, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --radius-sm: calc(var(--radius) * 0.6);
@@ -90,8 +96,11 @@ body {
 
 body {
   font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
 }
 
 @layer base {
@@ -109,11 +118,9 @@ body {
   padding: 10px 14px;
   background: var(--background);
   color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 13px;
   border: 1px solid var(--line-2);
+  border-radius: 999px;
   transition: top 0.15s;
 }
 
@@ -139,18 +146,17 @@ body {
   margin: 0 28px;
   background-image: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.09) 0 1px,
+    rgba(255, 107, 53, 0.18) 0 1px,
     transparent 1px calc(100% / 12)
   );
   background-size: calc(100% / 12) 100%;
   background-repeat: repeat-x;
-  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  border-right: 1px solid rgba(255, 107, 53, 0.18);
 }
 
 section {
   position: relative;
-  padding: 120px 28px;
-  border-top: 1px solid var(--line);
+  padding: 160px 28px;
 }
 
 .meta {
@@ -163,7 +169,7 @@ section {
 
 .meta strong {
   color: var(--ink);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .meta-label {
@@ -179,13 +185,14 @@ section {
 
 @media (max-width: 720px) {
   section {
-    padding: 72px 28px;
+    padding: 96px 16px;
   }
 
   .grid-overlay::before {
+    margin: 0 16px;
     background-image: linear-gradient(
       to right,
-      rgba(255, 255, 255, 0.09) 0 1px,
+      rgba(255, 107, 53, 0.18) 0 1px,
       transparent 1px calc(100% / 4)
     );
     background-size: calc(100% / 4) 100%;

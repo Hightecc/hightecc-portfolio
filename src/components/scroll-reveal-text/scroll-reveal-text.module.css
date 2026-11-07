@@ -1,0 +1,9 @@
+.word {
+  color: var(--mute);
+  transition: color 0.25s ease-out;
+}
+
+.lit {
+  color: var(--ink);
+  transition: color 0.25s ease-out;
+}

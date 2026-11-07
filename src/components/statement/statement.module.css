@@ -1,0 +1,22 @@
+.section {
+  padding-top: 200px;
+  padding-bottom: 200px;
+}
+
+.text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4.4vw, 3.75rem);
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+}

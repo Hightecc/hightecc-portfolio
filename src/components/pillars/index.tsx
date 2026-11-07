@@ -24,21 +24,23 @@ export async function Pillars() {
       />
 
       <Container>
-        <Row className={styles.grid}>
+        <Row rowGap={12} className={styles.grid}>
           {keys.map((k) => (
-            <Col key={k} span={12} md={4} className={styles.pillar}>
-              <div className={styles.num}>{t(`${k}.num`)}</div>
-              <h3 className={styles.title}>
-                {t.rich(`${k}.title`, {
-                  em: (chunks) => <em>{chunks}</em>,
-                })}
-              </h3>
-              <p className={styles.body}>{t(`${k}.body`)}</p>
-              <ul className={styles.list}>
-                {pillars[k].items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+            <Col key={k} span={12} md={4} className={styles.cell}>
+              <article className={styles.pillar}>
+                <div className={styles.num}>{t(`${k}.num`)}</div>
+                <h3 className={styles.title}>
+                  {t.rich(`${k}.title`, {
+                    em: (chunks) => <em>{chunks}</em>,
+                  })}
+                </h3>
+                <p className={styles.body}>{t(`${k}.body`)}</p>
+                <ul className={styles.list}>
+                  {pillars[k].items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
             </Col>
           ))}
         </Row>

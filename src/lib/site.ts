@@ -9,10 +9,10 @@ export const site = {
     linkedin: "https://linkedin.com/in/basilebong",
   },
   nav: [
-    { key: "about", href: "/#about" },
+    { key: "industries", href: "/#industries" },
     { key: "work", href: "/#work" },
     { key: "what", href: "/#what" },
-    { key: "contact", href: "/#contact" },
+    { key: "about", href: "/#about" },
   ],
   legal: {
     provider: {
