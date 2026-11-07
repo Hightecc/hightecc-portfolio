@@ -11,7 +11,8 @@
 
 .photo {
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto;
+  height: 82%;
   z-index: 0;
   pointer-events: none;
 }
@@ -81,11 +82,15 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(3rem, 5.8vw, 5.5rem);
-  line-height: 1;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.6rem, 4.6vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
   color: var(--ink);
   text-wrap: balance;
+}
+
+.line {
+  display: block;
 }
 
 .amp {
@@ -137,6 +142,10 @@
   }
 
   .display {
-    font-size: clamp(2.75rem, 13vw, 4rem);
+    font-size: clamp(2.25rem, 10vw, 3rem);
+  }
+
+  .line {
+    display: inline;
   }
 }

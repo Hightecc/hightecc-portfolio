@@ -32,10 +32,12 @@ export async function Hero() {
           <Col span={12} md={8} mdStart={3}>
             <div className={styles.axis}>
               <h1 className={styles.display}>
-                {t("headline.line1")}{" "}
-                {t.rich("headline.line2", {
-                  amp: (chunks) => <span className={styles.amp}>{chunks}</span>,
-                })}
+                <span className={styles.line}>{t("headline.line1")}</span>{" "}
+                <span className={styles.line}>
+                  {t.rich("headline.line2", {
+                    amp: (chunks) => <span className={styles.amp}>{chunks}</span>,
+                  })}
+                </span>
               </h1>
               <p className={styles.sub}>
                 {t.rich("sub", {

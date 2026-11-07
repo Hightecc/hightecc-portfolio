@@ -25,8 +25,8 @@ const messages: MessageShape = {
   },
   hero: {
     headline: {
-      line1: "AI",
-      line2: "that <amp>lands</amp>",
+      line1: "First-class work deserves",
+      line2: "first-class <amp>software</amp>.",
     },
     sub: "I'm Basile. I help business owners <strong>use AI where it actually helps</strong>: from getting your bearings to a solution that runs day to day. No hype. Clear communication and the right pace.",
     cta: {
@@ -54,7 +54,6 @@ const messages: MessageShape = {
       languagesK: "Languages",
       languagesV: "Deutsch · Français · English",
     },
-    body: "What drives me: tech is never finished. It keeps evolving, sitting at the front line of changes that shape our society. I'm a convinced AI believer, an automation fan, and I believe good software makes life tangibly better. Not in pitch-deck speak. Concretely: less friction, less waiting, more possibilities.",
   },
   pillars: {
     section: {

@@ -46,8 +46,6 @@ export async function About() {
                 <div className={styles.credoV}>{t("credo.languagesV")}</div>
               </div>
             </aside>
-
-            <p className={styles.body}>{t("body")}</p>
           </Col>
         </Row>
       </Container>

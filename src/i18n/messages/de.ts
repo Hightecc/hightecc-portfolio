@@ -23,8 +23,8 @@ const messages = {
   },
   hero: {
     headline: {
-      line1: "KI,",
-      line2: "die <amp>ankommt</amp>",
+      line1: "Erstklassige Arbeit verdient",
+      line2: "erstklassige <amp>Software</amp>.",
     },
     sub: "Ich bin Basile. Ich helfe Unternehmer·innen, <strong>KI dort einzusetzen, wo sie wirklich hilft</strong>: vom ersten Überblick bis zur Lösung, die im Alltag läuft. Ohne Hype, mit klarer Kommunikation und dem richtigen Tempo.",
     cta: {
@@ -52,7 +52,6 @@ const messages = {
       languagesK: "Sprachen",
       languagesV: "Deutsch · Français · English",
     },
-    body: "Was mich antreibt: Tech ist nie zu Ende. Sie entwickelt sich weiter, sie steht an vorderster Front von Veränderungen, die unsere Gesellschaft formen. Ich bin überzeugter AI-Believer, Automation-Fan, und glaube daran, dass gute Software Leben spürbar besser macht. Nicht in Pitch-Deck-Sprache, sondern konkret: weniger Reibung, weniger Warten, mehr Möglichkeiten.",
   },
   pillars: {
     section: {
