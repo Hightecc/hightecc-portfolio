@@ -5,6 +5,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
 import thresholdMetalworks from "@/assets/imagery/threshold-metalworks.jpg";
+import { ImageCredit } from "@/components/image-credit";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
 
@@ -58,6 +59,7 @@ export async function Hero() {
             fetchPriority="high"
             className={styles.img}
           />
+          <ImageCredit />
         </div>
       </Container>
     </header>

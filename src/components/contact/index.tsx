@@ -4,6 +4,7 @@ import { ArrowRight, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
 import kontakt from "@/assets/imagery/threshold-kontakt.jpg";
+import { ImageCredit } from "@/components/image-credit";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/grid";
 import { site } from "@/lib/site";
@@ -49,6 +50,7 @@ export async function Contact() {
               placeholder="blur"
               className={styles.img}
             />
+            <ImageCredit />
           </div>
         </div>
       </Container>
