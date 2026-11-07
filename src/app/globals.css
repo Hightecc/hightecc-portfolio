@@ -4,7 +4,7 @@
 /*
  * Two parallel token sets live side-by-side:
  * - shadcn (--background, --primary, --muted, …) drives src/components/ui/*.
- * - Landing-only (--ink, --line, --blob-*, …) drives the wireframe section styles.
+ * - Landing-only (--ink, --line, --threshold, …) drives the wireframe section styles.
  * Both are exposed so CSS and Tailwind utilities can reference them.
  */
 :root {
@@ -33,9 +33,8 @@
   --mute-2: #55554f;
   --line: #1f1f1d;
   --line-2: #2a2a27;
-  --blob-a: #ff6b35;
-  --blob-b: #ff8555;
-  --blob-c: #ffb37a;
+  --threshold: #f4efe6;
+  --threshold-glow: rgba(244, 239, 230, 0.35);
 }
 
 @theme inline {

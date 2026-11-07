@@ -9,9 +9,9 @@ const messages = {
   },
   metadata: {
     home: {
-      title: "Hightecc · Basile Bong · Softwareentwicklung",
+      title: "Hightecc · Basile Bong · KI-Beratung & Umsetzung",
       description:
-        "Freelance Softwareentwicklung. Outcome-orientiert, klar kommuniziert, pünktlich geliefert.",
+        "KI-Beratung für Unternehmen, die nicht wissen, wo sie anfangen sollen. Klar erklärt, ehrlich bewertet, sauber umgesetzt.",
     },
     impressum: {
       title: "Impressum · Hightecc",
@@ -27,21 +27,21 @@ const messages = {
       indexLabel: "Index",
       indexValue: "001 · Basile Bong",
       disciplineLabel: "Discipline",
-      disciplineValue: "Freelance Software Engineer",
+      disciplineValue: "AI Consulting · Engineering",
       locationLabel: "Location",
       locationValue: "Köln, DE",
-      fmtLabel: "FMT 2026",
-      fmtValue: "Freelance · Remote + Köln",
+      imageLabel: "Bild",
+      imageValue: "KI-generiert",
       scrollLabel: "Scroll",
       scrollValue: "04 Kapitel · ~2 min",
     },
     headline: {
-      line1: "Ideen",
-      line2: "die <amp>live</amp> gehen",
+      line1: "KI,",
+      line2: "die <amp>ankommt</amp>",
     },
-    sub: "Ich bin Basile. Ich helfe Unternehmer·innen dabei, <strong>technische Projekte umzusetzen</strong>: mit klarer Kommunikation, intelligenter Planung und dem richtigen Tempo. Bis sie live gehen.",
+    sub: "Ich bin Basile. Ich helfe Unternehmer·innen, <strong>KI dort einzusetzen, wo sie wirklich hilft</strong>: vom ersten Überblick bis zur Lösung, die im Alltag läuft. Ohne Hype, mit klarer Kommunikation und dem richtigen Tempo.",
     cta: {
-      primary: "Projekt besprechen",
+      primary: "Erstgespräch anfragen",
       secondary: "So arbeite ich",
     },
   },
@@ -102,20 +102,20 @@ const messages = {
       lede: "Kurz, weil's nicht im Zentrum stehen sollte: Das sind die Bereiche, in denen ich tief unterwegs bin. Wähle nach Problem, nicht nach Tool.",
     },
     a: {
-      title: "Web & APIs",
-      desc: "Produktfertige Web-Apps und saubere Backends. Von MVP bis skalierbare Enterprise-Lösung.",
+      title: "KI-Orientierung",
+      desc: "Wo lohnt sich KI in Deinem Unternehmen, und wo nicht? Ich schaue mir Prozesse und Team an und sage Dir ehrlich, womit Du anfängst.",
     },
     b: {
-      title: "Mobile Apps",
-      desc: "Cross-Platform (iOS / Android) mit einer Codebase. Schnell am Markt, wartbar im Alltag.",
-    },
-    c: {
       title: "KI-Integration",
       desc: "LLM-Features, die im Produkt funktionieren. Inkl. Monitoring, Guardrails und ehrlicher Evaluierung.",
     },
+    c: {
+      title: "Automation",
+      desc: "Internes Tooling unter die Lupe nehmen, Engpässe finden, Automationen bauen. Damit Dein Team weniger klickt und mehr schafft.",
+    },
     d: {
-      title: "Tech-Beratung & Automation",
-      desc: "Internes Tooling unter die Lupe nehmen, Engpässe finden, Automationen vorschlagen. Damit Dein Team weniger klickt und mehr ausliefert.",
+      title: "Web & Mobile",
+      desc: "Produktfertige Web-Apps, saubere Backends und Cross-Platform-Apps. Wenn aus der Idee ein Produkt werden soll.",
     },
     note: "Andere Stacks? <strong>Fragen lohnt sich.</strong> Das richtige Werkzeug entscheidet sich am Problem, nicht am Lebenslauf.",
     noteTag: "NOTE",

@@ -1,8 +1,8 @@
 export const capabilityTags = {
-  a: ["Python", "Django", "TypeScript", "React", "Postgres"],
-  b: ["React Native", "Expo", "Flutter"],
-  c: ["Claude", "OpenAI", "RAG", "Eval", "Tracing"],
-  d: ["Tooling-Audit", "Automation", "Workflows", "Integrations"],
+  a: ["Use Cases", "Process Audit", "Roadmap", "Enablement"],
+  b: ["Claude", "OpenAI", "RAG", "Eval", "Tracing"],
+  c: ["Tooling-Audit", "Workflows", "Integrations", "Agents"],
+  d: ["TypeScript", "React", "Python", "React Native", "Postgres"],
 } as const;
 
 export const capabilityIndex = {

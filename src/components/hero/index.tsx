@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowDown, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
+import thresholdMetalworks from "@/assets/imagery/threshold-metalworks.jpg";
 import { Button } from "@/components/ui/button";
 
 import styles from "./hero.module.css";
@@ -12,10 +14,16 @@ export async function Hero() {
 
   return (
     <header className={styles.hero}>
-      <div className={styles.blobs} aria-hidden>
-        <div className={`${styles.blob} ${styles.blob1}`} />
-        <div className={`${styles.blob} ${styles.blob2}`} />
-        <div className={`${styles.blob} ${styles.blob3}`} />
+      <div className={styles.photo} aria-hidden>
+        <Image
+          src={thresholdMetalworks}
+          alt=""
+          fill
+          sizes="100vw"
+          placeholder="blur"
+          fetchPriority="high"
+          className={styles.photoImg}
+        />
       </div>
 
       <div className={styles.inner}>
@@ -36,7 +44,7 @@ export async function Hero() {
 
         <div className={styles.center}>
           <h1 className={styles.display}>
-            <span className={styles.line1}>{t("headline.line1")}</span>
+            <span className={styles.line1}>{t("headline.line1")}</span>{" "}
             <span className={styles.line2}>
               {t.rich("headline.line2", {
                 amp: (chunks) => <span className={styles.amp}>{chunks}</span>,
@@ -53,8 +61,8 @@ export async function Hero() {
 
         <div className={styles.bottom}>
           <div className={styles.metaBlock}>
-            <span className="meta meta-label">{t("meta.fmtLabel")}</span>
-            <span className="meta meta-val">{t("meta.fmtValue")}</span>
+            <span className="meta meta-label">{t("meta.imageLabel")}</span>
+            <span className="meta meta-val">{t("meta.imageValue")}</span>
           </div>
           <div className={styles.ctaRow}>
             <Button asChild size="lg">
