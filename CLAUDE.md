@@ -22,7 +22,9 @@ One blank line between every CSS rule block, including sibling rules inside a me
 
 shadcn/ui on top of Tailwind v4 and the Next.js 16 App Router. Dark, single-theme. No `.dark` class.
 
-Design tokens live in `globals.css` as two parallel sets: shadcn tokens that drive the UI primitives, and landing-only tokens that drive the section styles. Both are exposed via `@theme inline`. Fonts come from `next/font/google` in the root layout and are wired in as CSS variables.
+Design tokens live in `globals.css` as two parallel sets: shadcn tokens that drive the UI primitives, and landing-only tokens that drive the section styles. Both are exposed via `@theme inline`. Fonts come from `next/font/google` in the root layout and are wired in as CSS variables: Inter Tight (light, `--font-display`) for headlines, Inter for body, JetBrains Mono only for small labels. Orange (`--brand`) is an accent, never a fill; `--primary` is the off-white of the pill buttons.
+
+The visual language follows the threshold photo series described in `docs/imagery.md`: full-bleed or rounded (`--radius-card`) photo cards, light two-tone headlines where `<em>` renders the grey second half, and pill-shaped buttons and tabs.
 
 Copy lives in `src/i18n/messages/{de,en}.ts`. DE is the source of truth; EN is type-checked against DE via the `MessageShape` helper and validated by `pnpm i18n:check`. Section components consume `getTranslations()` / `t.rich()` from `next-intl/server`. `src/lib/site.ts` holds only the shared identity (name, owner, nav, contact URLs, canonical site URL).
 
@@ -36,7 +38,7 @@ Every component lives in its own directory under `src/components/` as `index.tsx
 
 # Layout grid
 
-All content aligns to a 12-column grid via `Container`, `Row`, and `Col` from `@/components/ui/grid`. The `.grid-overlay` in the root layout draws the same 12 tracks so alignment is visible while iterating.
+All content aligns to a 12-column grid via `Container`, `Row`, and `Col` from `@/components/ui/grid`. The `.grid-overlay` in the root layout draws the same 12 tracks in development only, so alignment is visible while iterating without showing in production.
 
 `Container` caps width at 1280px and centers it. `Row` is the 12-column CSS grid. `Col` accepts `span` (mobile, default 12), `md` (≥720px override), `start`, and `mdStart`. Sections compose layouts with whole-column spans; visual gutters come from internal padding on the Col content or from leaving an empty column via `mdStart`. Default column gap is 0 so column edges sit exactly on the overlay lines. Use `rowGap` on `Row` for vertical spacing when columns wrap on mobile.
 

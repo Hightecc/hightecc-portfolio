@@ -20,18 +20,22 @@ Appended to every prompt, unchanged:
 
 > Shot on a Fujifilm X-T5 with Classic Chrome film simulation, 35mm lens, natural available light, muted desaturated colors, slightly lifted blacks, soft highlight rolloff, fine organic film grain, documentary photography, quiet and unstaged, set in Germany, no text, no logos, no people looking at camera.
 
-Model: `gemini-3-pro-image`, `aspectRatio` 16:9 for full-bleed, 3:2 for section images, `imageSize` 2K.
+Model: `gemini-3-pro-image`, `aspectRatio` 16:9, `imageSize` 2K. Image edits (e.g. removing invented lettering) go through the same model with the source image attached.
 
 ## Series
 
-| # | Industry | Threshold | Status |
-| - | -------- | --------- | ------ |
-| 1 | Metalworking | Heavy PVC strip curtain at the hall entrance, worker pushing through | Hero (`src/assets/imagery/threshold-metalworks.jpg`). Jacket shows faint invented lettering, fix in final pass. |
-| 2 | Logistics | Roller door half open, worker ducking under it into the lit hall | Planned |
-| 3 | Medical practice | Front door of an old townhouse, doctor stepping in from the blue street into the lit reception | Planned |
-| 4 | Agriculture | Reversed: farmer stepping out of the lit barn into the blue yard | Planned |
-| 5 | Bakery | Swing door from the lit bakehouse into the still-dark shop | Planned |
-| 6 | Office | Glass door into the one lit room on a dark floor | Planned |
+| # | Industry | Threshold | File |
+| - | -------- | --------- | ---- |
+| 1 | Metalworking | Heavy PVC strip curtain at the hall entrance, worker pushing through | `threshold-metalworks.jpg` (hero) |
+| 2 | Manufacturing | Open sectional door into a long lit assembly hall | `threshold-produktion.jpg` |
+| 3 | Logistics | Roller door at a loading dock, worker walking into the lit warehouse | `threshold-logistik.jpg` |
+| 4 | Medical practice | Front door of an old sandstone townhouse, doctor stepping into the lit practice | `threshold-praxis.jpg` |
+| 5 | Agriculture | Reversed: farmer stepping out of the lit barn into the blue yard | `threshold-landwirtschaft.jpg` |
+| 6 | Trades | Carpenter carrying a board through the open workshop doors | `threshold-handwerk.jpg` |
+| 7 | Tax & law | Dark corridor, one lit meeting room behind a glass door | `threshold-kanzlei.jpg` |
+| 8 | Contact | Reversed: man stepping out of a lit lobby into the blue morning | `threshold-kontakt.jpg` |
+
+All files live in `src/assets/imagery/`, generated at 2K and resized to 2400px wide (JPEG q82). Manufacturing and logistics are the weakest on rule 3 (symmetry): regenerate those first when refreshing the set.
 
 Generate one image at a time and review it against the rules before the next.
 
