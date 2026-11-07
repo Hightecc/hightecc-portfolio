@@ -4,62 +4,45 @@
 }
 
 .card {
-  position: relative;
-  min-height: min(86svh, 820px);
-  display: flex;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  min-height: min(78svh, 720px);
   border-radius: var(--radius-card);
   overflow: hidden;
-  isolation: isolate;
-  background: var(--surface);
-}
-
-.img {
-  z-index: 0;
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
   background:
-    linear-gradient(to right, rgba(10, 10, 9, 0.75) 0%, rgba(10, 10, 9, 0) 55%),
-    linear-gradient(to top, rgba(10, 10, 9, 0.85) 0%, rgba(10, 10, 9, 0) 55%);
-}
-
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.1;
-  mix-blend-mode: overlay;
-  background-image: var(--grain);
-  background-size: 240px 240px;
+    radial-gradient(ellipse 80% 60% at 0% 100%, rgba(244, 214, 160, 0.08), transparent 70%),
+    var(--surface);
+  border: 1px solid var(--line);
 }
 
 .content {
   position: relative;
-  z-index: 2;
-  max-width: 560px;
-  padding: 0 48px 56px;
+  padding: 56px 48px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: flex-start;
   gap: 22px;
+}
+
+.content::after {
+  content: "";
+  position: absolute;
+  top: 48px;
+  bottom: 48px;
+  right: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--threshold) 50%, transparent);
+  box-shadow: 0 0 18px 1px var(--threshold-glow);
 }
 
 .heading {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(2.6rem, 6vw, 5rem);
-  line-height: 1;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.4rem, 4.4vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
   color: var(--ink);
   text-wrap: balance;
 }
@@ -71,10 +54,10 @@
 
 .lede {
   margin: 0;
-  max-width: 46ch;
+  max-width: 40ch;
   font-size: 17px;
   line-height: 1.55;
-  color: rgba(245, 244, 240, 0.75);
+  color: var(--mute);
 }
 
 .actions {
@@ -87,7 +70,16 @@
 .note {
   margin: 0;
   font-size: 13px;
-  color: rgba(245, 244, 240, 0.6);
+  color: var(--mute);
+}
+
+.window {
+  position: relative;
+  min-height: 360px;
+}
+
+.img {
+  object-fit: cover;
 }
 
 @media (max-width: 720px) {
@@ -96,18 +88,30 @@
   }
 
   .card {
-    min-height: 88svh;
-  }
-
-  .section {
-    padding-bottom: 0;
-  }
-
-  .img {
-    object-position: 58% 30%;
+    grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .content {
-    padding: 0 20px 32px;
+    padding: 36px 24px;
+  }
+
+  .content::after {
+    top: auto;
+    bottom: 0;
+    left: 24px;
+    right: 24px;
+    width: auto;
+    height: 1px;
+    background: var(--seam-h);
+  }
+
+  .window {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+  }
+
+  .img {
+    object-position: 55% center;
   }
 }

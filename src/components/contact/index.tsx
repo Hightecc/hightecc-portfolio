@@ -17,14 +17,6 @@ export async function Contact() {
     <section id="contact" className={styles.section}>
       <Container>
         <div className={styles.card}>
-          <Image
-            src={kontakt}
-            alt={t("alt")}
-            fill
-            sizes="(min-width: 1336px) 1280px, 100vw"
-            placeholder="blur"
-            className={styles.img}
-          />
           <div className={styles.content}>
             <h2 className={styles.heading}>
               {t.rich("heading", {
@@ -47,6 +39,16 @@ export async function Contact() {
               </Button>
             </div>
             <p className={styles.note}>{t("mailNote")}</p>
+          </div>
+          <div className={styles.window}>
+            <Image
+              src={kontakt}
+              alt={t("alt")}
+              fill
+              sizes="(min-width: 720px) 60vw, 100vw"
+              placeholder="blur"
+              className={styles.img}
+            />
           </div>
         </div>
       </Container>

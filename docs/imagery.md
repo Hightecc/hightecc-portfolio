@@ -7,12 +7,12 @@ Two photographic series carry the brand. Both are AI-generated.
 
 ## Casting
 
-Germany's workforce, not a stock-photo default. Across the series, and within any image with several people:
+Germany's workforce as it actually looks in a typical Mittelstand company, not a stock-photo default and not a checklist.
 
-- **Gender:** at least half women; never only men.
-- **Origin:** roughly 70% white, 30% people of colour (Black, Middle Eastern, South and East Asian, mixed), in ordinary roles, not as tokens.
+- **Gender:** a natural mix; never only men.
+- **Origin:** mostly white. People of other backgrounds appear the way they would in a real team, as one colleague among several, not one of each group per image. Across the series, roughly 70% white.
 - **Age:** apprentices to people near retirement.
-- **Write it into the prompt.** Image models default to white men, so name the people explicitly (e.g. "a Black woman in her thirties", "an older Turkish-German man").
+- **Prompting:** describe the team plainly ("colleagues, a typical German team"). Name a background for at most one person per image. Listing every person's ethnicity produces a staged, checklist look.
 
 ## Mood
 

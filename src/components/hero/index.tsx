@@ -15,21 +15,9 @@ export async function Hero() {
 
   return (
     <header className={styles.hero}>
-      <div className={styles.photo} aria-hidden>
-        <Image
-          src={thresholdMetalworks}
-          alt=""
-          fill
-          sizes="100vw"
-          placeholder="blur"
-          fetchPriority="high"
-          className={styles.photoImg}
-        />
-      </div>
-
-      <Container className={styles.content}>
+      <Container>
         <Row>
-          <Col span={12} md={8} mdStart={3}>
+          <Col span={12} md={10} mdStart={2}>
             <div className={styles.axis}>
               <h1 className={styles.display}>
                 <span className={styles.line}>{t("headline.line1")}</span>{" "}
@@ -59,6 +47,18 @@ export async function Hero() {
             </div>
           </Col>
         </Row>
+
+        <div className={styles.window}>
+          <Image
+            src={thresholdMetalworks}
+            alt=""
+            fill
+            sizes="(min-width: 1336px) 1280px, 100vw"
+            placeholder="blur"
+            fetchPriority="high"
+            className={styles.img}
+          />
+        </div>
       </Container>
     </header>
   );
