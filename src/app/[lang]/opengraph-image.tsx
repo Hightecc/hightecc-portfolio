@@ -12,4 +12,4 @@ export const dynamicParams = false;
 
 export const generateStaticParams = generateLocaleStaticParams;
 
-export default createOgImageHandler({ namespace: "metadata.home" });
+export default createOgImageHandler({ namespace: "metadata.home", useHeroHeadline: true });

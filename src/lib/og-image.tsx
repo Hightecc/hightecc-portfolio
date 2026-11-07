@@ -16,56 +16,62 @@ export const OG_CONTENT_TYPE = "image/png";
 
 const PALETTE = {
   bg: "#0a0a09",
-  ink: "#ffffff",
-  body: "#c8c8c8",
+  ink: "#f5f4f0",
+  mute: "#8a8a85",
+  threshold: "#f4e6cc",
 } as const;
 
 const FONT = {
-  sans: "DM Sans",
-  serif: "Merriweather",
+  sans: "Inter",
+  display: "Inter Tight",
 } as const;
 
-const FONTS_DIR = path.join(process.cwd(), "src/assets/fonts");
-const GRAIN_PATH = path.join(process.cwd(), "src/assets/og-grain.png");
+const ASSETS_DIR = path.join(process.cwd(), "src/assets");
 
 type Assets = {
   sans: Buffer;
-  serif: Buffer;
-  grainSrc: string;
+  display: Buffer;
+  photoSrc: string;
 };
 
 let assetsPromise: Promise<Assets> | null = null;
 
 function getAssets(): Promise<Assets> {
   assetsPromise ??= (async () => {
-    const [sans, serif, grain] = await Promise.all([
-      readFile(path.join(FONTS_DIR, "dm-sans-400.woff")),
-      readFile(path.join(FONTS_DIR, "merriweather-700.woff")),
-      readFile(GRAIN_PATH),
+    const [sans, display, photo] = await Promise.all([
+      readFile(path.join(ASSETS_DIR, "fonts/inter-400.woff")),
+      readFile(path.join(ASSETS_DIR, "fonts/inter-tight-300.woff")),
+      readFile(path.join(ASSETS_DIR, "imagery/threshold-metalworks.jpg")),
     ]);
     return {
       sans,
-      serif,
-      grainSrc: `data:image/png;base64,${grain.toString("base64")}`,
+      display,
+      photoSrc: `data:image/jpeg;base64,${photo.toString("base64")}`,
     };
   })();
   return assetsPromise;
 }
 
-function renderOgImage(title: string, description: string, assets: Assets) {
+type Segment = { text: string; accent: boolean };
+
+function parseAccent(raw: string): Segment[] {
+  return raw
+    .split(/(<amp>.*?<\/amp>)/)
+    .filter(Boolean)
+    .map((part) => {
+      const match = part.match(/^<amp>(.*)<\/amp>$/);
+      return match ? { text: match[1] ?? "", accent: true } : { text: part, accent: false };
+    });
+}
+
+function renderOgImage(headline: Segment[], description: string, assets: Assets) {
   return new ImageResponse(
     <div
       style={{
         width: "100%",
         height: "100%",
         display: "flex",
-        flexDirection: "column",
-        background: [
-          "radial-gradient(ellipse 900px 700px at 85% 25%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 35%, transparent 70%)",
-          "radial-gradient(ellipse 1000px 800px at 10% 90%, rgba(220,220,220,0.45) 0%, rgba(220,220,220,0.15) 35%, transparent 70%)",
-          "radial-gradient(circle 500px at 55% 60%, rgba(180,180,180,0.3) 0%, rgba(180,180,180,0.1) 40%, transparent 75%)",
-          PALETTE.bg,
-        ].join(", "),
+        background: `radial-gradient(ellipse 700px 420px at 0% 100%, rgba(244,214,160,0.12) 0%, transparent 70%), ${PALETTE.bg}`,
         color: PALETTE.ink,
         fontFamily: FONT.sans,
         position: "relative",
@@ -74,69 +80,97 @@ function renderOgImage(title: string, description: string, assets: Assets) {
     >
       <div
         style={{
-          position: "absolute",
-          inset: 0,
+          position: "relative",
           display: "flex",
-          flexWrap: "wrap",
-          opacity: 0.05,
+          flexDirection: "column",
+          justifyContent: "space-between",
+          width: 640,
+          height: "100%",
+          padding: "64px 56px 64px 72px",
         }}
       >
-        {Array.from({ length: 8 * 4 }).map((_, i) => (
-          // biome-ignore lint/performance/noImgElement: rendered by Satori, not a browser
-          <img
-            // biome-ignore lint/suspicious/noArrayIndexKey: tile grid is static
-            key={i}
-            src={assets.grainSrc}
-            alt=""
-            width={160}
-            height={160}
-          />
-        ))}
+        <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 24 }}>
+          <span style={{ color: PALETTE.ink }}>Hightecc</span>
+          <span style={{ color: PALETTE.mute }}>· Basile Bong</span>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            fontFamily: FONT.display,
+            fontWeight: 300,
+            fontSize: 64,
+            lineHeight: 1.05,
+            letterSpacing: "-0.04em",
+          }}
+        >
+          {headline
+            .flatMap((segment) =>
+              segment.text
+                .split(" ")
+                .filter(Boolean)
+                .map((word) => ({ word, accent: segment.accent })),
+            )
+            .map(({ word, accent }, i) => (
+              <span
+                // biome-ignore lint/suspicious/noArrayIndexKey: words never reorder
+                key={i}
+                style={{
+                  color: accent ? PALETTE.threshold : PALETTE.ink,
+                  marginLeft: /^[.,!?]$/.test(word) ? "-0.25em" : 0,
+                  marginRight: "0.25em",
+                }}
+              >
+                {word}
+              </span>
+            ))}
+        </div>
+
+        <span style={{ fontSize: 22, lineHeight: 1.5, color: PALETTE.mute, maxWidth: 500 }}>
+          {description}
+        </span>
       </div>
 
       <div
         style={{
-          position: "relative",
+          position: "absolute",
+          top: 72,
+          bottom: 72,
+          left: 640,
+          width: 1,
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          width: "100%",
-          height: "100%",
-          padding: "80px",
+          background: `linear-gradient(to bottom, transparent, ${PALETTE.threshold}, transparent)`,
+          boxShadow: "0 0 18px 1px rgba(244,222,180,0.35)",
+        }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          top: 48,
+          right: 48,
+          bottom: 48,
+          width: 464,
+          display: "flex",
+          borderRadius: 18,
+          overflow: "hidden",
         }}
       >
-        <span
-          style={{
-            fontFamily: FONT.serif,
-            fontWeight: 700,
-            fontSize: 84,
-            lineHeight: 1.0,
-            letterSpacing: "-0.02em",
-            color: PALETTE.ink,
-            maxWidth: 1040,
-          }}
-        >
-          {title}
-        </span>
-        <span
-          style={{
-            fontFamily: FONT.sans,
-            fontWeight: 400,
-            fontSize: 28,
-            lineHeight: 1.5,
-            color: PALETTE.body,
-            maxWidth: 880,
-            marginTop: 36,
-          }}
-        >
-          {description}
-        </span>
+        {/* biome-ignore lint/performance/noImgElement: rendered by Satori, not a browser */}
+        <img
+          src={assets.photoSrc}
+          alt=""
+          width={464}
+          height={534}
+          style={{ objectFit: "cover", objectPosition: "45% center" }}
+        />
       </div>
     </div>,
     {
       ...OG_SIZE,
       fonts: [
-        { name: FONT.serif, data: assets.serif, weight: 700, style: "normal" },
+        { name: FONT.display, data: assets.display, weight: 300, style: "normal" },
         { name: FONT.sans, data: assets.sans, weight: 400, style: "normal" },
       ],
     },
@@ -145,14 +179,24 @@ function renderOgImage(title: string, description: string, assets: Assets) {
 
 type MetadataNamespace = "metadata.home" | "metadata.impressum" | "metadata.datenschutz";
 
-export function createOgImageHandler({ namespace }: { namespace: MetadataNamespace }) {
+export function createOgImageHandler({
+  namespace,
+  useHeroHeadline = false,
+}: {
+  namespace: MetadataNamespace;
+  useHeroHeadline?: boolean;
+}) {
   return async function OgImage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     if (!hasLocale(routing.locales, lang)) notFound();
-    const [meta, assets] = await Promise.all([
+    const [meta, hero, assets] = await Promise.all([
       getTranslations({ locale: lang, namespace }),
+      getTranslations({ locale: lang, namespace: "hero" }),
       getAssets(),
     ]);
-    return renderOgImage(meta("title"), meta("description"), assets);
+    const headline = useHeroHeadline
+      ? parseAccent(`${hero.raw("headline.line1")} ${hero.raw("headline.line2")}`)
+      : [{ text: meta("title"), accent: false }];
+    return renderOgImage(headline, meta("description"), assets);
   };
 }
