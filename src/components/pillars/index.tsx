@@ -5,6 +5,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import business from "@/assets/imagery/motion-business.jpg";
 import essenz from "@/assets/imagery/motion-essenz.jpg";
 import kommunikation from "@/assets/imagery/motion-kommunikation.jpg";
+import { ImageCredit } from "@/components/image-credit";
 import { Col, Container, Row } from "@/components/ui/grid";
 
 import { SectionHead } from "../section-head";
@@ -42,6 +43,7 @@ export async function Pillars() {
                   placeholder="blur"
                   className={styles.img}
                 />
+                <ImageCredit position="top" />
                 <div className={styles.content}>
                   <h3 className={styles.title}>
                     {t.rich(`${key}.title`, {

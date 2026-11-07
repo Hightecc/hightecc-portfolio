@@ -149,6 +149,9 @@ const messages: MessageShape = {
     version: "v2026.1",
     buildTag: "Built with care",
   },
+  imageCredit: {
+    label: "AI-generated",
+  },
   localeSwitcher: {
     label: "Language",
     de: "DE",
