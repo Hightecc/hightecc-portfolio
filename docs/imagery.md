@@ -58,7 +58,7 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 
 | File | Use | Width |
 | ---- | --- | ----- |
-| `threshold-metalworks.jpg` | Hero: worker through a strip curtain. Too blue for the light theme; to be replaced (see hero prompt v2) | 2400 |
+| `threshold-metalworks.jpg` | Hero: worker pushing through a strip curtain at sunrise, colleague waving inside (hero prompt v2) | 2400 |
 | `threshold-kontakt.jpg` | Contact: two people at the glass door of a lit office at dusk. Also blue; replace with the same palette rules | 2400 |
 | `motion-kommunikation.jpg` | Approach card 1: colleagues talking at a workbench | 1200 |
 | `motion-essenz.jpg` | Approach card 2: hands assembling parts | 1200 |
@@ -70,7 +70,7 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 
 ## Hero prompt v2 (warm, for the light theme)
 
-> Strictly frontal, perfectly symmetrical one-point composition, wide 21:9 frame, camera at eye level and a little back, centered on the open entrance of a German mid-sized metalworking hall on a clear morning just after sunrise. The facade is warm light-grey corrugated metal and sandstone-colored concrete, mirrored evenly left and right, catching low golden sunlight. The wide entrance with a transparent PVC strip curtain sits exactly in the center. Inside, the hall is bright with warm white light: workbenches in natural steel and timber, machines in warm grey, a few colleagues already at work, a typical German team. One worker in a charcoal work jacket and trousers, seen in three-quarter view from behind, is caught mid-step exactly in the center as he pushes through the curtain, front foot inside the warm light, back foot still on the sunlit forecourt. A colleague inside raises a hand in greeting. The forecourt in the lower third is clean pale concrete with long soft morning shadows, calm and empty, room for type. No blue surfaces, no blue sky, no blue clothing or machines: the whole image stays in warm greys, sand, steel and gold.
+> Strictly frontal, perfectly symmetrical one-point composition, wide 21:9 frame, camera at eye level and a little back, centered on the open entrance of a German mid-sized metalworking hall on a clear morning just after sunrise. The facade is warm light-grey corrugated metal and sandstone-colored concrete, mirrored evenly left and right, catching low golden sunlight. The wide entrance with a transparent PVC strip curtain sits exactly in the center. Inside, the hall is bright with warm white light: workbenches in natural steel and timber, machines in warm grey, a few colleagues already at work, a typical German team of men and women of different ages. One worker in a charcoal work jacket and trousers, seen in three-quarter view from behind, is caught mid-step exactly in the center as he pushes through the curtain, front foot inside the warm light, back foot still on the sunlit forecourt. A female colleague inside raises a hand in greeting. The forecourt in the lower third is clean pale concrete with long soft morning shadows, calm and empty, room for type. No blue surfaces, no blue sky, no blue clothing or machines: the whole image stays in warm greys, sand, steel and gold.
 
 Append the style line. Check the result against the casting and palette rules above before shipping.
 
