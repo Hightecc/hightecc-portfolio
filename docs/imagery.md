@@ -10,9 +10,16 @@ Two photographic series carry the brand. Both are AI-generated.
 Germany's workforce as it actually looks in a typical Mittelstand company, not a stock-photo default and not a checklist.
 
 - **Gender:** a natural mix; never only men.
-- **Origin:** mostly white. People of other backgrounds appear the way they would in a real team, as one colleague among several, not one of each group per image. Across the series, roughly 70% white.
+- **Origin:** mostly white, the way a typical Mittelstand team in Germany looks. Many images show no one of a visibly different background; when someone does appear, it is one person, never several in one image. Diversity must never be the subject of the picture.
 - **Age:** apprentices to people near retirement.
-- **Prompting:** describe the team plainly ("colleagues, a typical German team"). Name a background for at most one person per image. Listing every person's ethnicity produces a staged, checklist look.
+- **Prompting:** describe the team plainly ("colleagues, a typical German team"). Do not name ethnicities or religious dress at all; the model already mixes more than reality, so the prompt should not push it further. Re-roll images that read as staged or as a diversity checklist.
+
+## Palette
+
+The site is light (warm off-white paper) and the logo is orange. Photos must sit next to both:
+
+- **Warm, never blue.** Golden sunrise light, warm greys, sandstone, timber, brick, brushed steel. No saturated blue facades, workbenches, uniforms or blue-hour skies; cold blue fights the orange logo.
+- **Bright overall.** The lit interior and the sunlit ground carry the frame. Shadows are warm grey, not navy.
 
 ## Mood
 
@@ -20,7 +27,7 @@ Upbeat, never lonely. First light (blue dawn outside, warm light just switched o
 
 ## Threshold rules
 
-1. **Sunrise.** Low, warm sunlight; the lit side glows golden.
+1. **Sunrise.** Low, warm sunlight; the lit side glows golden. Not blue hour.
 2. **One threshold, one person, mid-step.** A physical threshold (strip curtain, door, gate). The light changes at the threshold.
 3. **Strict symmetry.** Frontal, one-point composition, threshold centered, both halves mirrored. Calm and precise.
 4. **Seen from behind or the side.** Nobody looks at the camera.
@@ -43,7 +50,7 @@ Upbeat, never lonely. First light (blue dawn outside, warm light just switched o
 
 > Photographed with a slow shutter speed while panning, strong horizontal motion blur, people and objects streak into soft trails of color and light, abstract enough to sit behind text, with one area only slightly sharper.
 
-Model: `gemini-3-pro-image`, `imageSize` 2K; 16:9 for full-bleed and wide cards, 4:5 for tall cards.
+Model: `gemini-3-pro-image`, `imageSize` 2K; 21:9 for the hero, 16:9 for wide cards, 4:5 for tall cards. The hero is shown at 21:9 on desktop and cropped to 4:3 around the centre on mobile, so keep the person and the threshold in the middle third.
 
 ## Files
 
@@ -51,8 +58,8 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 
 | File | Use | Width |
 | ---- | --- | ----- |
-| `threshold-metalworks.jpg` | Hero: worker through a strip curtain at sunrise | 2400 |
-| `threshold-kontakt.jpg` | Contact: woman stepping out of a lobby into spring sunlight | 2400 |
+| `threshold-metalworks.jpg` | Hero: worker through a strip curtain. Too blue for the light theme; to be replaced (see hero prompt v2) | 2400 |
+| `threshold-kontakt.jpg` | Contact: two people at the glass door of a lit office at dusk. Also blue; replace with the same palette rules | 2400 |
 | `motion-kommunikation.jpg` | Approach card 1: colleagues talking at a workbench | 1200 |
 | `motion-essenz.jpg` | Approach card 2: hands assembling parts | 1200 |
 | `motion-business.jpg` | Approach card 3: walking past a planning wall | 1200 |
@@ -61,8 +68,14 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 | `motion-automation.jpg` | Services card C: parcels on a conveyor | 1600 |
 | `motion-web.jpg` | Services card D: phone in a train station concourse | 1600 |
 
-The hero was made in two steps: the original blue-hour prompt below, then an edit to sunrise.
+## Hero prompt v2 (warm, for the light theme)
 
-## Hero prompt (image 1)
+> Strictly frontal, perfectly symmetrical one-point composition, wide 21:9 frame, camera at eye level and a little back, centered on the open entrance of a German mid-sized metalworking hall on a clear morning just after sunrise. The facade is warm light-grey corrugated metal and sandstone-colored concrete, mirrored evenly left and right, catching low golden sunlight. The wide entrance with a transparent PVC strip curtain sits exactly in the center. Inside, the hall is bright with warm white light: workbenches in natural steel and timber, machines in warm grey, a few colleagues already at work, a typical German team. One worker in a charcoal work jacket and trousers, seen in three-quarter view from behind, is caught mid-step exactly in the center as he pushes through the curtain, front foot inside the warm light, back foot still on the sunlit forecourt. A colleague inside raises a hand in greeting. The forecourt in the lower third is clean pale concrete with long soft morning shadows, calm and empty, room for type. No blue surfaces, no blue sky, no blue clothing or machines: the whole image stays in warm greys, sand, steel and gold.
+
+Append the style line. Check the result against the casting and palette rules above before shipping.
+
+## Hero prompt v1 (blue hour, retired)
+
+The first hero was made in two steps: the blue-hour prompt below, then an edit to sunrise. It stays here for reference; its blue palette clashes with the orange logo.
 
 > Strictly frontal, perfectly symmetrical one-point composition, camera low and further back, centered on the entrance of a German mid-sized metalworking hall at blue hour before sunrise in winter. The wide entrance opening with a heavy transparent PVC strip curtain sits in the UPPER HALF of the frame, exactly centered. The LOWER HALF of the frame is a wide, empty, frosted concrete yard in deep blue shadow, completely clear of objects, calm negative space. The facade left and right is dark blue and mirrored evenly. Behind the curtain, the hall's lights have just come on, warm golden-white light glowing through the strips and spilling a soft warm pool onto the frost just in front of the entrance. A worker in a dark work jacket, seen from behind, small in the frame, is caught mid-step exactly in the center as he pushes through the curtain with both hands, the strips parting around him, his back foot still outside on the blue frosted ground, his front foot in the warm light. Calm, precise, documentary, in the tradition of German typological architecture photography.
