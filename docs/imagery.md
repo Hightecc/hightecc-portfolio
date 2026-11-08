@@ -50,7 +50,7 @@ Upbeat, never lonely. First light (blue dawn outside, warm light just switched o
 
 > Photographed with a slow shutter speed while panning, strong horizontal motion blur, people and objects streak into soft trails of color and light, abstract enough to sit behind text, with one area only slightly sharper.
 
-Model: `gemini-3-pro-image`, `imageSize` 2K; 21:9 for the hero, 16:9 for wide cards, 4:5 for tall cards. The hero is shown at 21:9 on desktop and cropped to 4:3 around the centre on mobile, so keep the person and the threshold in the middle third.
+Model: `gemini-3-pro-image`, `imageSize` 2K; 21:9 for the hero, 16:9 for wide cards, 4:5 for tall cards and the contact photo. The hero is shown at 21:9 on desktop and cropped to 4:3 around the centre on mobile, so keep the person and the threshold in the middle third.
 
 ## Files
 
@@ -59,7 +59,7 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 | File | Use | Width |
 | ---- | --- | ----- |
 | `threshold-metalworks.jpg` | Hero: worker pushing through a strip curtain at sunrise, colleague waving inside (hero prompt v2) | 2400 |
-| `threshold-kontakt.jpg` | Contact: two people at the glass door of a lit office at dusk. Also blue; replace with the same palette rules | 2400 |
+| `threshold-kontakt.jpg` | Contact: woman walking through the open door of a brick-built office at sunrise (contact prompt v2) | 1600 |
 | `motion-kommunikation.jpg` | Approach card 1: colleagues talking at a workbench | 1200 |
 | `motion-essenz.jpg` | Approach card 2: hands assembling parts | 1200 |
 | `motion-business.jpg` | Approach card 3: walking past a planning wall | 1200 |
@@ -73,6 +73,12 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 > Strictly frontal, perfectly symmetrical one-point composition, wide 21:9 frame, camera at eye level and a little back, centered on the open entrance of a German mid-sized metalworking hall on a clear morning just after sunrise. The facade is warm light-grey corrugated metal and sandstone-colored concrete, mirrored evenly left and right, catching low golden sunlight. The wide entrance with a transparent PVC strip curtain sits exactly in the center. Inside, the hall is bright with warm white light: workbenches in natural steel and timber, machines in warm grey, a few colleagues already at work, a typical German team of men and women of different ages. One worker in a charcoal work jacket and trousers, seen in three-quarter view from behind, is caught mid-step exactly in the center as he pushes through the curtain, front foot inside the warm light, back foot still on the sunlit forecourt. A female colleague inside raises a hand in greeting. The forecourt in the lower third is clean pale concrete with long soft morning shadows, calm and empty, room for type. No blue surfaces, no blue sky, no blue clothing or machines: the whole image stays in warm greys, sand, steel and gold.
 
 Append the style line. Check the result against the casting and palette rules above before shipping.
+
+## Contact prompt v2 (warm, for the light theme)
+
+> Strictly frontal, perfectly symmetrical one-point composition, portrait 4:5 frame, camera at eye level, centered on the glass entrance door of a small German company office in a renovated warm red-brick building on a clear spring morning just after sunrise. Low golden sunlight falls across the brick facade and the light stone pavement, mirrored evenly left and right. The double glass door sits exactly in the center and stands open. Inside, the office is bright with warm light: light oak floor, plants, a long table where two colleagues of a typical German team, a man and a woman, are already talking over coffee. A woman in a camel coat, seen in three-quarter view from behind, is caught mid-step exactly in the center as she walks through the open door into the warm light, one foot on the sunlit pavement, one on the threshold. The lower third is calm, empty, sunlit pavement. No blue surfaces, no blue sky, no blue clothing: warm brick, oak, cream and gold throughout.
+
+Append the style line. The image fills the right side of the contact card (close to square on desktop, 4:5 on mobile), so keep the door and the person in the middle.
 
 ## Hero prompt v1 (blue hour, retired)
 

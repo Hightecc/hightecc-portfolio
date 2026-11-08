@@ -108,7 +108,7 @@ const messages: MessageShape = {
     lede: "Send me a few lines about what your business does and which tasks eat up the most time. I'll get back to you, and together we'll work out whether AI can help, and how.",
     linkedinLabel: "LinkedIn",
     mailNote: "Email is the fastest way to reach me.",
-    alt: "Two people walk through the glass door of a brightly lit office where the team is already at work.",
+    alt: "A woman walks through the open glass door of a bright office where two colleagues are already talking over coffee.",
   },
   impressum: {
     section: {

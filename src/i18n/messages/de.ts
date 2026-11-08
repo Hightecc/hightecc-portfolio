@@ -113,7 +113,7 @@ const messages = {
     lede: "Schreib mir kurz, was dein Betrieb macht und welche Aufgaben euch am meisten Zeit kosten. Ich melde mich bei dir, und wir schauen gemeinsam, ob und wie KI helfen kann.",
     linkedinLabel: "LinkedIn",
     mailNote: "Per Mail geht's am schnellsten.",
-    alt: "Zwei Menschen gehen durch die Glastür eines hell erleuchteten Büros, in dem das Team schon arbeitet.",
+    alt: "Eine Frau geht morgens durch die offene Glastür eines hellen Büros, in dem zwei aus dem Team schon beim Kaffee sitzen.",
   },
   impressum: {
     section: {
