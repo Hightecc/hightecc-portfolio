@@ -44,7 +44,7 @@ export async function Capabilities() {
                   placeholder="blur"
                   className={styles.img}
                 />
-                <ImageCredit position="top" />
+                <ImageCredit />
                 <div className={styles.content}>
                   <h3 className={styles.title}>{t(`${key}.title`)}</h3>
                   <p className={styles.desc}>{t(`${key}.desc`)}</p>

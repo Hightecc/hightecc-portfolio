@@ -1,18 +1,10 @@
 .credit {
   position: absolute;
-  right: 16px;
+  right: 14px;
+  bottom: 12px;
   z-index: 3;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1;
-  color: rgba(245, 244, 240, 0.55);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  color: rgba(245, 244, 240, 0.32);
   pointer-events: none;
-}
-
-.top {
-  top: 16px;
-}
-
-.bottom {
-  bottom: 14px;
 }

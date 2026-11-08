@@ -43,7 +43,7 @@ export async function Pillars() {
                   placeholder="blur"
                   className={styles.img}
                 />
-                <ImageCredit position="top" />
+                <ImageCredit />
                 <div className={styles.content}>
                   <h3 className={styles.title}>
                     {t.rich(`${key}.title`, {
