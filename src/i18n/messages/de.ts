@@ -1,16 +1,16 @@
 const messages = {
   nav: {
-    work: "Arbeitsweise",
     what: "Leistungen",
+    work: "Ablauf",
     about: "Über mich",
-    cta: "Let's talk",
+    cta: "Schreib mir",
     menu: "Menü",
   },
   metadata: {
     home: {
-      title: "Hightecc · Basile Bong · KI-Beratung & Umsetzung",
+      title: "Hightecc · KI-Beratung und Umsetzung für KMU in Köln",
       description:
-        "KI-Beratung für Unternehmen, die nicht wissen, wo sie anfangen sollen. Klar erklärt, ehrlich bewertet, sauber umgesetzt.",
+        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, und baut die Werkzeuge dafür. Für kleine und mittlere Betriebe ohne eigene IT-Abteilung.",
     },
     impressum: {
       title: "Impressum · Hightecc",
@@ -23,107 +23,97 @@ const messages = {
   },
   hero: {
     headline: {
-      line1: "Erstklassige Arbeit verdient",
-      line2: "erstklassige <amp>Software</amp>.",
+      line1: "KI, die deinem Betrieb",
+      line2: "<amp>wirklich</amp> Arbeit abnimmt.",
     },
-    sub: "Ich bin Basile. Ich helfe Unternehmer·innen, <strong>KI dort einzusetzen, wo sie wirklich hilft</strong>: vom ersten Überblick bis zur Lösung, die im Alltag läuft. Ohne Hype, mit klarer Kommunikation und dem richtigen Tempo.",
+    sub: "Ich bin Basile, Berater und Entwickler aus Köln. Ich finde heraus, wo in deinem Betrieb Zeit verloren geht, etwa bei Anfragen, Angeboten oder Papierkram, und <strong>baue das Werkzeug, das genau diese Arbeit übernimmt</strong>. Für Betriebe ohne eigene IT-Abteilung.",
     cta: {
       primary: "Erstgespräch anfragen",
-      secondary: "So arbeite ich",
+      secondary: "Was ich anbiete",
     },
   },
   statement: {
-    before:
-      "KI verändert gerade, wie in jeder Branche gearbeitet wird. Viele Unternehmen stehen davor und fragen sich, wo sie anfangen sollen.",
-    after: "Ich helfe beim ersten Schritt. Und bei allen danach.",
+    before: "Alle reden über KI. Aber was sie deinem Betrieb konkret bringt, sagt dir kaum jemand.",
+    after: "Ich schon. Und dann baue ich, was sich lohnt.",
+  },
+  capabilities: {
+    section: {
+      title: "Was ich für dich <em>tun kann.</em>",
+      lede: "Vom genauen Blick auf deinen Betrieb bis zum fertigen Werkzeug. Du kannst mit dem Check anfangen oder gleich mit einer konkreten Aufgabe kommen.",
+    },
+    a: {
+      title: "KI-Check",
+      desc: "Ich schaue mir an, wie in deinem Betrieb gearbeitet wird, und sage dir ehrlich, wo KI Zeit spart und wo nicht. Danach weißt du, womit du anfängst und was es dir bringt.",
+    },
+    b: {
+      title: "KI-Assistent",
+      desc: "Ein Assistent, der eure Unterlagen kennt: Er bereitet Antworten auf Kundenanfragen vor, findet Infos in Handbüchern und Verträgen oder schreibt den ersten Entwurf für ein Angebot. Was rausgeht, entscheidet ihr.",
+    },
+    c: {
+      title: "Automatisierung",
+      desc: "Daten von einem Programm ins nächste kopieren, Rechnungen abtippen, Termine nachhalten: Das kann der Computer übernehmen. Dein Team klickt weniger und hat mehr Zeit für die eigentliche Arbeit.",
+    },
+    d: {
+      title: "Software nach Maß",
+      desc: "Wenn kein fertiges Programm passt, baue ich dir eins: zum Beispiel ein Portal, über das deine Kundschaft Aufträge schickt, eine Einsatzplanung im Browser oder eine App fürs Handy.",
+    },
+    note: "Du weißt noch nicht, was davon passt? <strong>Das klären wir im ersten Gespräch.</strong>",
+  },
+  pillars: {
+    section: {
+      title: "So läuft's ab. <em>Ohne Fachchinesisch.</em>",
+      lede: "Keine monatelangen Konzepte. Drei Schritte, und nach jedem entscheidest du, ob es weitergeht.",
+    },
+    one: {
+      title: "Erst zuhören, <em>dann vorschlagen.</em>",
+      body: "Wir sprechen darüber, wie dein Betrieb arbeitet und wo es hakt. Ich frage nach, bis ich es verstanden habe, und erkläre alles so, dass du kein Technikstudium brauchst.",
+      items: [
+        "In Köln oder per Video",
+        "Kein Verkaufsgespräch",
+        "Ehrlich, auch wenn's „lieber nicht“ heißt",
+      ],
+    },
+    two: {
+      title: "Klein anfangen, <em>schnell etwas sehen.</em>",
+      body: "Wir suchen die Aufgabe aus, bei der KI am meisten bringt, und lösen erst die. Nach wenigen Wochen hat dein Team etwas in der Hand, das es im Alltag ausprobieren kann, nicht erst nach Monaten.",
+      items: [
+        "Eine Aufgabe nach der anderen",
+        "Früh mit deinem Team testen",
+        "Kein Großprojekt mit offenem Ende",
+      ],
+    },
+    three: {
+      title: "Nur ausbauen, <em>was sich rechnet.</em>",
+      body: "Ich denke wie ein Unternehmer, nicht nur wie ein Techniker. Jeder Schritt muss sich für dich lohnen: weniger Aufwand, schnellere Abläufe oder zufriedenere Kundschaft. Wenn nicht, merken wir das früh und lassen es.",
+      items: [
+        "Klare Ziele für jeden Schritt",
+        "Budget, das planbar bleibt",
+        "Erst Ergebnis, dann weiter",
+      ],
+    },
   },
   about: {
     section: {
-      title: "Tech ist nie langweilig. <em>Genau deshalb</em> bin ich dabei.",
+      title: "Hallo, ich bin <em>Basile.</em>",
     },
-    lede: "Ich baue digitale Produkte, so lange ich denken kann. <em>Alles, was man bauen kann, interessiert mich.</em> <muted>Web, Mobile, Automatisierungen, KI-Features. Ich liebe es, Ideen in etwas Greifbares zu verwandeln. Und fast genauso sehr mag ich die andere Seite: Business, Sales, die Frage, ob das Produkt am Ende wirklich bei Menschen ankommt. Denn ein Produkt bauen ist das eine. Ziele damit erreichen das andere.</muted>",
+    lede: "Ich baue Software, seit ich denken kann: Websites, Apps, Automatisierungen und KI-Anwendungen. <em>Mich interessiert dabei vor allem, ob es am Ende wirklich hilft.</em> <muted>Ein Werkzeug zu bauen ist das eine. Dass es im Alltag genutzt wird und sich rechnet, ist das andere. Deshalb denke ich nicht nur an die Technik, sondern genauso an Abläufe, Kosten und die Menschen, die damit arbeiten.</muted>",
     credo: {
-      credoK: "Credo",
-      credoV: "Annahmen sind teuer. Feedback nicht.",
-      lovesK: "Liebt",
-      lovesV: "Digitale Produkte aller Art. Business & Sales. AI & Automation.",
-      basedInK: "Basiert in",
-      basedInV: "Köln, DE oder remote",
+      contactK: "Ansprechpartner",
+      contactV: "Nur ich, vom ersten Gespräch bis zur fertigen Lösung",
+      focusK: "Schwerpunkte",
+      focusV: "KI-Check · KI-Assistent · Automatisierung · Software nach Maß",
+      basedInK: "Standort",
+      basedInV: "Köln · vor Ort oder per Video",
       languagesK: "Sprachen",
       languagesV: "Deutsch · Français · English",
     },
   },
-  pillars: {
-    section: {
-      title: "Wofür Du mich buchst <em>(und nicht nur für Code).</em>",
-      lede: 'Der eigentliche Wert liegt selten im Code allein. Hier ist, was den Unterschied zwischen „Projekt läuft" und „Projekt kippt" macht.',
-    },
-    one: {
-      title: "Kommunikation, <em>die nicht rätseln lässt.</em>",
-      body: "Klar und offen, ohne Fach-Jargon zum Beeindrucken. Ich frage lieber nach, bis ich verstanden habe, was Dir wirklich wichtig ist. Kommunikation als Tool, nicht als Nebensache.",
-      items: ["Zuhören vor Vorschlagen", "Klartext statt Buzzwords", "Fragen, wenn's unklar ist"],
-    },
-    two: {
-      title: "Auf's <em>Essenzielle</em> runterbrechen.",
-      body: "Ich zerlege große Vorhaben in Release-fähige Stücke. Schon nach wenigen Wochen läuft etwas Echtes, nicht erst nach Monaten. So kippt kein Budget im Dunkeln, und jede Entscheidung wird durch echtes Feedback bestätigt, nicht durch Annahmen.",
-      items: [
-        "MVP mit klarem Kern",
-        "Früh in die Hände der Nutzer·innen",
-        "Iteration statt Big-Bang",
-      ],
-    },
-    three: {
-      title: "Planung mit <em>Business-Kopf.</em>",
-      body: "Ich denke nicht nur in Code und Tech-Stack, sondern in Meilensteinen, Budgets und Hypothesen. Jede Woche Arbeit soll eine Frage Deines Business beantworten, nicht nur ein Ticket schließen.",
-      items: ["ROI-getriebener Backlog", "Release-Pläne, die halten", "Kritische Pfade zuerst"],
-    },
-  },
-  capabilities: {
-    section: {
-      title: "Womit ich meistens <em>unterwegs bin.</em>",
-      lede: "Kurz, weil's nicht im Zentrum stehen sollte: Das sind die Bereiche, in denen ich tief unterwegs bin. Wähle nach Problem, nicht nach Tool.",
-    },
-    a: {
-      title: "KI-Orientierung",
-      desc: "Wo lohnt sich KI in Deinem Unternehmen, und wo nicht? Ich schaue mir Prozesse und Team an und sage Dir ehrlich, womit Du anfängst.",
-    },
-    b: {
-      title: "KI-Integration",
-      desc: "LLM-Features, die im Produkt funktionieren. Inkl. Monitoring, Guardrails und ehrlicher Evaluierung.",
-    },
-    c: {
-      title: "Automation",
-      desc: "Internes Tooling unter die Lupe nehmen, Engpässe finden, Automationen bauen. Damit Dein Team weniger klickt und mehr schafft.",
-    },
-    d: {
-      title: "Web & Mobile",
-      desc: "Produktfertige Web-Apps, saubere Backends und Cross-Platform-Apps. Wenn aus der Idee ein Produkt werden soll.",
-    },
-    note: "Andere Stacks? <strong>Fragen lohnt sich.</strong> Das richtige Werkzeug entscheidet sich am Problem, nicht am Lebenslauf.",
-  },
-  products: {
-    section: {
-      title: "Nebenher baue ich etwas <em>eigenes.</em>",
-    },
-    heading: "Noch ohne Namen. <em>Mit klarer Richtung.</em>",
-    body: "Zwischen Kund·innen-Projekten baue ich an etwas Eigenem. Mehr dazu, sobald's so weit ist. Du baust auch was? Lass uns sparren.",
-    meta: {
-      statusK: "Status",
-      statusV: "Prototyp · Research",
-      launchK: "Launch",
-      launchV: "TBD · 2026",
-      modeK: "Modus",
-      modeV: "Bootstrap · Solo",
-      updatesK: "Updates",
-      updatesV: "Per Mail auf Anfrage",
-    },
-  },
   contact: {
-    heading: "Erzähl mir von <em>Deinem Projekt.</em>",
-    lede: "Wo stehst Du gerade? Gemeinsam finden wir heraus, ob und wo KI bei Dir Sinn ergibt.",
+    heading: "Erzähl mir, <em>wo es hakt.</em>",
+    lede: "Schreib mir kurz, was dein Betrieb macht und welche Aufgaben euch am meisten Zeit kosten. Ich melde mich bei dir, und wir schauen gemeinsam, ob und wie KI helfen kann.",
     linkedinLabel: "LinkedIn",
-    mailNote: "Per Mail geht's am schnellsten",
-    alt: "Ein Mann tritt aus einer erleuchteten Eingangshalle hinaus in den blauen Wintermorgen.",
+    mailNote: "Per Mail geht's am schnellsten.",
+    alt: "Zwei Menschen gehen durch die Glastür eines hell erleuchteten Büros, in dem das Team schon arbeitet.",
   },
   impressum: {
     section: {
@@ -138,12 +128,12 @@ const messages = {
     preface: "",
   },
   footer: {
-    pitch: "Keine Cookies. Kein Tracking. Keine Banner. Nur die Seite, die du angefordert hast.",
+    pitch: "Keine Cookies. Kein Tracking. Keine Banner. Nur die Seite, die du aufgerufen hast.",
     brandSuffix: "· Basile Bong · Köln, DE",
     impressum: "Impressum",
     datenschutz: "Datenschutz",
     version: "v2026.1",
-    buildTag: "Built with care",
+    buildTag: "Mit Sorgfalt gebaut",
   },
   imageCredit: {
     label: "KI-generiert",

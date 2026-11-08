@@ -2,17 +2,17 @@ import type { MessageShape } from "./shape";
 
 const messages: MessageShape = {
   nav: {
-    work: "Approach",
     what: "Services",
+    work: "How it works",
     about: "About",
-    cta: "Let's talk",
+    cta: "Get in touch",
     menu: "Menu",
   },
   metadata: {
     home: {
-      title: "Hightecc · Basile Bong · AI Consulting & Implementation",
+      title: "Hightecc · AI consulting and implementation for SMEs in Cologne",
       description:
-        "AI consulting for companies that don't know where to start. Clear explanations, honest assessments, solid implementation.",
+        "Basile Bong works out where AI can save your business time and builds the tools to do it. For small and mid-sized businesses without their own IT department.",
     },
     impressum: {
       title: "Legal notice · Hightecc",
@@ -25,107 +25,90 @@ const messages: MessageShape = {
   },
   hero: {
     headline: {
-      line1: "First-class work deserves",
-      line2: "first-class <amp>software</amp>.",
+      line1: "Put AI to work",
+      line2: "where it <amp>actually</amp> helps.",
     },
-    sub: "I'm Basile. I help business owners <strong>use AI where it actually helps</strong>: from getting your bearings to a solution that runs day to day. No hype. Clear communication and the right pace.",
+    sub: "I'm Basile, a consultant and developer in Cologne. I work out where your business loses time, whether that's enquiries, quotes or paperwork, and <strong>build the tool that takes that work off your hands</strong>. For businesses without their own IT department.",
     cta: {
-      primary: "Request an intro call",
-      secondary: "How I work",
+      primary: "Arrange an intro call",
+      secondary: "What I offer",
     },
   },
   statement: {
     before:
-      "AI is changing how work gets done in every industry. Many companies are facing it and wondering where to start.",
-    after: "I help with the first step. And every one after that.",
+      "Everyone's talking about AI. Hardly anyone tells you what it can actually do for your business.",
+    after: "I will. And then I'll build what's worth building.",
+  },
+  capabilities: {
+    section: {
+      title: "What I can <em>do for you.</em>",
+      lede: "From a first look at your business to a finished tool. Start with the check, or come straight to me with a specific task.",
+    },
+    a: {
+      title: "AI check",
+      desc: "I look at how your business runs day to day and tell you honestly where AI saves time and where it doesn't. You come away knowing where to start and what you'll get out of it.",
+    },
+    b: {
+      title: "AI assistant",
+      desc: "An assistant that knows your documents: it prepares replies to customer enquiries, finds what you need in manuals and contracts or writes a first draft of your next quote. Nothing goes out without your say-so.",
+    },
+    c: {
+      title: "Automation",
+      desc: "Copying data from one program to another, keying in incoming invoices, sending appointment reminders: a computer can handle all of that. Your team spends less time clicking and more time on the real work.",
+    },
+    d: {
+      title: "Custom software",
+      desc: "When nothing off the shelf fits, I build something that does: a portal where customers send in orders, a mobile app or a scheduling tool your team uses in the browser.",
+    },
+    note: "Not sure which of these fits? <strong>That's what the first call is for.</strong>",
+  },
+  pillars: {
+    section: {
+      title: "How it works. <em>No jargon.</em>",
+      lede: "No drawn-out planning phase. Three steps, and after each one you decide whether to keep going.",
+    },
+    one: {
+      title: "Listen first, <em>advise second.</em>",
+      body: "We talk about how your business works and where things get stuck. I keep asking until I understand, and explain everything so you don't need a technical background.",
+      items: ["In Cologne or by video call", "No sales pitch", "Honest advice, even if it's no"],
+    },
+    two: {
+      title: "Start small, <em>see results fast.</em>",
+      body: "We pick the one task where AI makes the biggest difference and solve that first. Within a few weeks, your team is trying out something real in their daily work. Not months from now.",
+      items: ["One task at a time", "Tested early with your team", "No never-ending big project"],
+    },
+    three: {
+      title: "Only build on <em>what pays off.</em>",
+      body: "I think like a business owner, not just an engineer. Every step has to be worth it for you: less effort, quicker turnaround or happier customers. If it isn't, we'll know early and stop.",
+      items: [
+        "A clear goal for every step",
+        "A budget you can plan around",
+        "Results first, then the next step",
+      ],
+    },
   },
   about: {
     section: {
-      title: "Tech is never boring. <em>That's exactly why</em> I'm here.",
+      title: "Hi, I'm <em>Basile.</em>",
     },
-    lede: "I've been building digital products for as long as I can remember. <em>Anything you can build, I'm curious about.</em> <muted>Web, mobile, automations, AI features. I love turning ideas into something tangible. And almost as much, I love the other side: business, sales, the question of whether the product actually lands with people. Because building a product is one thing. Hitting goals with it is another.</muted>",
+    lede: "I've been building software for as long as I can remember: websites, apps, automations and AI tools. <em>What I care about most is whether it really helps.</em> <muted>Building a tool is one thing. Getting people to use it every day, and making it pay for itself, is another. So the technology is only half of what I think about. The other half is processes, costs and the people using it.</muted>",
     credo: {
-      credoK: "Credo",
-      credoV: "Assumptions are expensive. Feedback isn't.",
-      lovesK: "Loves",
-      lovesV: "Digital products of every kind. Business & sales. AI & automation.",
+      contactK: "Your contact",
+      contactV: "Just me, from the first call to the finished tool",
+      focusK: "Focus",
+      focusV: "AI check · AI assistant · Automation · Custom software",
       basedInK: "Based in",
-      basedInV: "Cologne, DE or remote",
+      basedInV: "Cologne · on site or by video call",
       languagesK: "Languages",
       languagesV: "Deutsch · Français · English",
     },
   },
-  pillars: {
-    section: {
-      title: "What you book me for <em>(and not just for code).</em>",
-      lede: 'The real value rarely lives in the code alone. Here\'s what makes the difference between "project running" and "project failing".',
-    },
-    one: {
-      title: "Communication <em>that leaves no guesswork.</em>",
-      body: "Clear and open, no jargon to impress. I'd rather ask again until I've understood what really matters to you. Communication as a tool, not an afterthought.",
-      items: [
-        "Listen before proposing",
-        "Plain talk over buzzwords",
-        "Ask when something's unclear",
-      ],
-    },
-    two: {
-      title: "Cut down to <em>the essentials.</em>",
-      body: "I break large initiatives into release-ready slices. Something real is running after a few weeks, not months. Budgets don't tip over in the dark, and every decision is confirmed by real feedback, not assumptions.",
-      items: ["MVP with a clear core", "Early in users' hands", "Iteration, not Big Bang"],
-    },
-    three: {
-      title: "Planning with a <em>business head.</em>",
-      body: "I don't just think in code and tech stack. I think in milestones, budgets, and hypotheses. Every week of work should answer a question for your business, not just close a ticket.",
-      items: ["ROI-driven backlog", "Release plans that hold", "Critical paths first"],
-    },
-  },
-  capabilities: {
-    section: {
-      title: "Where I usually <em>operate.</em>",
-      lede: "Short, because it shouldn't be the focus: these are the areas I go deep in. Choose by problem, not by tool.",
-    },
-    a: {
-      title: "AI assessment",
-      desc: "Where does AI pay off in your company, and where doesn't it? I look at your processes and your team and tell you honestly where to start.",
-    },
-    b: {
-      title: "AI integration",
-      desc: "LLM features that work in your product. Including monitoring, guardrails, and honest evaluation.",
-    },
-    c: {
-      title: "Automation",
-      desc: "Taking a close look at internal tooling, finding bottlenecks, building automations. So your team clicks less and gets more done.",
-    },
-    d: {
-      title: "Web & mobile",
-      desc: "Production-ready web apps, clean backends, and cross-platform apps. For when the idea needs to become a product.",
-    },
-    note: "Other stacks? <strong>Worth asking.</strong> The right tool is decided by the problem, not by the resume.",
-  },
-  products: {
-    section: {
-      title: "On the side, I'm building <em>something of my own.</em>",
-    },
-    heading: "No name yet. <em>Clear direction.</em>",
-    body: "Between client projects, I'm building something of my own. More on it when it's ready. Building something too? Let's spar.",
-    meta: {
-      statusK: "Status",
-      statusV: "Prototype · Research",
-      launchK: "Launch",
-      launchV: "TBD · 2026",
-      modeK: "Mode",
-      modeV: "Bootstrap · Solo",
-      updatesK: "Updates",
-      updatesV: "By email on request",
-    },
-  },
   contact: {
-    heading: "Tell me about <em>your project.</em>",
-    lede: "Where do you stand right now? Together we'll figure out whether and where AI makes sense for you.",
+    heading: "Tell me <em>what's slowing you down.</em>",
+    lede: "Send me a few lines about what your business does and which tasks eat up the most time. I'll get back to you, and together we'll work out whether AI can help, and how.",
     linkedinLabel: "LinkedIn",
-    mailNote: "Email is the fastest way to reach me",
-    alt: "A man steps out of a lit entrance hall into the blue winter morning.",
+    mailNote: "Email is the fastest way to reach me.",
+    alt: "Two people walk through the glass door of a brightly lit office where the team is already at work.",
   },
   impressum: {
     section: {

@@ -30,12 +30,12 @@ export async function About() {
           <Col span={12} md={4} mdStart={9}>
             <aside className={styles.credo}>
               <div className={styles.credoRow}>
-                <div className={styles.credoK}>{t("credo.credoK")}</div>
-                <div className={styles.credoV}>{t("credo.credoV")}</div>
+                <div className={styles.credoK}>{t("credo.contactK")}</div>
+                <div className={styles.credoV}>{t("credo.contactV")}</div>
               </div>
               <div className={styles.credoRow}>
-                <div className={styles.credoK}>{t("credo.lovesK")}</div>
-                <div className={styles.credoV}>{t("credo.lovesV")}</div>
+                <div className={styles.credoK}>{t("credo.focusK")}</div>
+                <div className={styles.credoV}>{t("credo.focusV")}</div>
               </div>
               <div className={styles.credoRow}>
                 <div className={styles.credoK}>{t("credo.basedInK")}</div>
