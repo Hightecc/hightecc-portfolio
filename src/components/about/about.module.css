@@ -17,7 +17,7 @@
 
 .lede em {
   font-style: normal;
-  color: var(--threshold);
+  color: var(--threshold-ink);
 }
 
 .lede .ledeMuted {

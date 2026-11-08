@@ -57,7 +57,7 @@
   font-size: 30px;
   line-height: 1.08;
   letter-spacing: -0.03em;
-  color: var(--ink);
+  color: var(--on-photo);
   text-wrap: balance;
 }
 
@@ -82,7 +82,7 @@
   flex-direction: column;
   gap: 10px;
   font-size: 14px;
-  color: var(--ink);
+  color: var(--on-photo);
 }
 
 .list::before {
@@ -92,7 +92,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: var(--seam-h-soft);
+  background: linear-gradient(to right, transparent, rgba(244, 230, 204, 0.35) 50%, transparent);
 }
 
 @media (max-width: 720px) {

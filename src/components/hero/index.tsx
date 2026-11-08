@@ -41,7 +41,7 @@ export async function Hero() {
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                  <Link href="#work">{t("cta.secondary")}</Link>
+                  <Link href="#what">{t("cta.secondary")}</Link>
                 </Button>
               </div>
               <span className={styles.plumb} aria-hidden />
@@ -49,18 +49,22 @@ export async function Hero() {
           </Col>
         </Row>
 
-        <div className={styles.window}>
-          <Image
-            src={thresholdMetalworks}
-            alt=""
-            fill
-            sizes="(min-width: 1336px) 1280px, 100vw"
-            placeholder="blur"
-            fetchPriority="high"
-            className={styles.img}
-          />
-          <ImageCredit />
-        </div>
+        <Row>
+          <Col span={12} md={10} mdStart={2}>
+            <div className={styles.window}>
+              <Image
+                src={thresholdMetalworks}
+                alt=""
+                fill
+                sizes="(min-width: 1336px) 1067px, (min-width: 720px) 83vw, 100vw"
+                placeholder="blur"
+                fetchPriority="high"
+                className={styles.img}
+              />
+              <ImageCredit />
+            </div>
+          </Col>
+        </Row>
       </Container>
     </header>
   );

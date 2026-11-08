@@ -15,10 +15,11 @@ export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_CONTENT_TYPE = "image/png";
 
 const PALETTE = {
-  bg: "#0a0a09",
-  ink: "#f5f4f0",
-  mute: "#8a8a85",
-  threshold: "#f4e6cc",
+  bg: "#f6f4ef",
+  ink: "#171614",
+  mute: "#6b6a64",
+  threshold: "#cc8a2e",
+  thresholdInk: "#a8681e",
 } as const;
 
 const FONT = {
@@ -71,7 +72,7 @@ function renderOgImage(headline: Segment[], description: string, assets: Assets)
         width: "100%",
         height: "100%",
         display: "flex",
-        background: `radial-gradient(ellipse 700px 420px at 0% 100%, rgba(244,214,160,0.12) 0%, transparent 70%), ${PALETTE.bg}`,
+        background: `radial-gradient(ellipse 700px 420px at 0% 100%, rgba(217,164,65,0.14) 0%, transparent 70%), ${PALETTE.bg}`,
         color: PALETTE.ink,
         fontFamily: FONT.sans,
         position: "relative",
@@ -117,7 +118,7 @@ function renderOgImage(headline: Segment[], description: string, assets: Assets)
                 // biome-ignore lint/suspicious/noArrayIndexKey: words never reorder
                 key={i}
                 style={{
-                  color: accent ? PALETTE.threshold : PALETTE.ink,
+                  color: accent ? PALETTE.thresholdInk : PALETTE.ink,
                   marginLeft: /^[.,!?]$/.test(word) ? "-0.25em" : 0,
                   marginRight: "0.25em",
                 }}
@@ -141,7 +142,7 @@ function renderOgImage(headline: Segment[], description: string, assets: Assets)
           width: 1,
           display: "flex",
           background: `linear-gradient(to bottom, transparent, ${PALETTE.threshold}, transparent)`,
-          boxShadow: "0 0 18px 1px rgba(244,222,180,0.35)",
+          boxShadow: "0 0 18px 1px rgba(204,138,46,0.4)",
         }}
       />
 
