@@ -7,7 +7,6 @@ import { About } from "@/components/about";
 import { Capabilities } from "@/components/capabilities";
 import { Contact } from "@/components/contact";
 import { Hero } from "@/components/hero";
-import { LightDivider } from "@/components/light-divider";
 import { Pillars } from "@/components/pillars";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -25,11 +24,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <Hero />
       <main id="main">
         <Statement />
-        <LightDivider />
         <Capabilities />
-        <LightDivider />
         <Pillars />
-        <LightDivider />
         <About />
         <Contact />
       </main>
