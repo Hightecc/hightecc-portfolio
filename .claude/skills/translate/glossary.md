@@ -33,7 +33,6 @@ When the DE source contains the term on the left, the EN translation uses the te
 | `KI`                            | `AI`                                             |
 | `KI-Beratung`                   | `AI consulting`                                  |
 | `KI-Check`                      | `AI check`                                       |
-| `KI-generiert`                  | `AI-generated`                                   |
 | `Software nach Maß`             | `custom software`                                |
 | `Abläufe planen`                | `Workflow planning`                              |
 | `Brücke zur IT`                 | `Bridge to your IT`                              |

@@ -135,9 +135,6 @@ const messages = {
     version: "v2026.1",
     buildTag: "Mit Sorgfalt gebaut",
   },
-  imageCredit: {
-    label: "KI-generiert",
-  },
   localeSwitcher: {
     label: "Sprache",
     de: "DE",

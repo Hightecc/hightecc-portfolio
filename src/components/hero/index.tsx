@@ -5,7 +5,6 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
 import heroImage from "@/assets/imagery/riso-werkstatt.jpg";
-import { ImageCredit } from "@/components/image-credit";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
 
@@ -61,7 +60,6 @@ export async function Hero() {
                 fetchPriority="high"
                 className={styles.img}
               />
-              <ImageCredit />
             </div>
           </Col>
         </Row>

@@ -6,7 +6,6 @@ import automation from "@/assets/imagery/motion-automation.jpg";
 import integration from "@/assets/imagery/motion-integration.jpg";
 import orientierung from "@/assets/imagery/motion-orientierung.jpg";
 import web from "@/assets/imagery/motion-web.jpg";
-import { ImageCredit } from "@/components/image-credit";
 import { Col, Container, Row } from "@/components/ui/grid";
 
 import { SectionHead } from "../section-head";
@@ -44,7 +43,6 @@ export async function Capabilities() {
                   placeholder="blur"
                   className={styles.img}
                 />
-                <ImageCredit />
                 <div className={styles.content}>
                   <h3 className={styles.title}>{t(`${key}.title`)}</h3>
                   <p className={styles.desc}>{t(`${key}.desc`)}</p>
