@@ -12,7 +12,7 @@ const messages: MessageShape = {
     home: {
       title: "Hightecc · AI consulting and custom software for SMEs in Cologne",
       description:
-        "Basile Bong works out where AI can save your business time, plans the solution with your IT and builds custom software. For small and mid-sized businesses.",
+        "Basile Bong works out where AI can save your business time, plans the changes with your IT and builds custom software where nothing off the shelf fits. For small and mid-sized businesses.",
     },
     impressum: {
       title: "Legal notice · Hightecc",
@@ -28,7 +28,7 @@ const messages: MessageShape = {
       line1: "Put AI to work",
       line2: "where it <amp>actually</amp> helps.",
     },
-    sub: "I'm Basile, a consultant and developer in Cologne. I work out where your business loses time, whether that's enquiries, quotes or paperwork, and <strong>plan with you and your IT how AI can take that work on</strong>. When no off-the-shelf program fits, I build it myself.",
+    sub: "I'm Basile, an AI consultant for small and mid-sized businesses, based in Cologne. I work out where your business loses time, whether that's enquiries, quotes or paperwork, and <strong>plan with you and your IT team how AI can take that work on</strong>. Where nothing off the shelf fits, I build the software myself.",
     cta: {
       primary: "Arrange an intro call",
       secondary: "What I offer",
@@ -37,12 +37,12 @@ const messages: MessageShape = {
   statement: {
     before:
       "Everyone's talking about AI. Hardly anyone tells you what it can actually do for your business.",
-    after: "I will. And then we'll plan together how to make it happen.",
+    after: "I will. Then we'll plan how to get there, together.",
   },
   capabilities: {
     section: {
       title: "What I can <em>do for you.</em>",
-      lede: "From a first look at your business to a working solution. Start with the check, or come straight to me with a specific question.",
+      lede: "From a first look at your business to a clear plan, or software I build for you. Start with the check, or come straight to me with a specific question.",
     },
     a: {
       title: "AI check",
@@ -50,11 +50,11 @@ const messages: MessageShape = {
     },
     b: {
       title: "Workflow planning",
-      desc: "I map out how data and tasks should flow: which programs work together and where AI takes over a step, like sorting incoming enquiries or drafting a first quote. You end up with a plan your IT can build.",
+      desc: "I map out how work should move through your business: which programs need to talk to each other, and where AI could take over a step, such as sorting incoming enquiries or drafting a first quote. You end up with a clear plan your IT can build from.",
     },
     c: {
-      title: "A bridge to your IT",
-      desc: "I sit down with your IT team or IT provider, translate between you and the technical side, and review their proposals and quotes. That way, what gets built is what you actually need.",
+      title: "Bridge to your IT",
+      desc: "I sit down with your IT team or provider, translate between you and the technical side, and review their proposals and quotes. That way, what gets built is what you need.",
     },
     d: {
       title: "Custom software",
@@ -65,7 +65,7 @@ const messages: MessageShape = {
   pillars: {
     section: {
       title: "How it works. <em>No jargon.</em>",
-      lede: "No drawn-out planning phase. Three steps, and after each one you decide whether to keep going.",
+      lede: "No plan that tries to do everything at once. Three steps, and after each one you decide whether to keep going.",
     },
     one: {
       title: "Listen first, <em>advise second.</em>",
@@ -73,9 +73,9 @@ const messages: MessageShape = {
       items: ["In Cologne or by video call", "No sales pitch", "Honest advice, even if it's no"],
     },
     two: {
-      title: "Start small, <em>see results fast.</em>",
-      body: "We pick the one task where AI makes the biggest difference and solve that first. Within a few weeks, your team is trying out something real in their daily work. Not months from now.",
-      items: ["One task at a time", "Tested early with your team", "No never-ending big project"],
+      title: "Start small, <em>try it early.</em>",
+      body: "We pick the one task where AI makes the biggest difference and tackle that first. Depending on the task, your IT puts the plan into practice or I build the software myself. Either way, your team gets to try early whether it helps day to day.",
+      items: ["One task at a time", "Test small first", "No never-ending big project"],
     },
     three: {
       title: "Only build on <em>what pays off.</em>",
@@ -91,12 +91,12 @@ const messages: MessageShape = {
     section: {
       title: "Hi, I'm <em>Basile.</em>",
     },
-    lede: "I've been building software for as long as I can remember: websites, apps, automations and AI tools. <em>What I care about most is whether it really helps.</em> <muted>Building a tool is one thing. Getting people to use it every day, and making it pay for itself, is another. So the technology is only half of what I think about. The other half is processes, costs and the people using it.</muted>",
+    lede: "I've been building software for as long as I can remember: websites, web apps and mobile apps. <em>What I care about most is whether it really helps.</em> <muted>Because I build software myself, I know what's technically possible. That lets me talk to your IT as an equal and still explain everything so you can make a good decision.</muted>",
     credo: {
       contactK: "Your contact",
-      contactV: "Just me, from the first call to the finished tool",
+      contactV: "Always me, from the first call onwards",
       focusK: "Focus",
-      focusV: "AI check · Workflow planning · A bridge to your IT · Custom software",
+      focusV: "AI check · Workflow planning · Bridge to your IT · Custom software",
       basedInK: "Based in",
       basedInV: "Cologne · on site or by video call",
       languagesK: "Languages",

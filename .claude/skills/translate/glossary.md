@@ -33,10 +33,12 @@ When the DE source contains the term on the left, the EN translation uses the te
 | `KI`                            | `AI`                                             |
 | `KI-Beratung`                   | `AI consulting`                                  |
 | `KI-Check`                      | `AI check`                                       |
-| `KI-Assistent`                  | `AI assistant`                                   |
 | `KI-generiert`                  | `AI-generated`                                   |
 | `Software nach Maß`             | `custom software`                                |
-| `Automatisierung`               | `automation`                                     |
+| `Abläufe planen`                | `Workflow planning`                              |
+| `Brücke zur IT`                 | `Bridge to your IT`                              |
+| `IT-Dienstleister`              | `IT provider`                                    |
+| `deine IT`                      | `your IT` / `your IT team` (never "IT department") |
 | `Betrieb`                       | `business` (not "company" or "operation")        |
 | `KMU`                           | `SMEs` (metadata only; body copy spells it out)  |
 | `Erstgespräch`                  | `intro call`                                     |

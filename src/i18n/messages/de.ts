@@ -10,7 +10,7 @@ const messages = {
     home: {
       title: "Hightecc · KI-Beratung und Software nach Maß für KMU in Köln",
       description:
-        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, plant die Lösung mit deiner IT und entwickelt Software nach Maß. Für kleine und mittlere Betriebe.",
+        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, plant die Umsetzung mit deiner IT und baut Software nach Maß, wenn kein fertiges Programm passt. Für kleine und mittlere Betriebe.",
     },
     impressum: {
       title: "Impressum · Hightecc",
@@ -26,7 +26,7 @@ const messages = {
       line1: "KI, die deinem Betrieb",
       line2: "<amp>wirklich</amp> Arbeit abnimmt.",
     },
-    sub: "Ich bin Basile, Berater und Entwickler aus Köln. Ich finde heraus, wo in deinem Betrieb Zeit verloren geht, etwa bei Anfragen, Angeboten oder Papierkram, und <strong>plane mit dir und deiner IT, wie KI diese Arbeit übernimmt</strong>. Passt kein fertiges Programm, entwickle ich es selbst.",
+    sub: "Ich bin Basile aus Köln und berate kleine und mittlere Betriebe zu KI. Ich finde heraus, wo bei dir Zeit verloren geht, etwa bei Anfragen, Angeboten oder Papierkram, und <strong>plane mit dir und deiner IT, wie KI diese Arbeit übernimmt</strong>. Passt kein fertiges Programm, baue ich dir eins.",
     cta: {
       primary: "Erstgespräch anfragen",
       secondary: "Was ich anbiete",
@@ -34,12 +34,12 @@ const messages = {
   },
   statement: {
     before: "Alle reden über KI. Aber was sie deinem Betrieb konkret bringt, sagt dir kaum jemand.",
-    after: "Ich schon. Und dann planen wir zusammen, wie es umgesetzt wird.",
+    after: "Ich schon. Und dann planen wir zusammen den Weg dahin.",
   },
   capabilities: {
     section: {
       title: "Was ich für dich <em>tun kann.</em>",
-      lede: "Vom genauen Blick auf deinen Betrieb bis zur fertigen Lösung. Du kannst mit dem Check anfangen oder gleich mit einer konkreten Frage kommen.",
+      lede: "Vom genauen Blick auf deinen Betrieb bis zum fertigen Plan oder Programm. Du kannst mit dem Check anfangen oder gleich mit einer konkreten Frage kommen.",
     },
     a: {
       title: "KI-Check",
@@ -47,11 +47,11 @@ const messages = {
     },
     b: {
       title: "Abläufe planen",
-      desc: "Ich zeichne auf, wie Daten und Arbeitsschritte künftig laufen sollen: welche Programme zusammenarbeiten und wo KI einen Schritt übernimmt, etwa beim Vorsortieren von Anfragen oder beim ersten Entwurf eines Angebots. Am Ende steht ein Plan, den deine IT umsetzen kann.",
+      desc: "Ich skizziere, wie die Arbeit künftig läuft: welche Programme Daten austauschen und wo KI einen Schritt übernimmt, etwa beim Vorsortieren von Anfragen oder beim ersten Entwurf eines Angebots. Am Ende hast du einen Plan, den deine IT umsetzen kann.",
     },
     c: {
       title: "Brücke zur IT",
-      desc: "Ich setze mich mit deiner IT oder deinem IT-Dienstleister an einen Tisch, übersetze zwischen dir und der Technik und prüfe Vorschläge und Angebote. So wird am Ende das gebaut, was du wirklich brauchst.",
+      desc: "Ich setze mich mit deiner IT oder deinem IT-Dienstleister an einen Tisch, übersetze zwischen dir und der Technik und prüfe Vorschläge und Angebote. So wird am Ende das gebaut, was du brauchst.",
     },
     d: {
       title: "Software nach Maß",
@@ -62,7 +62,7 @@ const messages = {
   pillars: {
     section: {
       title: "So läuft's ab. <em>Ohne Fachchinesisch.</em>",
-      lede: "Keine monatelangen Konzepte. Drei Schritte, und nach jedem entscheidest du, ob es weitergeht.",
+      lede: "Kein Konzept für alles auf einmal. Drei Schritte, und nach jedem entscheidest du, ob es weitergeht.",
     },
     one: {
       title: "Erst zuhören, <em>dann vorschlagen.</em>",
@@ -74,11 +74,11 @@ const messages = {
       ],
     },
     two: {
-      title: "Klein anfangen, <em>schnell etwas sehen.</em>",
-      body: "Wir suchen die Aufgabe aus, bei der KI am meisten bringt, und lösen erst die. Nach wenigen Wochen hat dein Team etwas in der Hand, das es im Alltag ausprobieren kann, nicht erst nach Monaten.",
+      title: "Klein anfangen, <em>früh ausprobieren.</em>",
+      body: "Wir suchen die Aufgabe aus, bei der KI am meisten bringt, und kümmern uns erst um die. Je nach Aufgabe setzt deine IT den Plan um oder ich baue das Programm selbst. Hauptsache, dein Team kann früh ausprobieren, ob es im Alltag hilft.",
       items: [
         "Eine Aufgabe nach der anderen",
-        "Früh mit deinem Team testen",
+        "Erst im Kleinen testen",
         "Kein Großprojekt mit offenem Ende",
       ],
     },
@@ -96,10 +96,10 @@ const messages = {
     section: {
       title: "Hallo, ich bin <em>Basile.</em>",
     },
-    lede: "Ich baue Software, seit ich denken kann: Websites, Apps, Automatisierungen und KI-Anwendungen. <em>Mich interessiert dabei vor allem, ob es am Ende wirklich hilft.</em> <muted>Ein Werkzeug zu bauen ist das eine. Dass es im Alltag genutzt wird und sich rechnet, ist das andere. Deshalb denke ich nicht nur an die Technik, sondern genauso an Abläufe, Kosten und die Menschen, die damit arbeiten.</muted>",
+    lede: "Ich baue Software, seit ich denken kann: Websites, Web-Anwendungen und Apps. <em>Mich interessiert dabei vor allem, ob es am Ende wirklich hilft.</em> <muted>Weil ich selbst entwickle, weiß ich, was technisch machbar ist. So kann ich mit deiner IT auf Augenhöhe reden und dir trotzdem alles so erklären, dass du gut entscheiden kannst.</muted>",
     credo: {
       contactK: "Ansprechpartner",
-      contactV: "Nur ich, vom ersten Gespräch bis zur fertigen Lösung",
+      contactV: "Immer ich, vom ersten Gespräch an",
       focusK: "Schwerpunkte",
       focusV: "KI-Check · Abläufe planen · Brücke zur IT · Software nach Maß",
       basedInK: "Standort",
