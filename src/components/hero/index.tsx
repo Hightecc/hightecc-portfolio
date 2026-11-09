@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import thresholdMetalworks from "@/assets/imagery/threshold-metalworks.jpg";
+import heroImage from "@/assets/imagery/riso-werkstatt.jpg";
 import { ImageCredit } from "@/components/image-credit";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
@@ -53,7 +53,7 @@ export async function Hero() {
           <Col span={12} md={10} mdStart={2}>
             <div className={styles.window}>
               <Image
-                src={thresholdMetalworks}
+                src={heroImage}
                 alt=""
                 fill
                 sizes="(min-width: 1336px) 1067px, (min-width: 720px) 83vw, 100vw"
