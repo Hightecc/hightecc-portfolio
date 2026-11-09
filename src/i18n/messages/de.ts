@@ -10,7 +10,7 @@ const messages = {
     home: {
       title: "Hightecc · KI-Beratung und Software nach Maß für KMU in Köln",
       description:
-        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, plant die Umsetzung mit deiner IT und baut Software nach Maß, wenn kein fertiges Programm passt. Für kleine und mittlere Betriebe.",
+        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, plant die Umsetzung mit deiner IT und baut Software nach Maß.",
     },
     impressum: {
       title: "Impressum · Hightecc",
@@ -75,10 +75,10 @@ const messages = {
     },
     two: {
       title: "Klein anfangen, <em>früh ausprobieren.</em>",
-      body: "Wir suchen die Aufgabe aus, bei der KI am meisten bringt, und kümmern uns erst um die. Je nach Aufgabe setzt deine IT den Plan um oder ich baue das Programm selbst. Hauptsache, dein Team kann früh ausprobieren, ob es im Alltag hilft.",
+      body: "Wir suchen die Aufgabe aus, bei der KI am meisten bringt, und kümmern uns erst um die. Je nach Aufgabe setzt deine IT den Plan um oder ich baue ein passendes Programm selbst. Hauptsache, dein Team kann früh ausprobieren, ob das im Alltag hilft.",
       items: [
         "Eine Aufgabe nach der anderen",
-        "Erst im Kleinen testen",
+        "Im Kleinen testen",
         "Kein Großprojekt mit offenem Ende",
       ],
     },

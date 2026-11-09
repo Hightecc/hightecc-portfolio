@@ -12,7 +12,7 @@ const messages: MessageShape = {
     home: {
       title: "Hightecc · AI consulting and custom software for SMEs in Cologne",
       description:
-        "Basile Bong works out where AI can save your business time, plans the changes with your IT and builds custom software where nothing off the shelf fits. For small and mid-sized businesses.",
+        "Basile Bong works out where AI can save your business time, plans the changes with your IT and builds custom software.",
     },
     impressum: {
       title: "Legal notice · Hightecc",
@@ -74,8 +74,8 @@ const messages: MessageShape = {
     },
     two: {
       title: "Start small, <em>try it early.</em>",
-      body: "We pick the one task where AI makes the biggest difference and tackle that first. Depending on the task, your IT puts the plan into practice or I build the software myself. Either way, your team gets to try early whether it helps day to day.",
-      items: ["One task at a time", "Test small first", "No never-ending big project"],
+      body: "We pick the one task where AI makes the biggest difference and tackle that first. Depending on the task, your IT puts the plan into practice or I build the software myself. Either way, your team gets to try it early and see whether it helps day to day.",
+      items: ["One task at a time", "Early feedback from your team", "No never-ending big project"],
     },
     three: {
       title: "Only build on <em>what pays off.</em>",
