@@ -8,40 +8,37 @@
  * Both are exposed so CSS and Tailwind utilities can reference them.
  */
 :root {
-  --background: #f6f4ef;
+  --background: #ffffff;
   --foreground: #171614;
   --card: #ffffff;
   --card-foreground: #171614;
   --popover: #ffffff;
   --popover-foreground: #171614;
   --primary: #171614;
-  --primary-foreground: #f6f4ef;
-  --secondary: #ebe8e1;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f1ee;
   --secondary-foreground: #171614;
-  --muted: #ebe8e1;
+  --muted: #f2f1ee;
   --muted-foreground: #6b6a64;
   --accent: #ff8555;
   --accent-foreground: #171614;
   --destructive: oklch(0.65 0.22 27);
-  --border: #e2ded5;
-  --input: #d6d2c8;
+  --border: #e8e7e3;
+  --input: #dcdbd6;
   --ring: #e85a24;
   --radius: 0.75rem;
 
   --ink: #171614;
   --mute: #6b6a64;
   --mute-2: #9a978f;
-  --line: #e6e2d9;
-  --line-2: #d6d2c8;
-  --surface: #ffffff;
-  --surface-2: #efece5;
+  --line: #ebeae6;
+  --line-2: #dcdbd6;
+  --surface: #f7f6f3;
+  --surface-2: #f0efeb;
   --brand: #ff6b35;
-  --threshold: #cc8a2e;
-  --threshold-ink: #a8681e;
+  --accent-ink: #d9531e;
   --on-photo: #f5f4f0;
-  --threshold-glow: rgba(204, 138, 46, 0.4);
-  --seam-h: linear-gradient(to right, transparent, var(--threshold) 50%, transparent);
-  --seam-h-soft: linear-gradient(to right, transparent, rgba(168, 104, 30, 0.22) 50%, transparent);
+  --seam-h-soft: linear-gradient(to right, transparent, var(--line-2) 50%, transparent);
   --radius-card: 18px;
   --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }

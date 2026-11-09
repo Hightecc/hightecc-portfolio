@@ -14,10 +14,7 @@ export async function Statement() {
           <Col span={12} md={5}>
             <p className={styles.before}>{t("before")}</p>
           </Col>
-          <Col span={12} md={2} className={styles.seamCol}>
-            <span className={styles.seam} aria-hidden />
-          </Col>
-          <Col span={12} md={5}>
+          <Col span={12} md={5} mdStart={8}>
             <p className={styles.after}>{t("after")}</p>
           </Col>
         </Row>

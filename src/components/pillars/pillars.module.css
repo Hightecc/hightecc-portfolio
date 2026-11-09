@@ -92,7 +92,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(244, 230, 204, 0.35) 50%, transparent);
+  background: linear-gradient(to right, transparent, rgba(245, 244, 240, 0.3) 50%, transparent);
 }
 
 @media (max-width: 720px) {

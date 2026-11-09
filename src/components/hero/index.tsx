@@ -43,7 +43,6 @@ export async function Hero() {
                   <Link href="#what">{t("cta.secondary")}</Link>
                 </Button>
               </div>
-              <span className={styles.plumb} aria-hidden />
             </div>
           </Col>
         </Row>

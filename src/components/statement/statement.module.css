@@ -30,43 +30,6 @@
   text-wrap: balance;
 }
 
-.seamCol {
-  display: flex;
-  justify-content: center;
-  align-self: stretch;
-}
-
-.seam {
-  width: 1px;
-  min-height: 220px;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent, var(--threshold) 50%, transparent);
-  box-shadow: 0 0 18px 1px var(--threshold-glow);
-  transform-origin: center;
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .seam {
-      animation: draw linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 45%;
-    }
-  }
-}
-
-@keyframes draw {
-  from {
-    transform: scaleY(0);
-    opacity: 0;
-  }
-
-  to {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-}
-
 @media (max-width: 720px) {
   .section {
     padding-top: 112px;
@@ -76,32 +39,5 @@
   .before,
   .after {
     text-align: center;
-  }
-
-  .seam {
-    width: 120px;
-    min-height: 1px;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--threshold) 50%, transparent);
-  }
-
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .seam {
-        animation-name: draw-x;
-      }
-    }
-  }
-}
-
-@keyframes draw-x {
-  from {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-
-  to {
-    transform: scaleX(1);
-    opacity: 1;
   }
 }

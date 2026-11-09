@@ -15,11 +15,11 @@ export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_CONTENT_TYPE = "image/png";
 
 const PALETTE = {
-  bg: "#f6f4ef",
+  bg: "#ffffff",
   ink: "#171614",
   mute: "#6b6a64",
-  threshold: "#cc8a2e",
-  thresholdInk: "#a8681e",
+  line: "#dcdbd6",
+  accentInk: "#d9531e",
 } as const;
 
 const FONT = {
@@ -42,7 +42,7 @@ function getAssets(): Promise<Assets> {
     const [sans, display, photo] = await Promise.all([
       readFile(path.join(ASSETS_DIR, "fonts/inter-400.woff")),
       readFile(path.join(ASSETS_DIR, "fonts/inter-tight-300.woff")),
-      readFile(path.join(ASSETS_DIR, "imagery/threshold-metalworks.jpg")),
+      readFile(path.join(ASSETS_DIR, "imagery/riso-werkstatt.jpg")),
     ]);
     return {
       sans,
@@ -72,7 +72,7 @@ function renderOgImage(headline: Segment[], description: string, assets: Assets)
         width: "100%",
         height: "100%",
         display: "flex",
-        background: `radial-gradient(ellipse 700px 420px at 0% 100%, rgba(217,164,65,0.14) 0%, transparent 70%), ${PALETTE.bg}`,
+        background: PALETTE.bg,
         color: PALETTE.ink,
         fontFamily: FONT.sans,
         position: "relative",
@@ -118,7 +118,7 @@ function renderOgImage(headline: Segment[], description: string, assets: Assets)
                 // biome-ignore lint/suspicious/noArrayIndexKey: words never reorder
                 key={i}
                 style={{
-                  color: accent ? PALETTE.thresholdInk : PALETTE.ink,
+                  color: accent ? PALETTE.accentInk : PALETTE.ink,
                   marginLeft: /^[.,!?]$/.test(word) ? "-0.25em" : 0,
                   marginRight: "0.25em",
                 }}
@@ -141,8 +141,7 @@ function renderOgImage(headline: Segment[], description: string, assets: Assets)
           left: 640,
           width: 1,
           display: "flex",
-          background: `linear-gradient(to bottom, transparent, ${PALETTE.threshold}, transparent)`,
-          boxShadow: "0 0 18px 1px rgba(204,138,46,0.4)",
+          background: `linear-gradient(to bottom, transparent, ${PALETTE.line}, transparent)`,
         }}
       />
 

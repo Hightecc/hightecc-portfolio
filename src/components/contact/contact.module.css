@@ -9,9 +9,7 @@
   min-height: min(78svh, 720px);
   border-radius: var(--radius-card);
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 80% 60% at 0% 100%, rgba(217, 164, 65, 0.1), transparent 70%),
-    var(--surface);
+  background: var(--surface);
   border: 1px solid var(--line);
 }
 
@@ -23,17 +21,6 @@
   justify-content: flex-end;
   align-items: flex-start;
   gap: 22px;
-}
-
-.content::after {
-  content: "";
-  position: absolute;
-  top: 48px;
-  bottom: 48px;
-  right: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--threshold) 50%, transparent);
-  box-shadow: 0 0 18px 1px var(--threshold-glow);
 }
 
 .heading {
@@ -49,7 +36,7 @@
 
 .heading em {
   font-style: normal;
-  color: var(--threshold-ink);
+  color: var(--accent-ink);
 }
 
 .lede {
@@ -94,16 +81,6 @@
 
   .content {
     padding: 36px 24px;
-  }
-
-  .content::after {
-    top: auto;
-    bottom: 0;
-    left: 24px;
-    right: 24px;
-    width: auto;
-    height: 1px;
-    background: var(--seam-h);
   }
 
   .window {

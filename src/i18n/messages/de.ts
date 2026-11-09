@@ -61,7 +61,7 @@ const messages = {
   },
   pillars: {
     section: {
-      title: "So läuft's ab. <em>Ohne Fachchinesisch.</em>",
+      title: "So läuft's ab. <em>Ohne Fachjargon.</em>",
       lede: "Kein Konzept für alles auf einmal. Drei Schritte, und nach jedem entscheidest du, ob es weitergeht.",
     },
     one: {
