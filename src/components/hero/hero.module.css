@@ -60,6 +60,8 @@
   position: relative;
   aspect-ratio: 21 / 9;
   margin-top: 56px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
   overflow: hidden;
 }
 
