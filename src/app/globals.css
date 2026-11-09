@@ -155,12 +155,12 @@ body {
 
 section {
   position: relative;
-  padding: 160px 28px;
+  padding: 96px 28px;
 }
 
 @media (max-width: 720px) {
   section {
-    padding: 96px 16px;
+    padding: 64px 16px;
   }
 
   .grid-overlay::before {
