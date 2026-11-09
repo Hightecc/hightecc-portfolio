@@ -10,9 +10,9 @@ Two photographic series carry the brand. Both are AI-generated.
 Germany's workforce as it actually looks in a typical Mittelstand company, not a stock-photo default and not a checklist.
 
 - **Gender:** a natural mix; never only men.
-- **Origin:** mostly white, the way a typical Mittelstand team in Germany looks. Many images show no one of a visibly different background; when someone does appear, it is one person, never several in one image. Diversity must never be the subject of the picture.
+- **Origin:** mostly white, the way a typical Mittelstand team in Germany looks, with a little visible variety in skin tone: usually one colleague per image, never several. Diversity must never be the subject of the picture.
 - **Age:** apprentices to people near retirement.
-- **Prompting:** describe the team plainly ("colleagues, a typical German team"). Do not name ethnicities or religious dress at all; the model already mixes more than reality, so the prompt should not push it further. Re-roll images that read as staged or as a diversity checklist.
+- **Prompting:** describe the team plainly ("colleagues, a typical German team"). Do not name ethnicities or religious dress. If an image comes out all white, give one background colleague a darker skin tone in an edit pass; never more. Re-roll images that read as staged or as a diversity checklist.
 
 ## Palette
 
@@ -28,7 +28,7 @@ Upbeat, never lonely. First light (blue dawn outside, warm light just switched o
 ## Threshold rules
 
 1. **Sunrise.** Low, warm sunlight; the lit side glows golden. Not blue hour.
-2. **One threshold, one person, mid-step.** A physical threshold (strip curtain, door, gate). The light changes at the threshold.
+2. **One threshold, one person, mid-step.** A physical threshold (an open hall entrance, a doorway, a gate). The light changes at the threshold. Anything hanging in it, like a strip curtain, has to span the whole opening or it reads as a prop.
 3. **Strict symmetry.** Frontal, one-point composition, threshold centered, both halves mirrored. Calm and precise.
 4. **Seen from behind or the side.** Nobody looks at the camera.
 5. **Room for type.** Calm negative space (usually the ground) where headlines sit without covering the person.
@@ -58,7 +58,7 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 
 | File | Use | Width |
 | ---- | --- | ----- |
-| `threshold-metalworks.jpg` | Hero: worker pushing through a strip curtain at sunrise, colleague waving inside (hero prompt v2) | 2400 |
+| `threshold-metalworks.jpg` | Hero: worker walking into an open metalworking hall at sunrise, colleague waving inside (hero prompt v2, then an edit pass for one darker-skinned colleague and a beam sign painted out) | 2400 |
 | `threshold-kontakt.jpg` | Contact: woman walking through the open door of a brick-built office at sunrise (contact prompt v2) | 1600 |
 | `motion-kommunikation.jpg` | Approach card 1: colleagues talking at a workbench | 1200 |
 | `motion-essenz.jpg` | Approach card 2: hands assembling parts | 1200 |
@@ -70,7 +70,7 @@ All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
 
 ## Hero prompt v2 (warm, for the light theme)
 
-> Strictly frontal, perfectly symmetrical one-point composition, wide 21:9 frame, camera at eye level and a little back, centered on the open entrance of a German mid-sized metalworking hall on a clear morning just after sunrise. The facade is warm light-grey corrugated metal and sandstone-colored concrete, mirrored evenly left and right, catching low golden sunlight. The wide entrance with a transparent PVC strip curtain sits exactly in the center. Inside, the hall is bright with warm white light: workbenches in natural steel and timber, machines in warm grey, a few colleagues already at work, a typical German team of men and women of different ages. One worker in a charcoal work jacket and trousers, seen in three-quarter view from behind, is caught mid-step exactly in the center as he pushes through the curtain, front foot inside the warm light, back foot still on the sunlit forecourt. A female colleague inside raises a hand in greeting. The forecourt in the lower third is clean pale concrete with long soft morning shadows, calm and empty, room for type. No blue surfaces, no blue sky, no blue clothing or machines: the whole image stays in warm greys, sand, steel and gold.
+> Strictly frontal, perfectly symmetrical one-point composition, wide 21:9 frame, camera at eye level and a little back, centered on the open entrance of a German mid-sized metalworking hall on a clear morning just after sunrise. The facade is warm light-grey corrugated metal and sandstone-colored concrete, mirrored evenly left and right, catching low golden sunlight. The wide entrance stands fully open, exactly in the center, with no door, gate or curtain. Inside, the hall is bright with warm white light: workbenches in natural steel and timber, machines in warm grey, a few colleagues already at work, a typical German team of men and women of different ages. One worker in a charcoal work jacket and trousers, seen in three-quarter view from behind, is caught mid-step exactly in the center as he walks through the open entrance into the warm light of the hall. A female colleague inside raises a hand in greeting. The forecourt in the lower third is clean pale concrete with long soft morning shadows, calm and empty, room for type. No blue surfaces, no blue sky, no blue clothing or machines: the whole image stays in warm greys, sand, steel and gold.
 
 Append the style line. Check the result against the casting and palette rules above before shipping.
 
