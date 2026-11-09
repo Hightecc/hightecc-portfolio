@@ -17,7 +17,7 @@ export async function About() {
       />
 
       <Container>
-        <Row rowGap={48}>
+        <Row rowGap={48} className={styles.row}>
           <Col span={12} md={7} className={styles.narrative}>
             <p className={styles.lede}>
               {t.rich("lede", {
