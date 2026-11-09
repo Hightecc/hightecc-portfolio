@@ -32,10 +32,6 @@ const messages = {
       secondary: "Was ich anbiete",
     },
   },
-  statement: {
-    before: "Alle reden über KI. Aber was sie deinem Betrieb konkret bringt, sagt dir kaum jemand.",
-    after: "Ich schon. Und dann planen wir zusammen den Weg dahin.",
-  },
   capabilities: {
     section: {
       title: "Was ich für dich <em>tun kann.</em>",

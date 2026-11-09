@@ -10,7 +10,6 @@ import { Hero } from "@/components/hero";
 import { Pillars } from "@/components/pillars";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { Statement } from "@/components/statement";
 import { routing } from "@/i18n/routing";
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
@@ -23,7 +22,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <SiteHeader />
       <Hero />
       <main id="main">
-        <Statement />
         <Capabilities />
         <Pillars />
         <About />

@@ -34,11 +34,6 @@ const messages: MessageShape = {
       secondary: "What I offer",
     },
   },
-  statement: {
-    before:
-      "Everyone's talking about AI. Hardly anyone tells you what it can actually do for your business.",
-    after: "I will. Then we'll plan how to get there, together.",
-  },
   capabilities: {
     section: {
       title: "What I can <em>do for you.</em>",
