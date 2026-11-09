@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ArrowRight, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import kontakt from "@/assets/imagery/threshold-kontakt.jpg";
+import kontakt from "@/assets/imagery/riso-kontakt.jpg";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/grid";
 import { site } from "@/lib/site";

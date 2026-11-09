@@ -10,11 +10,9 @@ export async function Statement() {
   return (
     <section className={styles.section}>
       <Container>
-        <Row rowGap={40} className={styles.row}>
-          <Col span={12} md={5}>
+        <Row>
+          <Col span={12} md={8} mdStart={3}>
             <p className={styles.before}>{t("before")}</p>
-          </Col>
-          <Col span={12} md={5} mdStart={8}>
             <p className={styles.after}>{t("after")}</p>
           </Col>
         </Row>

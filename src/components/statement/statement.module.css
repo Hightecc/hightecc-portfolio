@@ -3,10 +3,6 @@
   padding-bottom: 180px;
 }
 
-.row {
-  align-items: center;
-}
-
 .before {
   margin: 0;
   font-family: var(--font-display);
@@ -15,18 +11,19 @@
   line-height: 1.25;
   letter-spacing: -0.025em;
   color: var(--mute);
-  text-align: right;
-  text-wrap: pretty;
+  text-align: center;
+  text-wrap: balance;
 }
 
 .after {
-  margin: 0;
+  margin: 20px 0 0;
   font-family: var(--font-display);
   font-weight: 300;
   font-size: clamp(2rem, 3.6vw, 3.25rem);
   line-height: 1.08;
   letter-spacing: -0.035em;
   color: var(--ink);
+  text-align: center;
   text-wrap: balance;
 }
 
@@ -34,10 +31,5 @@
   .section {
     padding-top: 112px;
     padding-bottom: 112px;
-  }
-
-  .before,
-  .after {
-    text-align: center;
   }
 }
