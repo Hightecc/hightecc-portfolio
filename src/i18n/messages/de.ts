@@ -8,9 +8,9 @@ const messages = {
   },
   metadata: {
     home: {
-      title: "Hightecc · KI-Beratung und Umsetzung für KMU in Köln",
+      title: "Hightecc · KI-Beratung und Software nach Maß für KMU in Köln",
       description:
-        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, und baut die Werkzeuge dafür. Für kleine und mittlere Betriebe ohne eigene IT-Abteilung.",
+        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, plant die Lösung mit deiner IT und entwickelt Software nach Maß. Für kleine und mittlere Betriebe.",
     },
     impressum: {
       title: "Impressum · Hightecc",
@@ -26,7 +26,7 @@ const messages = {
       line1: "KI, die deinem Betrieb",
       line2: "<amp>wirklich</amp> Arbeit abnimmt.",
     },
-    sub: "Ich bin Basile, Berater und Entwickler aus Köln. Ich finde heraus, wo in deinem Betrieb Zeit verloren geht, etwa bei Anfragen, Angeboten oder Papierkram, und <strong>baue das Werkzeug, das genau diese Arbeit übernimmt</strong>. Für Betriebe ohne eigene IT-Abteilung.",
+    sub: "Ich bin Basile, Berater und Entwickler aus Köln. Ich finde heraus, wo in deinem Betrieb Zeit verloren geht, etwa bei Anfragen, Angeboten oder Papierkram, und <strong>plane mit dir und deiner IT, wie KI diese Arbeit übernimmt</strong>. Passt kein fertiges Programm, entwickle ich es selbst.",
     cta: {
       primary: "Erstgespräch anfragen",
       secondary: "Was ich anbiete",
@@ -34,24 +34,24 @@ const messages = {
   },
   statement: {
     before: "Alle reden über KI. Aber was sie deinem Betrieb konkret bringt, sagt dir kaum jemand.",
-    after: "Ich schon. Und dann baue ich, was sich lohnt.",
+    after: "Ich schon. Und dann planen wir zusammen, wie es umgesetzt wird.",
   },
   capabilities: {
     section: {
       title: "Was ich für dich <em>tun kann.</em>",
-      lede: "Vom genauen Blick auf deinen Betrieb bis zum fertigen Werkzeug. Du kannst mit dem Check anfangen oder gleich mit einer konkreten Aufgabe kommen.",
+      lede: "Vom genauen Blick auf deinen Betrieb bis zur fertigen Lösung. Du kannst mit dem Check anfangen oder gleich mit einer konkreten Frage kommen.",
     },
     a: {
       title: "KI-Check",
       desc: "Ich schaue mir an, wie in deinem Betrieb gearbeitet wird, und sage dir ehrlich, wo KI Zeit spart und wo nicht. Danach weißt du, womit du anfängst und was es dir bringt.",
     },
     b: {
-      title: "KI-Assistent",
-      desc: "Ein Assistent, der eure Unterlagen kennt: Er bereitet Antworten auf Kundenanfragen vor, findet Infos in Handbüchern und Verträgen oder schreibt den ersten Entwurf für ein Angebot. Was rausgeht, entscheidet ihr.",
+      title: "Abläufe planen",
+      desc: "Ich zeichne auf, wie Daten und Arbeitsschritte künftig laufen sollen: welche Programme zusammenarbeiten und wo KI einen Schritt übernimmt, etwa beim Vorsortieren von Anfragen oder beim ersten Entwurf eines Angebots. Am Ende steht ein Plan, den deine IT umsetzen kann.",
     },
     c: {
-      title: "Automatisierung",
-      desc: "Daten von einem Programm ins nächste kopieren, Rechnungen abtippen, Termine nachhalten: Das kann der Computer übernehmen. Dein Team klickt weniger und hat mehr Zeit für die eigentliche Arbeit.",
+      title: "Brücke zur IT",
+      desc: "Ich setze mich mit deiner IT oder deinem IT-Dienstleister an einen Tisch, übersetze zwischen dir und der Technik und prüfe Vorschläge und Angebote. So wird am Ende das gebaut, was du wirklich brauchst.",
     },
     d: {
       title: "Software nach Maß",
@@ -101,7 +101,7 @@ const messages = {
       contactK: "Ansprechpartner",
       contactV: "Nur ich, vom ersten Gespräch bis zur fertigen Lösung",
       focusK: "Schwerpunkte",
-      focusV: "KI-Check · KI-Assistent · Automatisierung · Software nach Maß",
+      focusV: "KI-Check · Abläufe planen · Brücke zur IT · Software nach Maß",
       basedInK: "Standort",
       basedInV: "Köln · vor Ort oder per Video",
       languagesK: "Sprachen",

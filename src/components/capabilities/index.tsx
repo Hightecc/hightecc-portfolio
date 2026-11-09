@@ -14,8 +14,8 @@ import styles from "./capabilities.module.css";
 
 const capabilities = [
   { key: "a", image: orientierung },
-  { key: "b", image: integration },
-  { key: "c", image: automation },
+  { key: "b", image: automation },
+  { key: "c", image: integration },
   { key: "d", image: web },
 ] as const;
 

@@ -10,9 +10,9 @@ const messages: MessageShape = {
   },
   metadata: {
     home: {
-      title: "Hightecc · AI consulting and implementation for SMEs in Cologne",
+      title: "Hightecc · AI consulting and custom software for SMEs in Cologne",
       description:
-        "Basile Bong works out where AI can save your business time and builds the tools to do it. For small and mid-sized businesses without their own IT department.",
+        "Basile Bong works out where AI can save your business time, plans the solution with your IT and builds custom software. For small and mid-sized businesses.",
     },
     impressum: {
       title: "Legal notice · Hightecc",
@@ -28,7 +28,7 @@ const messages: MessageShape = {
       line1: "Put AI to work",
       line2: "where it <amp>actually</amp> helps.",
     },
-    sub: "I'm Basile, a consultant and developer in Cologne. I work out where your business loses time, whether that's enquiries, quotes or paperwork, and <strong>build the tool that takes that work off your hands</strong>. For businesses without their own IT department.",
+    sub: "I'm Basile, a consultant and developer in Cologne. I work out where your business loses time, whether that's enquiries, quotes or paperwork, and <strong>plan with you and your IT how AI can take that work on</strong>. When no off-the-shelf program fits, I build it myself.",
     cta: {
       primary: "Arrange an intro call",
       secondary: "What I offer",
@@ -37,24 +37,24 @@ const messages: MessageShape = {
   statement: {
     before:
       "Everyone's talking about AI. Hardly anyone tells you what it can actually do for your business.",
-    after: "I will. And then I'll build what's worth building.",
+    after: "I will. And then we'll plan together how to make it happen.",
   },
   capabilities: {
     section: {
       title: "What I can <em>do for you.</em>",
-      lede: "From a first look at your business to a finished tool. Start with the check, or come straight to me with a specific task.",
+      lede: "From a first look at your business to a working solution. Start with the check, or come straight to me with a specific question.",
     },
     a: {
       title: "AI check",
       desc: "I look at how your business runs day to day and tell you honestly where AI saves time and where it doesn't. You come away knowing where to start and what you'll get out of it.",
     },
     b: {
-      title: "AI assistant",
-      desc: "An assistant that knows your documents: it prepares replies to customer enquiries, finds what you need in manuals and contracts or writes a first draft of your next quote. Nothing goes out without your say-so.",
+      title: "Workflow planning",
+      desc: "I map out how data and tasks should flow: which programs work together and where AI takes over a step, like sorting incoming enquiries or drafting a first quote. You end up with a plan your IT can build.",
     },
     c: {
-      title: "Automation",
-      desc: "Copying data from one program to another, keying in incoming invoices, sending appointment reminders: a computer can handle all of that. Your team spends less time clicking and more time on the real work.",
+      title: "A bridge to your IT",
+      desc: "I sit down with your IT team or IT provider, translate between you and the technical side, and review their proposals and quotes. That way, what gets built is what you actually need.",
     },
     d: {
       title: "Custom software",
@@ -96,7 +96,7 @@ const messages: MessageShape = {
       contactK: "Your contact",
       contactV: "Just me, from the first call to the finished tool",
       focusK: "Focus",
-      focusV: "AI check · AI assistant · Automation · Custom software",
+      focusV: "AI check · Workflow planning · A bridge to your IT · Custom software",
       basedInK: "Based in",
       basedInV: "Cologne · on site or by video call",
       languagesK: "Languages",
