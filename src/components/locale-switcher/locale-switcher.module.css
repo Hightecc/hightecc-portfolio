@@ -27,7 +27,7 @@
 
 .sep {
   padding: 0 6px;
-  color: var(--line);
+  color: var(--line-2);
 }
 
 .switcher[data-size="lg"] {
@@ -56,18 +56,18 @@
 }
 
 .btn:hover {
-  color: #fff;
+  color: var(--ink);
 }
 
 .btn:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
   border-radius: 2px;
-  color: #fff;
+  color: var(--ink);
 }
 
 .btn[data-active="true"] {
-  color: #fff;
+  color: var(--ink);
 }
 
 .btn[aria-disabled="true"] {

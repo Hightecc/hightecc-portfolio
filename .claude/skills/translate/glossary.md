@@ -1,6 +1,6 @@
 # Translation glossary
 
-Authoritative list of terms that must not be translated, terms that must be translated in a specific way, and terms with mandated capitalisation. The DE source is the canonical wording; EN deviates from a literal translation only when this list says so.
+Authoritative list of terms that must not be translated, terms that must be translated in a specific way, and terms with mandated capitalisation. DE defines meaning and claims. EN is written natively and may restructure sentences, swap idioms, and shift emphasis freely. Never translate word for word.
 
 ## Do not translate (DNT)
 
@@ -21,9 +21,6 @@ These appear unchanged in every locale.
 - `Diensteanbieter`
 - The full body of the German legal text in `src/components/impressum/index.tsx` (the `<dl><dt>…</dt><dd>…</dd></dl>` blocks). It stays in German on both `/de/impressum` and `/en/impressum`.
 
-### Already English in DE
-- `Let's talk`
-
 ### Languages list (always in this exact form)
 - `Deutsch · Français · English`
 
@@ -31,51 +28,36 @@ These appear unchanged in every locale.
 
 When the DE source contains the term on the left, the EN translation uses the term on the right. Capitalisation and punctuation as shown.
 
-| German                        | English                                |
-| ----------------------------- | -------------------------------------- |
-| `KI`                          | `AI`                                   |
-| `KI-Features`                 | `AI features`                          |
-| `KI-Integration`              | `AI integration`                       |
-| `KI-Orientierung`             | `AI assessment`                        |
-| `KI-Beratung`                 | `AI consulting`                        |
-| `KI-generiert`                | `AI-generated`                         |
-| `Erstgespräch`                | `intro call`                           |
-| `Branche` / `Branchen`        | `industry` / `industries`              |
-| `Arbeitsweise` (nav, section) | `Approach`                             |
-| `Leistungen` (nav, section)   | `Services`                             |
-| `Über mich` (nav)             | `About`                                |
-| `Produktion` (industry)       | `Manufacturing`                        |
-| `Logistik` (industry)         | `Logistics`                            |
-| `Arztpraxis` (industry)       | `Medical practice`                     |
-| `Landwirtschaft` (industry)   | `Agriculture`                          |
-| `Handwerk` (industry)         | `Trades`                               |
-| `Kanzlei` (industry)          | `Tax & law firms`                      |
-| `Patient·innen`               | `patients`                             |
-| `Mandant` / `Mandanten-`      | `client`                               |
-| `Köln`                        | `Cologne` (in body copy and meta)      |
-| `Köln, DE`                    | `Cologne, DE` (in body copy and meta)  |
-| `Softwareentwicklung`         | `software engineering`                 |
-| `Softwareentwickler`          | `software engineer`                    |
-| `Impressum` (page title)      | `Legal notice`                         |
-| `Impressum` (footer link)     | `Legal notice`                         |
-| `Anbieterkennzeichnung`       | `provider information`                 |
-| `Unternehmer·innen`           | `business owners`                      |
-| `Kund·innen-Projekten`        | `client projects`                      |
-| `Nutzer·innen`                | `users`                                |
-| `Big-Bang`                    | `Big Bang`                             |
-| `MVP`                         | `MVP` (unchanged, common term)         |
-| `Backlog`                     | `backlog`                              |
-| `Release-Pläne`               | `release plans`                        |
-| `Release-fähige Stücke`       | `release-ready slices`                 |
-| `Meilenstein`                 | `milestone`                            |
-| `Hypothesen`                  | `hypotheses`                           |
-| `Tech-Stack`                  | `tech stack`                           |
-| `Buzzwords`                   | `buzzwords`                            |
-| `Pitch-Deck-Sprache`          | `pitch-deck speak`                     |
+| German                          | English                                          |
+| ------------------------------- | ------------------------------------------------ |
+| `KI`                            | `AI`                                             |
+| `KI-Beratung`                   | `AI consulting`                                  |
+| `KI-Check`                      | `AI check`                                       |
+| `Software nach Maß`             | `custom software`                                |
+| `Abläufe planen`                | `Workflow planning`                              |
+| `Brücke zur IT`                 | `Bridge to your IT`                              |
+| `IT-Dienstleister`              | `IT provider`                                    |
+| `deine IT`                      | `your IT` / `your IT team` (never "IT department") |
+| `Betrieb`                       | `business` (not "company" or "operation")        |
+| `KMU`                           | `SMEs` (metadata only; body copy spells it out)  |
+| `Erstgespräch`                  | `intro call`                                     |
+| `Erstgespräch anfragen` (CTA)   | `Arrange an intro call` (no booking tool, never "Book") |
+| `per Video`                     | `by video call`                                  |
+| `Ablauf` (nav, section)         | `How it works`                                   |
+| `Leistungen` (nav, section)     | `Services`                                       |
+| `Über mich` (nav)               | `About`                                          |
+| `Schreib mir` (nav CTA)         | `Get in touch`                                   |
+| `Kundschaft`                    | `customers` (never "clientele")                  |
+| `Ansprechpartner` (About box)   | `Your contact`                                   |
+| `Köln`                          | `Cologne` (in body copy and meta)                |
+| `Köln, DE`                      | `Cologne, DE` (in body copy and meta)            |
+| `Impressum` (page title)        | `Legal notice`                                   |
+| `Impressum` (footer link)       | `Legal notice`                                   |
+| `Anbieterkennzeichnung`         | `provider information`                           |
 
 ### Address note
 
-In the impressum legal block (which stays German), the city is `Köln`. In ordinary body copy and metadata it becomes `Cologne` on the English locale. The hero meta block, the About credo, the footer brand suffix, and the metadata description all switch to `Cologne, DE` on `/en`.
+In the impressum legal block (which stays German), the city is `Köln`. In ordinary body copy and metadata it becomes `Cologne` on the English locale. The About box and the footer brand suffix switch to Cologne on `/en`.
 
 ## Rich-text tags
 
@@ -91,7 +73,9 @@ If a translation needs to move the emphasis to a different word for it to sound 
 ## Voice and register
 
 - Address the reader as informal "you" in English (matches `du` in DE).
-- Use straightforward, declarative sentences. Match the DE rhythm of short clauses.
+- Use straightforward, declarative sentences. Short clauses, but follow English rhythm, not the German sentence structure.
+- Write for a non-technical small-business owner. No IT jargon where an everyday word exists.
+- No gendered forms in DE (`Kund·innen`, `Unternehmer·innen`). Use neutral words like `Kundschaft`, `Team`, `Betrieb`.
 - Avoid corporate "we". The site is a single freelancer (Basile).
 - Avoid marketing buzzwords: "synergy", "leverage", "best-in-class", "cutting-edge", "world-class", "next-gen", "AI-powered". These don't appear in the DE source and must not appear in the EN translation.
 - **Never use em dashes (`—`)**. Brand decision. Split into two sentences with a period instead, or use a comma, colon, or parentheses depending on what fits the rhythm. Middle dots (`·`) and arrows (`→`, `↓`) are still fine.
@@ -99,7 +83,8 @@ If a translation needs to move the emphasis to a different word for it to sound 
 ## Punctuation
 
 - The DE source uses German double-low-9 quotation marks (`„…"`). In EN, switch to straight `"…"` or English curly `"…"`. Pick one style per string and be consistent.
-- Apostrophes: prefer the typewriter `'` to keep CSS modules happy. Curly `'` is acceptable if the surrounding string also uses curly quotes.
+- Apostrophes: use the typewriter `'` everywhere, in both locales.
+- Lists: British English, no Oxford comma.
 - Don't add or remove final periods compared to the DE source unless the English sentence structure genuinely demands it.
 
 ## When this glossary is silent

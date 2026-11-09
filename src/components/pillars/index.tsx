@@ -2,19 +2,18 @@ import Image from "next/image";
 
 import { getMessages, getTranslations } from "next-intl/server";
 
-import business from "@/assets/imagery/motion-business.jpg";
-import essenz from "@/assets/imagery/motion-essenz.jpg";
-import kommunikation from "@/assets/imagery/motion-kommunikation.jpg";
-import { ImageCredit } from "@/components/image-credit";
+import grow from "@/assets/imagery/riso-grow.jpg";
+import listen from "@/assets/imagery/riso-listen.jpg";
+import small from "@/assets/imagery/riso-small.jpg";
 import { Col, Container, Row } from "@/components/ui/grid";
 
 import { SectionHead } from "../section-head";
 import styles from "./pillars.module.css";
 
 const pillars = [
-  { key: "one", image: kommunikation },
-  { key: "two", image: essenz },
-  { key: "three", image: business },
+  { key: "one", image: listen },
+  { key: "two", image: small },
+  { key: "three", image: grow },
 ] as const;
 
 export async function Pillars() {
@@ -35,15 +34,16 @@ export async function Pillars() {
           {pillars.map(({ key, image }) => (
             <Col key={key} span={12} md={4} className={styles.cell}>
               <article className={styles.pillar}>
-                <Image
-                  src={image}
-                  alt=""
-                  fill
-                  sizes="(min-width: 720px) 33vw, 100vw"
-                  placeholder="blur"
-                  className={styles.img}
-                />
-                <ImageCredit position="top" />
+                <div className={styles.media}>
+                  <Image
+                    src={image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 720px) 33vw, 100vw"
+                    placeholder="blur"
+                    className={styles.img}
+                  />
+                </div>
                 <div className={styles.content}>
                   <h3 className={styles.title}>
                     {t.rich(`${key}.title`, {

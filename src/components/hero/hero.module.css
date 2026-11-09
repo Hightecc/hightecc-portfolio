@@ -3,9 +3,7 @@
   padding: 148px 28px 0;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(244, 214, 160, 0.1), transparent 70%),
-    var(--background);
+  background: var(--background);
 }
 
 .axis {
@@ -32,7 +30,7 @@
 }
 
 .amp {
-  color: var(--threshold);
+  color: var(--accent-ink);
   font-style: italic;
 }
 
@@ -58,37 +56,17 @@
   margin-top: 8px;
 }
 
-.plumb {
-  width: 1px;
-  height: 72px;
-  margin-top: 16px;
-  background: linear-gradient(to bottom, transparent, var(--threshold));
-  box-shadow: 0 0 12px 1px var(--threshold-glow);
-}
-
 .window {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 9;
+  margin-top: 56px;
+  border: 1px solid var(--line);
   border-radius: var(--radius-card);
   overflow: hidden;
-  isolation: isolate;
-  background: var(--surface);
-  box-shadow: 0 -1px 0 0 rgba(244, 230, 204, 0.18);
 }
 
 .img {
   object-fit: cover;
-}
-
-.window::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.1;
-  mix-blend-mode: overlay;
-  background-image: var(--grain);
-  background-size: 240px 240px;
 }
 
 @media (max-width: 720px) {
@@ -104,14 +82,9 @@
     display: inline;
   }
 
-  .plumb {
-    height: 48px;
-  }
-
   .window {
-    aspect-ratio: 4 / 5;
-    margin: 0 -16px;
-    border-radius: 0;
+    aspect-ratio: 4 / 3;
+    margin-top: 40px;
   }
 
   .img {
