@@ -1,10 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import heroImage from "@/assets/imagery/riso-werkstatt.jpg";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
 
@@ -46,23 +44,12 @@ export async function Hero() {
             </div>
           </Col>
         </Row>
-
-        <Row>
-          <Col span={12} md={10} mdStart={2}>
-            <div className={styles.window}>
-              <Image
-                src={heroImage}
-                alt=""
-                fill
-                sizes="(min-width: 1336px) 1067px, (min-width: 720px) 83vw, 100vw"
-                placeholder="blur"
-                fetchPriority="high"
-                className={styles.img}
-              />
-            </div>
-          </Col>
-        </Row>
       </Container>
+      <div className={styles.horizon} aria-hidden>
+        <span className={styles.halo} />
+        <span className={styles.grain} />
+        <span className={styles.planet} />
+      </div>
     </header>
   );
 }
