@@ -42,7 +42,7 @@ function getAssets(): Promise<Assets> {
     const [sans, display, photo] = await Promise.all([
       readFile(path.join(ASSETS_DIR, "fonts/inter-400.woff")),
       readFile(path.join(ASSETS_DIR, "fonts/inter-tight-300.woff")),
-      readFile(path.join(ASSETS_DIR, "imagery/riso-werkstatt.jpg")),
+      readFile(path.join(ASSETS_DIR, "imagery/glass-contact.jpg")),
     ]);
     return {
       sans,
@@ -163,7 +163,7 @@ function renderOgImage(headline: Segment[], description: string, assets: Assets)
           alt=""
           width={464}
           height={534}
-          style={{ objectFit: "cover", objectPosition: "45% center" }}
+          style={{ objectFit: "cover", objectPosition: "center" }}
         />
       </div>
     </div>,

@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
+import glassHero from "@/assets/imagery/glass-hero.jpg";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
 
@@ -45,10 +47,17 @@ export async function Hero() {
           </Col>
         </Row>
       </Container>
-      <div className={styles.horizon} aria-hidden>
-        <span className={styles.halo} />
-        <span className={styles.grain} />
-        <span className={styles.planet} />
+      <div className={styles.stage}>
+        <Image
+          src={glassHero}
+          alt=""
+          fill
+          sizes="(min-width: 1440px) 1440px, 100vw"
+          placeholder="blur"
+          fetchPriority="high"
+          className={styles.img}
+        />
+        <span className={styles.grain} aria-hidden />
       </div>
     </header>
   );

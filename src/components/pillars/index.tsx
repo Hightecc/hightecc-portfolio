@@ -2,9 +2,9 @@ import Image from "next/image";
 
 import { getMessages, getTranslations } from "next-intl/server";
 
-import grow from "@/assets/imagery/riso-grow.jpg";
-import listen from "@/assets/imagery/riso-listen.jpg";
-import small from "@/assets/imagery/riso-small.jpg";
+import grow from "@/assets/imagery/glass-grow.jpg";
+import listen from "@/assets/imagery/glass-listen.jpg";
+import small from "@/assets/imagery/glass-small.jpg";
 import { Col, Container, Row } from "@/components/ui/grid";
 
 import { SectionHead } from "../section-head";

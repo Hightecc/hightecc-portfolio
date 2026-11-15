@@ -65,6 +65,16 @@
   min-height: 360px;
 }
 
+.window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain-ink);
+  background-size: 220px 220px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .img {
   object-fit: cover;
 }
@@ -86,9 +96,5 @@
   .window {
     aspect-ratio: 4 / 5;
     min-height: 0;
-  }
-
-  .img {
-    object-position: 55% center;
   }
 }

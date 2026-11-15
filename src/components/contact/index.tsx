@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ArrowRight, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import kontakt from "@/assets/imagery/riso-kontakt.jpg";
+import kontakt from "@/assets/imagery/glass-contact.jpg";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/grid";
 import { site } from "@/lib/site";
@@ -43,7 +43,7 @@ export async function Contact() {
           <div className={styles.window}>
             <Image
               src={kontakt}
-              alt={t("alt")}
+              alt=""
               fill
               sizes="(min-width: 720px) 60vw, 100vw"
               placeholder="blur"

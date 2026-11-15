@@ -2,10 +2,10 @@ import Image from "next/image";
 
 import { getTranslations } from "next-intl/server";
 
-import bridge from "@/assets/imagery/riso-bridge.jpg";
-import check from "@/assets/imagery/riso-check.jpg";
-import flows from "@/assets/imagery/riso-flows.jpg";
-import software from "@/assets/imagery/riso-software.jpg";
+import bridge from "@/assets/imagery/glass-bridge.jpg";
+import check from "@/assets/imagery/glass-check.jpg";
+import flows from "@/assets/imagery/glass-flows.jpg";
+import software from "@/assets/imagery/glass-software.jpg";
 import { Col, Container, Row } from "@/components/ui/grid";
 
 import { SectionHead } from "../section-head";

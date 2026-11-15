@@ -61,64 +61,28 @@
   margin-top: 8px;
 }
 
-.horizon {
-  --d: max(1700px, 130vw);
-  --h: clamp(340px, 40vw, 580px);
-  --lift: 160px;
+.stage {
   position: relative;
-  z-index: 0;
-  height: calc(var(--h) + var(--lift));
-  margin: calc(24px - var(--lift)) -28px 0;
-  isolation: isolate;
-  mask-image: linear-gradient(to bottom, #000 45%, transparent 96%);
+  max-width: 1440px;
+  aspect-ratio: 21 / 9;
+  margin: 8px auto 0;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 82%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
 }
 
-.halo,
-.grain,
-.planet {
-  position: absolute;
-  top: calc(var(--lift) + var(--h) * 0.3 - var(--d) * 0.08);
-  left: 50%;
-  width: var(--d);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  transform: translateX(-50%);
-}
-
-.halo {
-  background: radial-gradient(
-    circle closest-side,
-    transparent 0 79%,
-    var(--glow-orange) 82.5%,
-    var(--glow-peach) 86%,
-    color-mix(in srgb, var(--glow-mist) 85%, transparent) 90%,
-    color-mix(in srgb, var(--glow-teal) 35%, transparent) 94%,
-    transparent 100%
-  );
-  filter: blur(34px) saturate(1.25);
+.img {
+  object-fit: cover;
 }
 
 .grain {
+  position: absolute;
+  inset: 0;
   background-image: var(--grain-ink);
   background-size: 220px 220px;
-  opacity: 0.35;
-  mask-image: radial-gradient(
-    circle closest-side,
-    transparent 0 80%,
-    #000 85%,
-    #000 92%,
-    transparent 100%
-  );
-}
-
-.planet {
-  background: radial-gradient(
-    circle closest-side,
-    var(--background) 0 80%,
-    color-mix(in srgb, var(--background) 90%, var(--glow-peach)) 83.4%,
-    transparent 84.2%
-  );
-  filter: blur(2px);
+  opacity: 0.32;
+  pointer-events: none;
 }
 
 @media (max-width: 720px) {
@@ -134,10 +98,8 @@
     display: inline;
   }
 
-  .horizon {
-    --d: 1100px;
-    --h: 280px;
-    --lift: 96px;
-    margin: calc(8px - var(--lift)) -16px 0;
+  .stage {
+    aspect-ratio: 4 / 3;
+    margin: 16px -16px 0;
   }
 }
