@@ -4,8 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import thresholdMetalworks from "@/assets/imagery/threshold-metalworks.jpg";
-import { ImageCredit } from "@/components/image-credit";
+import glassHero from "@/assets/imagery/glass-hero.jpg";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
 
@@ -41,27 +40,25 @@ export async function Hero() {
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
-                  <Link href="#work">{t("cta.secondary")}</Link>
+                  <Link href="#what">{t("cta.secondary")}</Link>
                 </Button>
               </div>
-              <span className={styles.plumb} aria-hidden />
             </div>
           </Col>
         </Row>
-
-        <div className={styles.window}>
-          <Image
-            src={thresholdMetalworks}
-            alt=""
-            fill
-            sizes="(min-width: 1336px) 1280px, 100vw"
-            placeholder="blur"
-            fetchPriority="high"
-            className={styles.img}
-          />
-          <ImageCredit />
-        </div>
       </Container>
+      <div className={styles.stage}>
+        <Image
+          src={glassHero}
+          alt=""
+          fill
+          sizes="(min-width: 1440px) 1440px, 100vw"
+          placeholder="blur"
+          fetchPriority="high"
+          className={styles.img}
+        />
+        <span className={styles.grain} aria-hidden />
+      </div>
     </header>
   );
 }

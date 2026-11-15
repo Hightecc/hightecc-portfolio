@@ -1,68 +1,40 @@
 # Imagery
 
-Two photographic series carry the brand. Both are AI-generated.
+Every image on the site belongs to one series: abstract frosted-glass forms on white, lit from within in the brand orange with cool mint refractions, under a fine film grain. No people, no scenes, no text. The forms hint at the topic of each section (a ring for the check, an arch between two spheres for the IT bridge) without illustrating it literally.
 
-1. **The threshold at first light** (hero, contact): one person crossing a threshold into light, on the central axis of a symmetric composition. The image never says "AI". It shows the moment of stepping into something new.
-2. **Work in motion** (card backgrounds): people at work in German companies, photographed with a slow shutter so they streak into warm trails of light. These sit behind text, so they stay soft and abstract.
+## Style
 
-## Casting
+- **Material:** soft frosted glass that glows from within. Smooth gradients, gentle soft shadows, lots of white space.
+- **Colours:** warm orange `#FF6B35`, soft peach and mint teal `#1F8A84`. Everything else white.
+- **Grain:** the model adds almost none, so the site lays a fine dark noise texture (`--grain-ink` in `globals.css`) over every image at about 30% opacity. Keep it there rather than baking it into the files.
+- **No meaning:** no text, letters, numbers, logos, icons, symbols or people.
 
-Germany's workforce as it actually looks in a typical Mittelstand company, not a stock-photo default and not a checklist.
+## Generating
 
-- **Gender:** a natural mix; never only men.
-- **Origin:** mostly white. People of other backgrounds appear the way they would in a real team, as one colleague among several, not one of each group per image. Across the series, roughly 70% white.
-- **Age:** apprentices to people near retirement.
-- **Prompting:** describe the team plainly ("colleagues, a typical German team"). Name a background for at most one person per image. Listing every person's ethnicity produces a staged, checklist look.
+Model: `gemini-3.1-flash-lite-image`, the cheapest Gemini image model. It only supports `imageSize` 1K, which is enough for soft glass. Generate one image per motif and only re-roll the ones that fail review.
 
-## Mood
+Every prompt starts with the base line:
 
-Upbeat, never lonely. First light (blue dawn outside, warm light just switched on inside) works, as long as the scene is alive: colleagues already working inside, others arriving outside, people greeting each other, holding a door, talking. Show people in profile or three-quarter view, upright and engaged, rather than a single figure from behind.
+> Abstract 3D render, minimal and premium. Soft frosted-glass sculptural forms on a pure white background, lit so they glow softly from within. Colours only: warm orange #FF6B35, soft peach, and a cool mint teal #1F8A84 refracting through the glass; everything else white. Smooth soft gradients, gentle soft shadow, fine film grain. No text, no letters, no numbers, no logos, no people, no symbols, no icons.
 
-## Threshold rules
+Then the motif. Cards are 16:9 (the card shows a centred strip), the hero is 21:9 and the contact image 4:5.
 
-1. **Sunrise.** Low, warm sunlight; the lit side glows golden.
-2. **One threshold, one person, mid-step.** A physical threshold (strip curtain, door, gate). The light changes at the threshold.
-3. **Strict symmetry.** Frontal, one-point composition, threshold centered, both halves mirrored. Calm and precise.
-4. **Seen from behind or the side.** Nobody looks at the camera.
-5. **Room for type.** Calm negative space (usually the ground) where headlines sit without covering the person.
+## Post-processing
 
-## Motion rules
-
-1. **Slow shutter, panning.** Strong horizontal motion blur; one area only slightly sharper.
-2. **Warm morning light** through windows, bright interiors.
-3. **Readable behind text.** Cards add a dark gradient from the bottom, so keep the lower half calm.
-
-## Both series
-
-- **No text.** No logos, brand marks, licence plates, readable signs, or lettering on clothing. Check every image for invented lettering before shipping; edit it out with the same model if needed.
-- **Style line,** appended to every prompt:
-
-> Shot on Fujifilm with a Pro 400H color film look: warm golden morning sunlight, airy and optimistic, soft natural contrast, gentle organic film grain, documentary photography, unstaged, set in Germany, no text, no logos, no lettering on clothing, no readable signs, nobody looking at the camera.
-
-- **Motion prefix,** prepended for the card series:
-
-> Photographed with a slow shutter speed while panning, strong horizontal motion blur, people and objects streak into soft trails of color and light, abstract enough to sit behind text, with one area only slightly sharper.
-
-Model: `gemini-3-pro-image`, `imageSize` 2K; 16:9 for full-bleed and wide cards, 4:5 for tall cards.
+The model renders on a light grey studio backdrop. Take the median colour of the image edges and scale each channel so that colour becomes white (`pixel * 255 / backdrop`, clipped). Save as JPEG q86 at the generated size; the files come out around 35 KB.
 
 ## Files
 
-All in `src/assets/imagery/`, resized with Lanczos and saved as JPEG q82.
+All in `src/assets/imagery/`.
 
-| File | Use | Width |
+| File | Use | Motif |
 | ---- | --- | ----- |
-| `threshold-metalworks.jpg` | Hero: worker through a strip curtain at sunrise | 2400 |
-| `threshold-kontakt.jpg` | Contact: woman stepping out of a lobby into spring sunlight | 2400 |
-| `motion-kommunikation.jpg` | Approach card 1: colleagues talking at a workbench | 1200 |
-| `motion-essenz.jpg` | Approach card 2: hands assembling parts | 1200 |
-| `motion-business.jpg` | Approach card 3: walking past a planning wall | 1200 |
-| `motion-orientierung.jpg` | Services card A: walking through a production hall with a tablet | 1600 |
-| `motion-integration.jpg` | Services card B: office team at screens | 1600 |
-| `motion-automation.jpg` | Services card C: parcels on a conveyor | 1600 |
-| `motion-web.jpg` | Services card D: phone in a train station concourse | 1600 |
-
-The hero was made in two steps: the original blue-hour prompt below, then an edit to sunrise.
-
-## Hero prompt (image 1)
-
-> Strictly frontal, perfectly symmetrical one-point composition, camera low and further back, centered on the entrance of a German mid-sized metalworking hall at blue hour before sunrise in winter. The wide entrance opening with a heavy transparent PVC strip curtain sits in the UPPER HALF of the frame, exactly centered. The LOWER HALF of the frame is a wide, empty, frosted concrete yard in deep blue shadow, completely clear of objects, calm negative space. The facade left and right is dark blue and mirrored evenly. Behind the curtain, the hall's lights have just come on, warm golden-white light glowing through the strips and spilling a soft warm pool onto the frost just in front of the entrance. A worker in a dark work jacket, seen from behind, small in the frame, is caught mid-step exactly in the center as he pushes through the curtain with both hands, the strips parting around him, his back foot still outside on the blue frosted ground, his front foot in the warm light. Calm, precise, documentary, in the tradition of German typological architecture photography.
+| `glass-hero.jpg` | Hero (21:9, full width, edges masked into white) | A monumental frosted-glass ring rising from the bottom edge like a sunrise, glowing orange inside, mint at its edges, a soft warm halo |
+| `glass-contact.jpg` | Contact (4:5) and the link preview | A frosted glass prism splitting a beam of white light into orange and mint |
+| `glass-check.jpg` | Service: KI-Check | A smooth glass ring, like a lens, slightly tilted |
+| `glass-flows.jpg` | Service: Abläufe planen | Three rounded glass capsules joined by one flowing glass ribbon |
+| `glass-bridge.jpg` | Service: Brücke zur IT | An orange and a mint glass sphere connected by an arched glass bridge |
+| `glass-software.jpg` | Service: Software nach Maß | Three thin rounded glass panels, like floating screens, offset in depth |
+| `glass-listen.jpg` | Process 1: Erst zuhören | Two soft glass blobs overlapping like bubbles in conversation |
+| `glass-small.jpg` | Process 2: Klein anfangen | A small glass sphere next to an even smaller glass cube |
+| `glass-grow.jpg` | Process 3: Nur ausbauen | Four rounded glass blocks forming rising steps |

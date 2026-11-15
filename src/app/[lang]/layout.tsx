@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight } from "next/font/google";
+import { Instrument_Serif, Inter, Inter_Tight } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -21,6 +21,13 @@ const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
   weight: ["300", "400"],
+  style: ["normal", "italic"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
   style: ["normal", "italic"],
 });
 
@@ -66,7 +73,10 @@ export default async function LocaleLayout({
   const t = await getTranslations({ locale: lang, namespace: "a11y" });
 
   return (
-    <html lang={lang} className={`${inter.variable} ${interTight.variable}`}>
+    <html
+      lang={lang}
+      className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable}`}
+    >
       <body>
         <NextIntlClientProvider>
           <a href="#main" className="skip-link">

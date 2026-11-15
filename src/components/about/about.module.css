@@ -1,3 +1,7 @@
+.row {
+  align-items: center;
+}
+
 .narrative {
   display: flex;
   flex-direction: column;
@@ -17,7 +21,7 @@
 
 .lede em {
   font-style: normal;
-  color: var(--threshold);
+  color: var(--accent-ink);
 }
 
 .lede .ledeMuted {
