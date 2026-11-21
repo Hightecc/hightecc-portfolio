@@ -130,12 +130,17 @@ const raymarchFragment = /* glsl */ `
   }
 
   float map(vec3 p) {
-    float a = sdMotif(uFrom, p);
-    if (uFrom == uTo) return a;
-    float b = sdMotif(uTo, p);
-    float swell = sin(3.14159 * uMix);
+    float shape = sdMotif(uFrom, p);
+    float swell = 0.0;
+    if (uFrom != uTo) {
+      shape = mix(shape, sdMotif(uTo, p), uMix);
+      swell = sin(3.14159 * uMix);
+    }
+    float drift =
+      sin(p.x * 2.6 + uTime * 0.8) * sin(p.y * 2.2 - uTime * 0.6) * sin(p.z * 2.9 + uTime * 0.7) +
+      0.5 * sin(p.x * 4.3 - uTime * 1.1) * sin(p.y * 3.9 + uTime * 0.9) * sin(p.z * 4.6 - uTime * 0.5);
     float ripple = sin(p.x * 5.0 + uTime * 1.3) * sin(p.y * 4.0 - uTime) * sin(p.z * 6.0 + uTime * 0.7);
-    return mix(a, b, uMix) - swell * 0.05 + ripple * swell * 0.045;
+    return shape - swell * 0.05 + drift * 0.014 + ripple * swell * 0.045;
   }
 
   vec3 normalAt(vec3 p) {
@@ -334,14 +339,14 @@ function Morph({ onReady }: { onReady: () => void }) {
       const scale = (worldSize / 2) * fill;
       const spin = Math.sin(Math.PI * u) * 0.9;
 
-      scratch.position.set(wx, wy, 0);
+      scratch.position.set(wx, wy + Math.sin(t * 0.7) * worldSize * 0.012, 0);
       scratch.euler.set(
         0.12 + Math.sin(t * 0.4) * 0.05 - lean.y * 0.12 + spin * 0.3,
         Math.sin(t * 0.25) * 0.2 + lean.x * 0.2 + spin,
         spin * 0.2,
       );
       scratch.rotation.setFromEuler(scratch.euler);
-      scratch.scale.setScalar(scale);
+      scratch.scale.setScalar(scale * (1 + Math.sin(t * 0.9) * 0.012));
       scratch.matrix.compose(scratch.position, scratch.rotation, scratch.scale);
       scratch.orientation.makeRotationFromQuaternion(scratch.rotation);
       raymarch.uniforms.uRotation.value.setFromMatrix4(scratch.orientation);
