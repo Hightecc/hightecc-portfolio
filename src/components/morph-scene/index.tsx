@@ -129,7 +129,16 @@ const raymarchFragment = /* glsl */ `
     return sdFlows(p);
   }
 
+  vec3 sway(vec3 p) {
+    vec3 q = p;
+    q.x += sin(p.y * 1.8 + uTime * 0.9) * 0.07;
+    q.y += sin(p.z * 2.1 - uTime * 0.75 + p.x * 0.8) * 0.07;
+    q.z += sin(p.x * 1.6 + uTime * 0.6) * 0.06;
+    return q;
+  }
+
   float map(vec3 p) {
+    p = sway(p);
     float shape = sdMotif(uFrom, p);
     float swell = 0.0;
     if (uFrom != uTo) {
@@ -137,10 +146,10 @@ const raymarchFragment = /* glsl */ `
       swell = sin(3.14159 * uMix);
     }
     float drift =
-      sin(p.x * 2.6 + uTime * 0.8) * sin(p.y * 2.2 - uTime * 0.6) * sin(p.z * 2.9 + uTime * 0.7) +
-      0.5 * sin(p.x * 4.3 - uTime * 1.1) * sin(p.y * 3.9 + uTime * 0.9) * sin(p.z * 4.6 - uTime * 0.5);
+      sin(p.x * 1.9 + uTime * 0.7) * sin(p.y * 1.7 - uTime * 0.55) * sin(p.z * 2.1 + uTime * 0.6) +
+      0.4 * sin(p.x * 3.4 - uTime * 0.9) * sin(p.y * 3.1 + uTime * 0.8) * sin(p.z * 3.7 - uTime * 0.5);
     float ripple = sin(p.x * 5.0 + uTime * 1.3) * sin(p.y * 4.0 - uTime) * sin(p.z * 6.0 + uTime * 0.7);
-    return shape - swell * 0.05 + drift * 0.014 + ripple * swell * 0.045;
+    return shape - swell * 0.05 + drift * 0.024 + ripple * swell * 0.045;
   }
 
   vec3 normalAt(vec3 p) {
@@ -178,7 +187,7 @@ const raymarchFragment = /* glsl */ `
     float closest = 1e9;
     float tClosest = t;
     bool hit = false;
-    for (int i = 0; i < 120; i++) {
+    for (int i = 0; i < 140; i++) {
       vec3 p = ro + rd * t;
       float d = map(p);
       if (d < closest) {
@@ -189,7 +198,7 @@ const raymarchFragment = /* glsl */ `
         hit = true;
         break;
       }
-      t += d * 0.8;
+      t += d * 0.7;
       if (t > tEnd) break;
     }
 
