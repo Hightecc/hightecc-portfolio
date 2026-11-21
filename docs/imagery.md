@@ -12,7 +12,7 @@ The home page is one scroll-driven 3D film (`src/components/film-scene`, shapes 
 
 ## Chapters
 
-Every chapter marks where its motif sits with a `data-film-slot` element. The object follows those slots as you scroll. Between chapters it shrinks away inside a swirling cloud of orange, pink and violet dust that travels to the next slot, where the next motif grows back out of it.
+Every chapter marks where its motif sits with a `data-film-slot` element. The object follows those slots as you scroll. Between chapters it shrinks away inside a tilted three-armed spiral galaxy of dust, warm peach at the core and orange, pink and violet towards the rim, which travels to the next slot, where the next motif grows back out of it.
 
 | Slot | Chapter | Motif |
 | ---- | ------- | ----- |

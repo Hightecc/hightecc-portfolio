@@ -159,7 +159,9 @@ function useComposite() {
 }
 
 const dustVertex = /* glsl */ `
-  attribute vec3 aDirection;
+  attribute float aRadius;
+  attribute float aArm;
+  attribute vec3 aScatter;
   attribute float aSeed;
   uniform float uSpread;
   uniform float uTime;
@@ -169,19 +171,19 @@ const dustVertex = /* glsl */ `
   varying float vAlpha;
 
   void main() {
-    float spin = uTime * (0.4 + aSeed * 0.8) + aSeed * 40.0;
-    float reach = mix(0.15, 1.0, uSpread) * (0.55 + 0.45 * fract(aSeed * 7.13));
-    vec3 p = aDirection * reach;
-    float c = cos(spin * uSpread);
-    float s = sin(spin * uSpread);
-    p.xz = mat2(c, -s, s, c) * p.xz;
-    p.y *= mix(1.0, 0.65, uSpread);
+    float radius = aRadius * mix(0.08, 1.0, uSpread);
+    float orbit = uTime * 0.25;
+    float angle = aArm + aRadius * 5.0 + orbit + (1.0 - uSpread) * 4.0;
+    vec3 p = vec3(cos(angle) * radius, 0.0, sin(angle) * radius);
+    p += aScatter * mix(0.15, 1.0, uSpread);
     vec4 view = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * view;
-    gl_PointSize = uSize * (0.4 + fract(aSeed * 3.7)) / -view.z;
-    float pick = fract(aSeed * 13.7) * 3.0;
-    vColor = mix(uColors[int(pick)], uColors[int(pick) + 1], fract(pick));
-    vAlpha = 0.35 + 0.65 * fract(aSeed * 11.1);
+    float core = 1.0 - smoothstep(0.0, 0.35, aRadius);
+    gl_PointSize = uSize * (0.35 + fract(aSeed * 3.7) + core * 0.3) / -view.z;
+    float along = clamp(aRadius * 3.0 + (fract(aSeed * 13.7) - 0.5) * 0.8, 0.0, 2.999);
+    vColor = mix(uColors[int(along)], uColors[int(along) + 1], fract(along));
+    vColor = mix(vColor, vec3(1.0, 0.92, 0.86), core * 0.35);
+    vAlpha = (0.35 + 0.65 * fract(aSeed * 11.1)) * (0.7 + core * 0.3);
   }
 `;
 
@@ -197,21 +199,33 @@ const dustFragment = /* glsl */ `
   }
 `;
 
+const GALAXY_ARMS = 3;
+
+function scatter(radius: number, amount: number) {
+  const sign = Math.random() < 0.5 ? -1 : 1;
+  return Math.random() ** 2.4 * sign * amount * (0.3 + radius);
+}
+
 function useDust(count: number) {
   return useMemo(() => {
-    const directions = new Float32Array(count * 3);
+    const radii = new Float32Array(count);
+    const arms = new Float32Array(count);
+    const offsets = new Float32Array(count * 3);
     const seeds = new Float32Array(count);
     for (let i = 0; i < count; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      directions[i * 3] = Math.sin(phi) * Math.cos(theta);
-      directions[i * 3 + 1] = Math.cos(phi);
-      directions[i * 3 + 2] = Math.sin(phi) * Math.sin(theta);
+      const radius = 0.04 + Math.random() ** 1.3 * 0.96;
+      radii[i] = radius;
+      arms[i] = ((i % GALAXY_ARMS) / GALAXY_ARMS) * Math.PI * 2;
+      offsets[i * 3] = scatter(radius, 0.2);
+      offsets[i * 3 + 1] = scatter(radius, 0.14);
+      offsets[i * 3 + 2] = scatter(radius, 0.2);
       seeds[i] = Math.random();
     }
     const geometry = new BufferGeometry();
     geometry.setAttribute("position", new BufferAttribute(new Float32Array(count * 3), 3));
-    geometry.setAttribute("aDirection", new BufferAttribute(directions, 3));
+    geometry.setAttribute("aRadius", new BufferAttribute(radii, 1));
+    geometry.setAttribute("aArm", new BufferAttribute(arms, 1));
+    geometry.setAttribute("aScatter", new BufferAttribute(offsets, 3));
     geometry.setAttribute("aSeed", new BufferAttribute(seeds, 1));
     const uniforms = {
       uSpread: { value: 0 },
@@ -245,7 +259,7 @@ function Film({ onReady }: { onReady: () => void }) {
   const motifGroups = useRef<Partial<Record<Motif, Group>>>({});
   const prismBeams = useRef<Group>(null);
   const dustCloud = useRef<Points>(null);
-  const dust = useDust(1600);
+  const dust = useDust(2400);
   const slots = useRef<Slot[]>([]);
   const pointer = useRef({ x: 0, y: 0 });
   const leaning = useRef({ x: 0, y: 0 });
@@ -370,7 +384,8 @@ function Film({ onReady }: { onReady: () => void }) {
         const spread = from === to ? 0 : Math.sin(Math.PI * u);
         dustCloud.current.visible = spread > 0.001;
         dustCloud.current.position.set(wx, wy, 0.4);
-        dustCloud.current.scale.setScalar(worldSize * 0.55);
+        dustCloud.current.scale.setScalar(worldSize * 0.62);
+        dustCloud.current.rotation.set(0.85 + Math.sin(t * 0.3) * 0.12, t * 0.05, 0.35 - u * 0.5);
         dust.uniforms.uSpread.value = spread;
         dust.uniforms.uTime.value = t;
         dust.uniforms.uSize.value = 80 * dpr * (size.height / 900);
