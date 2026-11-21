@@ -25,7 +25,7 @@
   --destructive: oklch(0.65 0.22 27);
   --border: #24242c;
   --input: #2e2e37;
-  --ring: #a78bfa;
+  --ring: #ff7a45;
   --radius: 0.75rem;
 
   --ink: #f3f1f6;
@@ -43,15 +43,13 @@
   --glow-mist: #a9ddd2;
   --holo-violet: #8b5cf6;
   --holo-magenta: #e04fd4;
-  --holo-blue: #3b82f6;
-  --holo-cyan: #5eead4;
   --holo: linear-gradient(
     100deg,
-    var(--holo-cyan),
-    var(--holo-blue) 30%,
-    var(--holo-violet) 55%,
-    var(--holo-magenta) 78%,
-    var(--brand)
+    var(--glow-peach),
+    var(--brand) 35%,
+    #ff4d1f 60%,
+    var(--holo-magenta) 88%,
+    var(--holo-violet)
   );
   --seam-h-soft: linear-gradient(to right, transparent, var(--line-2) 50%, transparent);
   --radius-card: 18px;

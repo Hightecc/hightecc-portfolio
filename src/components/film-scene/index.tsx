@@ -29,15 +29,17 @@ const WORLD_HEIGHT = 2 * CAMERA_Z * Math.tan(MathUtils.degToRad(FOV / 2));
 
 const BACKGROUND = "#07070a";
 const ORANGE = "#ff6b35";
-const VIOLET = "#8b5cf6";
+const EMBER = "#ff4d1f";
+const PEACH = "#ffb48f";
+const CORAL = "#ff7a5c";
 const MAGENTA = "#e04fd4";
+const VIOLET = "#8b5cf6";
 const BLUE = "#3b82f6";
-const CYAN = "#5eead4";
 
 type Framing = { fill: number; offsetY: number; tilt: [number, number, number] };
 
 const framing: Record<Motif, Framing> = {
-  ring: { fill: 0.72, offsetY: 0.02, tilt: [0.1, 0, 0] },
+  mark: { fill: 0.72, offsetY: 0.06, tilt: [0.15, 0, 0] },
   lens: { fill: 0.78, offsetY: 0, tilt: [0, 0, 0] },
   flows: { fill: 0.74, offsetY: 0, tilt: [0.2, 0, 0] },
   bridge: { fill: 0.78, offsetY: 0.04, tilt: [0.15, 0, 0] },
@@ -45,7 +47,7 @@ const framing: Record<Motif, Framing> = {
   listen: { fill: 0.86, offsetY: 0, tilt: [0, 0, 0] },
   small: { fill: 0.9, offsetY: 0, tilt: [0.15, 0, 0] },
   grow: { fill: 0.8, offsetY: 0, tilt: [0, 0, 0] },
-  prism: { fill: 0.72, offsetY: 0, tilt: [0.35, 0.55, 0] },
+  prism: { fill: 0.74, offsetY: 0, tilt: [0.08, 0.42, 0] },
 };
 
 const passVertex = /* glsl */ `
@@ -172,11 +174,11 @@ function Film({ onReady }: { onReady: () => void }) {
 
   const fx = useMemo(
     () => ({
-      warm: fxMaterial(glowFragment, VIOLET, BLUE),
-      cool: fxMaterial(glowFragment, MAGENTA, ORANGE),
-      leak: fxMaterial(leakFragment, VIOLET, MAGENTA),
+      warm: fxMaterial(glowFragment, ORANGE, EMBER),
+      cool: fxMaterial(glowFragment, CORAL, MAGENTA),
+      leak: fxMaterial(leakFragment, EMBER, ORANGE),
       beamIn: fxMaterial(beamFragment, "#ffffff"),
-      spectrum: [ORANGE, MAGENTA, VIOLET, BLUE, CYAN].map((color) =>
+      spectrum: [EMBER, ORANGE, MAGENTA, VIOLET, BLUE].map((color) =>
         fxMaterial(beamFragment, color),
       ),
     }),
@@ -297,8 +299,8 @@ function Film({ onReady }: { onReady: () => void }) {
       warmGlow.current?.scale.setScalar(worldSize * 1.5);
       coolGlow.current?.position.set(wx + worldSize * 0.42, anchorY + worldSize * 0.3, -3.5);
       coolGlow.current?.scale.setScalar(worldSize * 1.1);
-      fx.warm.intensity.value = 0.42 * glow;
-      fx.cool.intensity.value = 0.3 * glow;
+      fx.warm.intensity.value = 0.5 * glow;
+      fx.cool.intensity.value = 0.22 * glow;
 
       const prism = motifGroups.current.prism;
       const beams = prismBeams.current;
@@ -341,15 +343,15 @@ function Film({ onReady }: { onReady: () => void }) {
         <planeGeometry args={[1, 1]} />
       </mesh>
       <group ref={prismBeams} visible={false}>
-        <mesh material={fx.beamIn.material} position={[-1.9, -0.05, 0]} rotation={[0, 0, 0.08]}>
+        <mesh material={fx.beamIn.material} position={[-1.75, 0.02, 0]} rotation={[0, 0, 0.1]}>
           <planeGeometry args={[2.8, 0.12]} />
         </mesh>
         {fx.spectrum.map((beam, i) => (
           <mesh
             key={beam.material.uuid}
             material={beam.material}
-            position={[1.75, 0.2 - i * 0.13, 0]}
-            rotation={[0, 0, 0.02 - i * 0.07]}
+            position={[1.7, 0.08 - i * 0.12, 0]}
+            rotation={[0, 0, -0.06 - i * 0.07]}
           >
             <planeGeometry args={[2.6, 0.16]} />
           </mesh>
@@ -379,21 +381,21 @@ function Film({ onReady }: { onReady: () => void }) {
 }
 
 const domeFragment = /* glsl */ `
-  uniform vec3 uViolet;
-  uniform vec3 uMagenta;
-  uniform vec3 uBlue;
-  uniform vec3 uCyan;
   uniform vec3 uOrange;
+  uniform vec3 uPeach;
+  uniform vec3 uCoral;
+  uniform vec3 uMagenta;
+  uniform vec3 uViolet;
   varying vec3 vDirection;
   void main() {
     vec3 d = normalize(vDirection);
     float angle = atan(d.z, d.x) / 6.28318 + 0.5;
-    vec3 hue = mix(uViolet, uMagenta, smoothstep(0.0, 0.25, angle));
-    hue = mix(hue, uOrange, smoothstep(0.25, 0.42, angle));
-    hue = mix(hue, uMagenta, smoothstep(0.42, 0.55, angle));
-    hue = mix(hue, uBlue, smoothstep(0.55, 0.75, angle));
-    hue = mix(hue, uCyan, smoothstep(0.75, 0.88, angle));
-    hue = mix(hue, uViolet, smoothstep(0.88, 1.0, angle));
+    vec3 hue = mix(uOrange, uPeach, smoothstep(0.0, 0.18, angle));
+    hue = mix(hue, uOrange, smoothstep(0.18, 0.36, angle));
+    hue = mix(hue, uMagenta, smoothstep(0.36, 0.5, angle));
+    hue = mix(hue, uCoral, smoothstep(0.5, 0.62, angle));
+    hue = mix(hue, uViolet, smoothstep(0.66, 0.74, angle) * (1.0 - smoothstep(0.74, 0.82, angle)));
+    hue = mix(hue, uOrange, smoothstep(0.82, 1.0, angle));
     float band = 0.35 + 0.65 * smoothstep(-0.7, 0.5, d.y);
     gl_FragColor = vec4(hue * band * 1.6, 1.0);
   }
@@ -412,11 +414,11 @@ function Lights() {
     () =>
       new ShaderMaterial({
         uniforms: {
-          uViolet: { value: new Color(VIOLET) },
-          uMagenta: { value: new Color(MAGENTA) },
-          uBlue: { value: new Color(BLUE) },
-          uCyan: { value: new Color(CYAN) },
           uOrange: { value: new Color(ORANGE) },
+          uPeach: { value: new Color(PEACH) },
+          uCoral: { value: new Color(CORAL) },
+          uMagenta: { value: new Color(MAGENTA) },
+          uViolet: { value: new Color(VIOLET) },
         },
         vertexShader: domeVertex,
         fragmentShader: domeFragment,

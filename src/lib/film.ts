@@ -1,5 +1,5 @@
 export const motifs = [
-  "ring",
+  "mark",
   "lens",
   "flows",
   "bridge",

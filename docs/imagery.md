@@ -5,7 +5,7 @@ The home page is one scroll-driven 3D film (`src/components/film-scene`, shapes 
 ## Style
 
 - **Materials:** liquid chrome (`MeshDistortMaterial`, fully metallic, iridescent), dispersive glass with strong chromatic aberration for links, lens and prism, and inflated pearlescent forms (rounded panels, capsule arrow).
-- **Colours:** violet `#8b5cf6`, magenta `#e04fd4`, blue `#3b82f6`, cyan `#5eead4` and orange `#ff6b35`. They come from a gradient dome in the environment map, so the shapes reflect them rather than being painted with them. A violet to magenta light leak sits in the top right corner.
+- **Colours:** orange `#ff6b35` leads, with ember `#ff4d1f`, peach `#ffb48f` and coral `#ff7a5c` around it and magenta `#e04fd4` and a narrow band of violet `#8b5cf6` for the holographic shift. They come from a gradient dome in the environment map, so the shapes reflect them rather than being painted with them; the material tints stay near silver and peach. An orange light leak sits in the top right corner, and the glows behind each shape are orange first.
 - **Background:** near-black `#07070a`, the same as `--background`.
 - **Grain:** added in the film's final pass over the whole frame, slightly stronger on bright areas. Keep it there rather than in the materials.
 - **No meaning:** no text, letters, numbers, logos, icons, symbols or people.
@@ -16,15 +16,15 @@ Every chapter marks where its motif sits with a `data-film-slot` element. The ob
 
 | Slot | Chapter | Motif |
 | ---- | ------- | ----- |
-| `ring` | Hero | A thick liquid chrome torus |
+| `mark` | Hero | The two Cs of the logo mark in chrome, interlocked like an infinity sign |
 | `lens` | Service: KI-Check | A dispersive glass ring around a liquid disc, tilted like a lens |
 | `flows` | Service: Abläufe planen | Three interlocking glass chain links |
-| `bridge` | Service: Brücke zur IT | A rose and a blue liquid sphere joined by a chrome arch |
+| `bridge` | Service: Brücke zur IT | Two liquid spheres joined by a chrome arch |
 | `software` | Service: Software nach Maß | Three inflated rounded panels, offset in depth |
 | `listen` | Process 1: Erst zuhören | Two liquid blobs overlapping |
 | `small` | Process 2: Klein anfangen | A chrome sphere next to a small inflated cube |
 | `grow` | Process 3: Nur ausbauen | An inflated arrow pointing up and to the right |
-| `prism` | Contact | A glass prism splitting a white beam into a spectrum |
+| `prism` | Contact | A triangular glass prism splitting a white beam into a spectrum |
 
 ## Fallback images
 

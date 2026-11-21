@@ -9,16 +9,18 @@ import {
   RoundedBox,
 } from "@react-three/drei";
 import { CatmullRomCurve3, ExtrudeGeometry, Shape, Vector3 } from "three";
+import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 
+import { MARK_CENTER, MARK_OFFSET, MARK_PATH, MARK_SCALE } from "@/lib/brand-mark";
 import type { Motif } from "@/lib/film";
 
 export type GlassProps = Omit<MeshTransmissionMaterialProps, "color">;
 
-const SILVER = "#e6e4ee";
-const LILAC = "#d9c8ff";
-const ROSE = "#ffc4ec";
-const SKY = "#bcd6ff";
-const PEACH = "#ffd0bd";
+const SILVER = "#f4eeea";
+const EMBER = "#ffd2bd";
+const ROSE = "#ffd9e6";
+const PEACH = "#ffe6d8";
+const CORAL = "#ffc9b6";
 
 type MotifProps = { glass: GlassProps };
 
@@ -59,7 +61,7 @@ function Liquid({ tint = SILVER, distort = 0.32 }: { tint?: string; distort?: nu
   );
 }
 
-function Pearl({ tint = LILAC }: { tint?: string }) {
+function Pearl({ tint = EMBER }: { tint?: string }) {
   return (
     <meshPhysicalMaterial
       color={tint}
@@ -69,7 +71,7 @@ function Pearl({ tint = LILAC }: { tint?: string }) {
       clearcoatRoughness={0.04}
       envMapIntensity={1.3}
       sheen={1}
-      sheenColor="#ff9be6"
+      sheenColor="#ffb38a"
       {...iridescent}
     />
   );
@@ -128,12 +130,40 @@ function linkCurve(length: number, radius: number) {
   return new CatmullRomCurve3(points, true);
 }
 
-function Ring() {
+function useMarkGeometry() {
+  return useMemo(() => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg"><path d="${MARK_PATH}"/></svg>`;
+    const shapes = new SVGLoader().parse(svg).paths.flatMap((path) => path.toShapes());
+    const geometry = new ExtrudeGeometry(shapes, {
+      depth: 60,
+      bevelEnabled: true,
+      bevelThickness: 70,
+      bevelSize: 46,
+      bevelSegments: 16,
+      curveSegments: 64,
+    });
+    geometry.translate(0, 0, -30);
+    geometry.scale(MARK_SCALE, MARK_SCALE, MARK_SCALE);
+    geometry.translate(MARK_OFFSET.x - MARK_CENTER.x, MARK_OFFSET.y - MARK_CENTER.y, 0);
+    const unit = 1 / 760;
+    geometry.scale(unit, -unit, -unit);
+    geometry.computeVertexNormals();
+    return geometry;
+  }, []);
+}
+
+function Mark() {
+  const geometry = useMarkGeometry();
+
   return (
-    <mesh>
-      <torusGeometry args={[0.72, 0.3, 96, 256]} />
-      <Liquid tint={LILAC} distort={0.18} />
-    </mesh>
+    <group>
+      <mesh geometry={geometry} rotation={[0, 0.22, 0]}>
+        <Chrome tint={SILVER} roughness={0.14} />
+      </mesh>
+      <mesh geometry={geometry} rotation={[0, -0.22, Math.PI]}>
+        <Chrome tint={PEACH} roughness={0.16} />
+      </mesh>
+    </group>
   );
 }
 
@@ -176,7 +206,7 @@ function Bridge() {
       </mesh>
       <mesh position={[0.66, -0.12, 0]}>
         <sphereGeometry args={[0.36, 96, 48]} />
-        <Liquid tint={SKY} distort={0.3} />
+        <Liquid tint={CORAL} distort={0.3} />
       </mesh>
       <mesh position={[0, -0.12, 0]}>
         <torusGeometry args={[0.66, 0.11, 48, 160, Math.PI]} />
@@ -194,7 +224,7 @@ function Software() {
     <group rotation={[0.12, -0.5, 0]}>
       {[-1, 0, 1].map((i) => (
         <mesh key={i} geometry={geometry} position={[i * 0.3, i * -0.24, i * 0.42]}>
-          <Pearl tint={[LILAC, ROSE, SKY][i + 1]} />
+          <Pearl tint={[EMBER, ROSE, CORAL][i + 1]} />
         </mesh>
       ))}
     </group>
@@ -210,7 +240,7 @@ function Listen() {
       </mesh>
       <mesh position={[0.32, -0.06, 0.2]} scale={0.46}>
         <icosahedronGeometry args={[1, 24]} />
-        <Liquid tint={SKY} distort={0.42} />
+        <Liquid tint={CORAL} distort={0.42} />
       </mesh>
     </group>
   );
@@ -221,7 +251,7 @@ function Small() {
     <group>
       <mesh position={[-0.26, 0.04, 0]}>
         <sphereGeometry args={[0.42, 96, 48]} />
-        <Chrome tint={LILAC} roughness={0.08} />
+        <Chrome tint={EMBER} roughness={0.08} />
       </mesh>
       <RoundedBox
         args={[0.36, 0.36, 0.36]}
@@ -255,10 +285,25 @@ function Grow() {
   );
 }
 
+function triangle(radius: number) {
+  const shape = new Shape();
+  for (let i = 0; i < 3; i++) {
+    const angle = Math.PI / 2 + (i * Math.PI * 2) / 3;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    if (i === 0) shape.moveTo(x, y);
+    else shape.lineTo(x, y);
+  }
+  shape.closePath();
+  return shape;
+}
+
 function Prism({ glass }: MotifProps) {
+  const shape = useMemo(() => triangle(0.66), []);
+  const geometry = usePuffy(shape, 0.7, 0.05);
+
   return (
-    <mesh rotation={[Math.PI / 2, 0, 0.12]}>
-      <cylinderGeometry args={[0.66, 0.66, 1.1, 3, 1]} />
+    <mesh geometry={geometry}>
       <HoloGlass glass={glass} />
     </mesh>
   );
@@ -274,7 +319,7 @@ export function Droplet() {
 }
 
 export const motifNodes: Record<Motif, (props: MotifProps) => ReactNode> = {
-  ring: Ring,
+  mark: Mark,
   lens: Lens,
   flows: Flows,
   bridge: Bridge,
