@@ -24,27 +24,26 @@ export const BACKGROUND = "#07070a";
 export const ORANGE = "#ff6b35";
 export const EMBER = "#ff4d1f";
 export const PEACH = "#ffb48f";
-export const CORAL = "#ff7a5c";
 export const PINK = "#ff5f8f";
 export const MAGENTA = "#e04fd4";
 export const VIOLET = "#8b5cf6";
 export const BLUE = "#3b82f6";
 
-export type Framing = { fill: number; offsetY: number; tilt: [number, number, number] };
+type Framing = { fill: number; offsetY: number };
 
 export const framing: Record<Motif, Framing> = {
-  mark: { fill: 0.72, offsetY: 0.06, tilt: [0.15, 0, 0] },
-  lens: { fill: 0.78, offsetY: 0, tilt: [0, 0, 0] },
-  flows: { fill: 0.74, offsetY: 0, tilt: [0.2, 0, 0] },
-  bridge: { fill: 0.78, offsetY: 0.04, tilt: [0.15, 0, 0] },
-  software: { fill: 0.7, offsetY: 0, tilt: [0, 0, 0] },
-  listen: { fill: 0.86, offsetY: 0, tilt: [0, 0, 0] },
-  small: { fill: 0.9, offsetY: 0, tilt: [0.15, 0, 0] },
-  grow: { fill: 0.8, offsetY: 0, tilt: [0, 0, 0] },
-  prism: { fill: 0.74, offsetY: 0, tilt: [0.08, 0.42, 0] },
+  mark: { fill: 0.72, offsetY: 0.06 },
+  lens: { fill: 0.78, offsetY: 0 },
+  flows: { fill: 0.74, offsetY: 0 },
+  bridge: { fill: 0.78, offsetY: 0.04 },
+  software: { fill: 0.7, offsetY: 0 },
+  listen: { fill: 0.86, offsetY: 0 },
+  small: { fill: 0.9, offsetY: 0 },
+  grow: { fill: 0.8, offsetY: 0 },
+  prism: { fill: 0.74, offsetY: 0 },
 };
 
-export const passVertex = /* glsl */ `
+const passVertex = /* glsl */ `
   varying vec2 vUv;
   void main() {
     vUv = uv;
@@ -89,7 +88,7 @@ export const beamFragment = /* glsl */ `
   }
 `;
 
-export const compositeFragment = /* glsl */ `
+const compositeFragment = /* glsl */ `
   uniform sampler2D tScene;
   uniform float uGrain;
   uniform float uPixel;
@@ -149,8 +148,6 @@ export function useComposite() {
 }
 
 export const easeOut = (t: number) => 1 - (1 - t) ** 3;
-
-export const FLOW_STOPS = [ORANGE, PINK, MAGENTA, VIOLET, PEACH, ORANGE];
 
 export const flowGlsl = /* glsl */ `
   uniform vec3 uStops[6];

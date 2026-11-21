@@ -9,8 +9,6 @@ import styles from "./film.module.css";
 
 const FilmScene = dynamic(() => import("@/components/film-scene"), { ssr: false });
 
-const MorphScene = dynamic(() => import("@/components/morph-scene"), { ssr: false });
-
 function supportsWebGL2() {
   try {
     return Boolean(document.createElement("canvas").getContext("webgl2"));
@@ -19,7 +17,7 @@ function supportsWebGL2() {
   }
 }
 
-export function Film({ variant = "meshes" }: { variant?: "meshes" | "morph" }) {
+export function Film() {
   const reducedMotion = useReducedMotion();
   const [webgl, setWebgl] = useState(false);
   const [ready, setReady] = useState(false);
@@ -42,7 +40,7 @@ export function Film({ variant = "meshes" }: { variant?: "meshes" | "morph" }) {
 
   return (
     <div className={styles.film} data-ready={ready} aria-hidden>
-      {variant === "morph" ? <MorphScene onReady={onReady} /> : <FilmScene onReady={onReady} />}
+      <FilmScene onReady={onReady} />
     </div>
   );
 }

@@ -1,30 +1,36 @@
 # Imagery
 
-The home page is one scroll-driven 3D film (`src/components/film-scene`, shapes in `src/components/film-motifs`). One holographic object changes shape from chapter to chapter. No people, no scenes, no text. The forms hint at the topic of each chapter (a lens for the check, chain links for the workflows, two blobs joined by an arch for the IT bridge) without illustrating it literally.
+The home page is one scroll-driven 3D film (`src/components/film-scene`). One liquid holographic object changes shape from chapter to chapter. No people, no scenes, no text. The forms hint at the topic of each chapter (a lens for the check, chain links for the workflows, a Möbius band for the IT bridge) without illustrating it literally.
+
+## How it is drawn
+
+The shapes are not 3D models. Each motif is a signed distance function in the film's raymarching shader (`sdMark`, `sdLens`, … in `src/components/film-scene/index.tsx`), so any motif can melt into any other: between two chapters the shader blends the two distance functions as you scroll, with a short ripple while they melt. The shader only runs on a quad around the object and marches inside a bounding sphere. To change a motif, change its distance function; keep it inside a radius of about 1.4 units.
+
+The shapes are never still. A slow domain warp makes the whole form sway like liquid metal and a two-octave drift rolls over the surface, even when the page is not scrolled. Thin parts (the chain links, the outer ripple ring) set the limit for how strong that motion can be before they tear.
 
 ## Style
 
-- **Materials:** liquid chrome (`MeshDistortMaterial`, fully metallic, iridescent), dispersive glass with strong chromatic aberration for links, lens and prism, and inflated pearlescent forms (rounded panels, capsule arrow).
-- **Colours:** orange `#ff6b35` leads, with ember `#ff4d1f`, peach `#ffb48f` and coral `#ff7a5c` around it and magenta `#e04fd4` and a narrow band of violet `#8b5cf6` for the holographic shift. They come from a gradient dome in the environment map that blends through orange, pink, magenta, violet and peach in long, even steps, so the shapes reflect flowing gradients rather than being painted. The material tints stay near silver and peach; strong tints flatten the gradients. An orange light leak sits in the top right corner, and the glows behind each shape are orange first.
+- **Material:** liquid chrome with a glassy core. Reflections, a thin-film rainbow tint and per-channel refraction all sample the same analytic environment in the shader.
+- **Colours:** orange `#ff6b35` leads, with peach `#ffb48f`, pink `#ff5f8f` and a narrow band of violet `#8b5cf6` for the holographic shift. The environment blends through them in long, even steps, so the shapes show flowing gradients rather than flat colour. Flat faces catch a single colour, so motifs stay rounded and puffy. An orange light leak sits in the top right corner, and the glows behind each shape are orange first.
 - **Background:** near-black `#07070a`, the same as `--background`.
-- **Grain:** added in the film's final pass over the whole frame, slightly stronger on bright areas. Keep it there rather than in the materials.
+- **Grain:** added in the film's final pass over the whole frame, slightly stronger on bright areas.
 - **No meaning:** no text, letters, numbers, logos, icons, symbols or people.
 
 ## Chapters
 
-Every chapter marks where its motif sits with a `data-film-slot` element. The object follows those slots as you scroll. Between chapters it shrinks away inside a tilted three-armed spiral galaxy of dust, warm peach at the core and orange, pink and violet towards the rim, which travels to the next slot, where the next motif grows back out of it.
+Every chapter marks where its motif sits with a `data-film-slot` element. The object follows those slots as you scroll and morphs from one motif into the next on the way.
 
 | Slot | Chapter | Motif |
 | ---- | ------- | ----- |
-| `mark` | Hero | The two Cs of the logo mark as round glass tubes, interlocked like an infinity sign (`MARK_ARC` in `src/lib/brand-mark.ts`) |
-| `lens` | Service: KI-Check | A dispersive glass ring around a liquid disc, tilted like a lens |
-| `flows` | Service: Abläufe planen | Three interlocking glass chain links |
-| `bridge` | Service: Brücke zur IT | A chrome Möbius band, one surface that joins both sides |
-| `software` | Service: Software nach Maß | Three inflated rounded panels, offset in depth |
-| `listen` | Process 1: Erst zuhören | Three concentric rings spreading like ripples, glass and chrome |
-| `small` | Process 2: Klein anfangen | A chrome sphere next to a small inflated cube |
-| `grow` | Process 3: Nur ausbauen | An inflated arrow pointing up and to the right |
-| `prism` | Contact | A triangular glass prism splitting a white beam into a spectrum |
+| `mark` | Hero | The two Cs of the logo mark as round tubes, interlocked like an infinity sign (`MARK_ARC` in `src/lib/brand-mark.ts`) |
+| `lens` | Service: KI-Check | A ring around a flat disc, tilted like a lens |
+| `flows` | Service: Abläufe planen | Three interlocking chain links |
+| `bridge` | Service: Brücke zur IT | A Möbius band, one surface that joins both sides |
+| `software` | Service: Software nach Maß | Three puffy rounded panels, offset in depth |
+| `listen` | Process 1: Erst zuhören | Three concentric rings spreading like ripples |
+| `small` | Process 2: Klein anfangen | A sphere next to a small rounded cube |
+| `grow` | Process 3: Nur ausbauen | A capsule arrow pointing up and to the right |
+| `prism` | Contact | A rounded triangular prism splitting a white beam into a spectrum |
 
 ## Fallback images
 

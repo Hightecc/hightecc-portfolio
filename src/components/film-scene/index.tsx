@@ -2,34 +2,31 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { Environment, Lightformer, PerformanceMonitor, useFBO } from "@react-three/drei";
+import { PerformanceMonitor, useFBO } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
-  AdditiveBlending,
-  BackSide,
-  BufferAttribute,
-  BufferGeometry,
   Color,
+  Euler,
   type Group,
   MathUtils,
+  Matrix3,
+  Matrix4,
   type Mesh,
   NeutralToneMapping,
-  type Points,
+  Quaternion,
   ShaderMaterial,
-  type Texture,
+  Vector3,
 } from "three";
 
-import { type GlassProps, motifNodes } from "@/components/film-motifs";
-import { type Motif, motifs } from "@/lib/film";
+import { MARK_ARC } from "@/lib/brand-mark";
+import { motifs } from "@/lib/film";
 import {
   BACKGROUND,
   BLUE,
   beamFragment,
   CAMERA_Z,
-  CORAL,
   EMBER,
   easeOut,
-  FLOW_STOPS,
   FOV,
   flowGlsl,
   framing,
@@ -46,106 +43,315 @@ import {
 } from "@/lib/film-fx";
 import { measureSlots, type Slot, shotAt } from "@/lib/film-track";
 
-const dustVertex = /* glsl */ `
-  attribute float aRadius;
-  attribute float aArm;
-  attribute vec3 aScatter;
-  attribute float aSeed;
-  uniform float uSpread;
+const BOUND = 1.45;
+
+const MORPH_STOPS = [ORANGE, PEACH, ORANGE, PINK, VIOLET, ORANGE];
+
+const raymarchVertex = /* glsl */ `
+  varying vec3 vWorld;
+  void main() {
+    vec4 world = modelMatrix * vec4(position, 1.0);
+    vWorld = world.xyz;
+    gl_Position = projectionMatrix * viewMatrix * world;
+  }
+`;
+
+const raymarchFragment = /* glsl */ `
+  uniform mat4 uInverse;
+  uniform mat3 uRotation;
+  uniform int uFrom;
+  uniform int uTo;
+  uniform float uMix;
   uniform float uTime;
-  uniform float uSize;
-  uniform vec3 uColors[4];
-  varying vec3 vColor;
-  varying float vAlpha;
+  uniform float uPixelAngle;
+  uniform float uBound;
+  varying vec3 vWorld;
 
-  void main() {
-    float radius = aRadius * mix(0.08, 1.0, uSpread);
-    float orbit = uTime * 0.25;
-    float angle = aArm + aRadius * 5.0 + orbit + (1.0 - uSpread) * 4.0;
-    vec3 p = vec3(cos(angle) * radius, 0.0, sin(angle) * radius);
-    p += aScatter * mix(0.15, 1.0, uSpread);
-    vec4 view = modelViewMatrix * vec4(p, 1.0);
-    gl_Position = projectionMatrix * view;
-    float core = 1.0 - smoothstep(0.0, 0.35, aRadius);
-    gl_PointSize = uSize * (0.35 + fract(aSeed * 3.7) + core * 0.3) / -view.z;
-    float along = clamp(aRadius * 3.0 + (fract(aSeed * 13.7) - 0.5) * 0.8, 0.0, 2.999);
-    vColor = mix(uColors[int(along)], uColors[int(along) + 1], fract(along));
-    vColor = mix(vColor, vec3(1.0, 0.92, 0.86), core * 0.35);
-    vAlpha = (0.35 + 0.65 * fract(aSeed * 11.1)) * (0.7 + core * 0.3);
+  ${flowGlsl}
+
+  mat2 rot(float a) {
+    float c = cos(a);
+    float s = sin(a);
+    return mat2(c, -s, s, c);
   }
-`;
 
-const dustFragment = /* glsl */ `
-  uniform float uIntensity;
-  varying vec3 vColor;
-  varying float vAlpha;
-
-  void main() {
-    float d = length(gl_PointCoord - 0.5) * 2.0;
-    float dot = pow(clamp(1.0 - d, 0.0, 1.0), 1.4);
-    gl_FragColor = vec4(vColor, dot * vAlpha * uIntensity);
+  float sdTorus(vec3 p, float big, float small) {
+    return length(vec2(length(p.xy) - big, p.z)) - small;
   }
-`;
 
-const GALAXY_ARMS = 3;
+  float sdCappedTorus(vec3 p, vec2 sc, float big, float small) {
+    p.x = abs(p.x);
+    float k = (sc.y * p.x > sc.x * p.y) ? dot(p.xy, sc) : length(p.xy);
+    return sqrt(dot(p, p) + big * big - 2.0 * big * k) - small;
+  }
 
-function scatter(radius: number, amount: number) {
-  const sign = Math.random() < 0.5 ? -1 : 1;
-  return Math.random() ** 2.4 * sign * amount * (0.3 + radius);
-}
+  float sdEllipsoid(vec3 p, vec3 r) {
+    float k0 = length(p / r);
+    float k1 = length(p / (r * r));
+    return k0 * (k0 - 1.0) / k1;
+  }
 
-function useDust(count: number) {
-  return useMemo(() => {
-    const radii = new Float32Array(count);
-    const arms = new Float32Array(count);
-    const offsets = new Float32Array(count * 3);
-    const seeds = new Float32Array(count);
-    for (let i = 0; i < count; i++) {
-      const radius = 0.04 + Math.random() ** 1.3 * 0.96;
-      radii[i] = radius;
-      arms[i] = ((i % GALAXY_ARMS) / GALAXY_ARMS) * Math.PI * 2;
-      offsets[i * 3] = scatter(radius, 0.2);
-      offsets[i * 3 + 1] = scatter(radius, 0.14);
-      offsets[i * 3 + 2] = scatter(radius, 0.2);
-      seeds[i] = Math.random();
+  float sdLink(vec3 p, float stretch, float big, float small) {
+    vec3 q = vec3(max(abs(p.x) - stretch, 0.0), p.y, p.z);
+    return length(vec2(length(q.xy) - big, q.z)) - small;
+  }
+
+  float sdRoundBox(vec3 p, vec3 extent, float radius) {
+    vec3 q = abs(p) - extent + radius;
+    return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0) - radius;
+  }
+
+  float sdCapsule(vec3 p, vec3 a, vec3 b, float radius) {
+    vec3 pa = p - a;
+    vec3 ba = b - a;
+    float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+    return length(pa - ba * h) - radius;
+  }
+
+  float sdTriPrism(vec3 p, vec2 h) {
+    vec3 q = abs(p);
+    return max(q.z - h.y, max(q.x * 0.866025 + p.y * 0.5, -p.y) - h.x * 0.5);
+  }
+
+  float sdC(vec3 p) {
+    p -= vec3(${MARK_ARC.center.x.toFixed(4)}, ${MARK_ARC.center.y.toFixed(4)}, 0.0);
+    p.yz *= rot(0.18);
+    p.xz *= rot(-0.16);
+    vec3 q = vec3(-p.y, -p.x, p.z);
+    float opening = ${(Math.PI - MARK_ARC.from).toFixed(4)};
+    return sdCappedTorus(
+      q,
+      vec2(sin(opening), cos(opening)),
+      ${MARK_ARC.radius.toFixed(4)},
+      ${MARK_ARC.tube.toFixed(4)}
+    );
+  }
+
+  float sdMark(vec3 p) {
+    return min(sdC(p), sdC(vec3(-p.xy, p.z)));
+  }
+
+  float sdLens(vec3 p) {
+    p.yz *= rot(0.45);
+    p.xz *= rot(-0.5);
+    float ring = sdTorus(p, 0.78, 0.2);
+    float disc = sdEllipsoid(p, vec3(0.6, 0.6, 0.13));
+    return min(ring, disc);
+  }
+
+  float sdFlows(vec3 p) {
+    p.xy *= rot(0.5);
+    p.xz *= rot(-0.35);
+    p.yz *= rot(0.3);
+    float d = sdLink(p - vec3(-0.62, 0.0, 0.0), 0.23, 0.3, 0.085);
+    d = min(d, sdLink(p - vec3(0.62, 0.0, 0.0), 0.23, 0.3, 0.085));
+    d = min(d, sdLink(vec3(p.x, p.z, -p.y), 0.23, 0.3, 0.085));
+    return d;
+  }
+
+  float sdBridge(vec3 p) {
+    p.yz *= rot(0.9);
+    p.xz *= rot(-0.2);
+    p.xy *= rot(-0.3);
+    float around = atan(p.y, p.x);
+    vec2 q = vec2(length(p.xy) - 0.66, p.z) * rot(around * 0.5);
+    vec2 d = abs(q) - vec2(0.2, 0.02);
+    return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0) - 0.05;
+  }
+
+  float sdSoftware(vec3 p) {
+    p.yz *= rot(-0.12);
+    p.xz *= rot(0.5);
+    float d = 1e9;
+    for (int i = -1; i <= 1; i++) {
+      float f = float(i);
+      d = min(d, sdRoundBox(p - vec3(f * 0.3, -f * 0.24, f * 0.42), vec3(0.52, 0.34, 0.11), 0.11));
     }
-    const geometry = new BufferGeometry();
-    geometry.setAttribute("position", new BufferAttribute(new Float32Array(count * 3), 3));
-    geometry.setAttribute("aRadius", new BufferAttribute(radii, 1));
-    geometry.setAttribute("aArm", new BufferAttribute(arms, 1));
-    geometry.setAttribute("aScatter", new BufferAttribute(offsets, 3));
-    geometry.setAttribute("aSeed", new BufferAttribute(seeds, 1));
+    return d;
+  }
+
+  float sdListen(vec3 p) {
+    p.yz *= rot(1.05);
+    p.xy *= rot(-0.25);
+    float d = sdTorus(p - vec3(0.0, 0.0, 0.12), 0.3, 0.08);
+    d = min(d, sdTorus(p, 0.6, 0.068));
+    d = min(d, sdTorus(p - vec3(0.0, 0.0, -0.12), 0.9, 0.06));
+    return d;
+  }
+
+  float sdSmall(vec3 p) {
+    p.yz *= rot(-0.15);
+    float sphere = length(p - vec3(-0.26, 0.04, 0.0)) - 0.42;
+    vec3 q = p - vec3(0.42, -0.22, 0.22);
+    q.yz *= rot(0.4);
+    q.xz *= rot(0.6);
+    return min(sphere, sdRoundBox(q, vec3(0.18), 0.1));
+  }
+
+  float sdGrow(vec3 p) {
+    p.xy *= rot(0.75);
+    p.xz *= rot(0.4);
+    p.yz *= rot(-0.25);
+    float d = sdCapsule(p, vec3(0.0, -0.645, 0.0), vec3(0.0, 0.405, 0.0), 0.15);
+    d = min(d, sdCapsule(p, vec3(-0.318, 0.241, 0.02), vec3(-0.002, 0.519, 0.02), 0.15));
+    d = min(d, sdCapsule(p, vec3(0.318, 0.241, 0.02), vec3(0.002, 0.519, 0.02), 0.15));
+    return d;
+  }
+
+  float sdPrism(vec3 p) {
+    p.xz *= rot(-0.42);
+    p.yz *= rot(-0.08);
+    return sdTriPrism(p, vec2(0.5, 0.26)) - 0.1;
+  }
+
+  float sdMotif(int id, vec3 p) {
+    if (id == 0) return sdMark(p);
+    if (id == 1) return sdLens(p);
+    if (id == 2) return sdFlows(p);
+    if (id == 3) return sdBridge(p);
+    if (id == 4) return sdSoftware(p);
+    if (id == 5) return sdListen(p);
+    if (id == 6) return sdSmall(p);
+    if (id == 7) return sdGrow(p);
+    return sdPrism(p);
+  }
+
+  vec3 sway(vec3 p) {
+    vec3 q = p;
+    q.x += sin(p.y * 1.8 + uTime * 0.9) * 0.07;
+    q.y += sin(p.z * 2.1 - uTime * 0.75 + p.x * 0.8) * 0.07;
+    q.z += sin(p.x * 1.6 + uTime * 0.6) * 0.06;
+    return q;
+  }
+
+  float map(vec3 p) {
+    p = sway(p);
+    float shape = sdMotif(uFrom, p);
+    float swell = 0.0;
+    if (uFrom != uTo) {
+      shape = mix(shape, sdMotif(uTo, p), uMix);
+      swell = sin(3.14159 * uMix);
+    }
+    float drift =
+      sin(p.x * 1.9 + uTime * 0.7) * sin(p.y * 1.7 - uTime * 0.55) * sin(p.z * 2.1 + uTime * 0.6) +
+      0.4 * sin(p.x * 3.4 - uTime * 0.9) * sin(p.y * 3.1 + uTime * 0.8) * sin(p.z * 3.7 - uTime * 0.5);
+    float ripple = sin(p.x * 5.0 + uTime * 1.3) * sin(p.y * 4.0 - uTime) * sin(p.z * 6.0 + uTime * 0.7);
+    return shape - swell * 0.05 + drift * 0.024 + ripple * swell * 0.045;
+  }
+
+  vec3 normalAt(vec3 p) {
+    const vec2 e = vec2(0.0015, -0.0015);
+    return normalize(
+      e.xyy * map(p + e.xyy) +
+      e.yyx * map(p + e.yyx) +
+      e.yxy * map(p + e.yxy) +
+      e.xxx * map(p + e.xxx)
+    );
+  }
+
+  vec3 environment(vec3 d) {
+    float angle = atan(d.z, d.x) / 6.28318 + 1.25;
+    vec3 hue = flow(angle + d.y * 0.22);
+    float light = 0.25 + 0.75 * smoothstep(-0.9, 0.7, d.y);
+    hue = mix(hue, vec3(1.0, 0.94, 0.9), smoothstep(0.55, 0.98, d.y) * 0.55);
+    vec3 color = hue * light * 1.35;
+    color += vec3(1.0) * smoothstep(0.9, 0.97, d.y) * 3.0;
+    color += vec3(1.0) * smoothstep(0.86, 0.95, -d.x) * smoothstep(0.5, 0.0, abs(d.y)) * 1.6;
+    return color;
+  }
+
+  void main() {
+    vec3 ro = (uInverse * vec4(cameraPosition, 1.0)).xyz;
+    vec3 rd = normalize((uInverse * vec4(vWorld, 1.0)).xyz - ro);
+
+    float b = dot(ro, rd);
+    float h = b * b - (dot(ro, ro) - uBound * uBound);
+    if (h < 0.0) discard;
+    h = sqrt(h);
+    float t = max(-b - h, 0.0);
+    float tEnd = -b + h;
+
+    float closest = 1e9;
+    float tClosest = t;
+    bool hit = false;
+    for (int i = 0; i < 140; i++) {
+      vec3 p = ro + rd * t;
+      float d = map(p);
+      if (d < closest) {
+        closest = d;
+        tClosest = t;
+      }
+      if (d < 0.0006 * t) {
+        hit = true;
+        break;
+      }
+      t += d * 0.7;
+      if (t > tEnd) break;
+    }
+
+    float footprint = uPixelAngle * tClosest;
+    float alpha = hit ? 1.0 : 1.0 - smoothstep(0.0, footprint * 1.5, closest);
+    if (alpha < 0.01) discard;
+
+    vec3 p = ro + rd * (hit ? t : tClosest);
+    vec3 n = normalAt(p);
+    vec3 view = normalize(uRotation * rd);
+    vec3 normal = normalize(uRotation * n);
+
+    float facing = max(dot(normal, -view), 0.0);
+    float fresnel = 0.06 + 0.94 * pow(1.0 - facing, 3.0);
+    vec3 reflection = environment(reflect(view, normal));
+    vec3 film = 0.5 + 0.5 * cos(6.28318 * (vec3(0.0, 0.33, 0.67) + fresnel * 1.4 + normal.y * 0.3));
+    reflection *= mix(vec3(1.0), film, 0.45);
+
+    vec3 refractedR = environment(refract(view, normal, 1.0 / 1.38));
+    vec3 refractedG = environment(refract(view, normal, 1.0 / 1.42));
+    vec3 refractedB = environment(refract(view, normal, 1.0 / 1.47));
+    vec3 body = vec3(refractedR.r, refractedG.g, refractedB.b) * 0.55;
+
+    vec3 color = mix(body, reflection, 0.45 + 0.55 * fresnel);
+    float spark = pow(max(dot(reflect(view, normal), normalize(vec3(-0.3, 0.9, 0.4))), 0.0), 60.0);
+    color += spark * 2.0;
+    gl_FragColor = vec4(color, alpha);
+  }
+`;
+
+function useRaymarch() {
+  return useMemo(() => {
     const uniforms = {
-      uSpread: { value: 0 },
+      uInverse: { value: new Matrix4() },
+      uRotation: { value: new Matrix3() },
+      uFrom: { value: 0 },
+      uTo: { value: 0 },
+      uMix: { value: 0 },
       uTime: { value: 0 },
-      uSize: { value: 60 },
-      uIntensity: { value: 0 },
-      uColors: { value: [PEACH, ORANGE, PINK, VIOLET].map((hex) => new Color(hex)) },
+      uPixelAngle: { value: 0.001 },
+      uBound: { value: BOUND },
+      uStops: { value: MORPH_STOPS.map((hex) => new Color(hex)) },
     };
     const material = new ShaderMaterial({
       uniforms,
-      vertexShader: dustVertex,
-      fragmentShader: dustFragment,
+      vertexShader: raymarchVertex,
+      fragmentShader: raymarchFragment,
       transparent: true,
       depthWrite: false,
-      blending: AdditiveBlending,
     });
-    return { geometry, material, uniforms };
-  }, [count]);
+    return { material, uniforms };
+  }, []);
 }
 
 function Film({ onReady }: { onReady: () => void }) {
   const size = useThree((state) => state.size);
   const dpr = useThree((state) => state.viewport.dpr);
-  const buffer = useFBO(Math.round(size.width * 0.6), Math.round(size.height * 0.6));
   const target = useFBO({ samples: 4 });
   const composite = useComposite();
+  const raymarch = useRaymarch();
 
-  const glassRoot = useRef<Group>(null);
-  const motifGroups = useRef<Partial<Record<Motif, Group>>>({});
-  const prismBeams = useRef<Group>(null);
-  const dustCloud = useRef<Points>(null);
-  const dust = useDust(2400);
+  const body = useRef<Mesh>(null);
+  const warmGlow = useRef<Mesh>(null);
+  const coolGlow = useRef<Mesh>(null);
+  const leak = useRef<Mesh>(null);
+  const beams = useRef<Group>(null);
   const slots = useRef<Slot[]>([]);
   const pointer = useRef({ x: 0, y: 0 });
   const leaning = useRef({ x: 0, y: 0 });
@@ -154,7 +360,7 @@ function Film({ onReady }: { onReady: () => void }) {
   const fx = useMemo(
     () => ({
       warm: fxMaterial(glowFragment, ORANGE, EMBER),
-      cool: fxMaterial(glowFragment, CORAL, MAGENTA),
+      cool: fxMaterial(glowFragment, MAGENTA, ORANGE),
       leak: fxMaterial(leakFragment, EMBER, ORANGE),
       beamIn: fxMaterial(beamFragment, "#ffffff"),
       spectrum: [EMBER, ORANGE, MAGENTA, VIOLET, BLUE].map((color) =>
@@ -163,29 +369,17 @@ function Film({ onReady }: { onReady: () => void }) {
     }),
     [],
   );
-  const warmGlow = useRef<Mesh>(null);
-  const coolGlow = useRef<Mesh>(null);
-  const leak = useRef<Mesh>(null);
 
-  const glass = useMemo<GlassProps>(
+  const scratch = useMemo(
     () => ({
-      buffer: buffer.texture as Texture,
-      resolution: 32,
-      backsideResolution: 32,
-      samples: 8,
-      thickness: 0.6,
-      roughness: 0.04,
-      ior: 1.5,
-      chromaticAberration: 0.9,
-      anisotropicBlur: 0.06,
-      distortion: 0.08,
-      distortionScale: 0.3,
-      temporalDistortion: 0.02,
-      clearcoat: 1,
-      clearcoatRoughness: 0.04,
-      envMapIntensity: 1.4,
+      matrix: new Matrix4(),
+      position: new Vector3(),
+      rotation: new Quaternion(),
+      euler: new Euler(),
+      scale: new Vector3(),
+      orientation: new Matrix4(),
     }),
-    [buffer],
+    [],
   );
 
   useEffect(() => {
@@ -216,96 +410,78 @@ function Film({ onReady }: { onReady: () => void }) {
     const scrollY = window.scrollY;
     const shot = shotAt(slots.current, scrollY + size.height * anchor);
 
-    if (leak.current) {
-      const depth = CAMERA_Z + 6;
-      const halfH = depth * Math.tan(MathUtils.degToRad(FOV / 2));
-      const halfW = halfH * (size.width / size.height);
-      const drift = Math.sin(t * 0.15 + scrollY * 0.0004) * 0.06;
-      leak.current.position.set(halfW * 0.72, halfH * 0.86, -6);
-      leak.current.rotation.z = -0.42 + drift;
-      leak.current.scale.set(halfW * 1.5, halfH * 0.55, 1);
-      fx.leak.intensity.value = 0.85;
-    }
-
     const sway = Math.min(delta * 3, 1);
     const lean = leaning.current;
     lean.x += (pointer.current.x - lean.x) * sway;
     lean.y += (pointer.current.y - lean.y) * sway;
 
-    if (shot) {
+    if (leak.current) {
+      const depth = CAMERA_Z + 6;
+      const halfH = depth * Math.tan((FOV / 2) * (Math.PI / 180));
+      const halfW = halfH * (size.width / size.height);
+      leak.current.position.set(halfW * 0.72, halfH * 0.86, -6);
+      leak.current.rotation.z = -0.42 + Math.sin(t * 0.15 + scrollY * 0.0004) * 0.06;
+      leak.current.scale.set(halfW * 1.5, halfH * 0.55, 1);
+      fx.leak.intensity.value = 0.85;
+    }
+
+    if (shot && body.current) {
       const { from, to, u } = shot;
       const travel = easeOut(u) * 0.5 + u * 0.5;
-      const x = MathUtils.lerp(from.x, to.x, travel);
-      const y = MathUtils.lerp(from.y - scrollY, to.y - scrollY, travel);
-      const worldSize = MathUtils.lerp(from.size, to.size, travel) * unit;
+      const x = from.x + (to.x - from.x) * travel;
+      const y = from.y - scrollY + (to.y - from.y) * travel;
+      const worldSize = (from.size + (to.size - from.size) * travel) * unit;
+      const fill =
+        framing[from.motif].fill + (framing[to.motif].fill - framing[from.motif].fill) * u;
+      const offset =
+        framing[from.motif].offsetY + (framing[to.motif].offsetY - framing[from.motif].offsetY) * u;
       const wx = (x - size.width / 2) * unit;
-      const wy = -(y - size.height / 2) * unit;
+      const wy = -(y - size.height / 2) * unit + offset * worldSize;
+      const scale = (worldSize / 2) * fill;
+      const spin = Math.sin(Math.PI * u) * 0.9;
 
-      const presence: Partial<Record<Motif, number>> = {};
-      if (from === to) presence[from.motif] = 1;
-      else {
-        presence[from.motif] = 1 - MathUtils.smoothstep(u, 0, 0.5);
-        presence[to.motif] = MathUtils.smoothstep(u, 0.5, 1);
-      }
+      scratch.position.set(wx, wy + Math.sin(t * 0.7) * worldSize * 0.012, 0);
+      scratch.euler.set(
+        0.12 + Math.sin(t * 0.4) * 0.05 - lean.y * 0.12 + spin * 0.3,
+        Math.sin(t * 0.25) * 0.2 + lean.x * 0.2 + spin,
+        spin * 0.2,
+      );
+      scratch.rotation.setFromEuler(scratch.euler);
+      scratch.scale.setScalar(scale * (1 + Math.sin(t * 0.9) * 0.012));
+      scratch.matrix.compose(scratch.position, scratch.rotation, scratch.scale);
+      scratch.orientation.makeRotationFromQuaternion(scratch.rotation);
+      raymarch.uniforms.uRotation.value.setFromMatrix4(scratch.orientation);
+      raymarch.uniforms.uInverse.value.copy(scratch.matrix).invert();
+      raymarch.uniforms.uFrom.value = motifs.indexOf(from.motif);
+      raymarch.uniforms.uTo.value = motifs.indexOf(to.motif);
+      raymarch.uniforms.uMix.value = u;
+      raymarch.uniforms.uTime.value = t;
+      raymarch.uniforms.uPixelAngle.value =
+        (2 * Math.tan((FOV / 2) * (Math.PI / 180))) / (size.height * dpr);
 
-      for (const motif of motifs) {
-        const group = motifGroups.current[motif];
-        if (!group) continue;
-        const amount = presence[motif] ?? 0;
-        group.visible = amount > 0.001;
-        if (!group.visible) continue;
-        const frame = framing[motif];
-        const scale = (worldSize / 2) * frame.fill * easeOut(amount);
-        group.scale.setScalar(Math.max(scale, 1e-4));
-        group.position.set(wx, wy + frame.offsetY * worldSize, 0);
-        group.rotation.set(
-          frame.tilt[0] + Math.sin(t * 0.4) * 0.05 - lean.y * 0.12,
-          frame.tilt[1] + Math.sin(t * 0.25) * 0.2 + lean.x * 0.2 + (1 - amount) * 2.2,
-          frame.tilt[2] + (1 - amount) * 0.6,
-        );
-      }
+      body.current.position.set(wx, wy, 0);
+      body.current.scale.setScalar(scale * BOUND * 2.6);
 
-      const between = from === to ? 0 : (4 * u * (1 - u)) ** 3;
-      if (dustCloud.current) {
-        const spread = from === to ? 0 : Math.sin(Math.PI * u);
-        dustCloud.current.visible = spread > 0.001;
-        dustCloud.current.position.set(wx, wy, 0.4);
-        dustCloud.current.scale.setScalar(worldSize * 0.62);
-        dustCloud.current.rotation.set(0.85 + Math.sin(t * 0.3) * 0.12, t * 0.05, 0.35 - u * 0.5);
-        dust.uniforms.uSpread.value = spread;
-        dust.uniforms.uTime.value = t;
-        dust.uniforms.uSize.value = 80 * dpr * (size.height / 900);
-        dust.uniforms.uIntensity.value = 1.1 * MathUtils.smoothstep(spread, 0, 0.35);
-      }
-
-      const glow = Math.max(presence[from.motif] ?? 0, presence[to.motif] ?? 0, between * 0.7);
-      const anchorY = wy + framing[from.motif].offsetY * worldSize * (1 - travel);
-      warmGlow.current?.position.set(wx, anchorY - worldSize * 0.08, -3);
+      warmGlow.current?.position.set(wx, wy - worldSize * 0.08, -3);
       warmGlow.current?.scale.setScalar(worldSize * 1.5);
-      coolGlow.current?.position.set(wx + worldSize * 0.42, anchorY + worldSize * 0.3, -3.5);
+      coolGlow.current?.position.set(wx + worldSize * 0.42, wy + worldSize * 0.3, -3.5);
       coolGlow.current?.scale.setScalar(worldSize * 1.1);
-      fx.warm.intensity.value = 0.5 * glow;
-      fx.cool.intensity.value = 0.22 * glow;
+      fx.warm.intensity.value = 0.5;
+      fx.cool.intensity.value = 0.22;
 
-      const prism = motifGroups.current.prism;
-      const beams = prismBeams.current;
-      const prismAmount = presence.prism ?? 0;
-      if (prism && beams) {
-        beams.visible = prismAmount > 0.001;
-        beams.position.copy(prism.position);
-        beams.position.z = -1.2;
-        beams.scale.setScalar((worldSize / 2) * framing.prism.fill);
-        fx.beamIn.intensity.value = 0.9 * prismAmount;
-        for (const beam of fx.spectrum) beam.intensity.value = 0.75 * prismAmount;
+      const prism =
+        (from.motif === "prism" ? 1 - u : 0) + (to.motif === "prism" && from !== to ? u : 0);
+      const shine = MathUtils.smoothstep(prism, 0.55, 1);
+      if (beams.current) {
+        beams.current.visible = shine > 0.001;
+        beams.current.position.set(wx, wy, -1.2);
+        beams.current.scale.setScalar(scale);
       }
+      fx.beamIn.intensity.value = 0.9 * shine;
+      for (const beam of fx.spectrum) beam.intensity.value = 0.75 * shine;
     }
 
     composite.uniforms.uPixel.value = dpr;
-
-    if (glassRoot.current) glassRoot.current.visible = false;
-    gl.setRenderTarget(buffer);
-    gl.render(scene, camera);
-    if (glassRoot.current) glassRoot.current.visible = true;
     gl.setRenderTarget(target);
     gl.render(scene, camera);
     gl.setRenderTarget(null);
@@ -321,20 +497,13 @@ function Film({ onReady }: { onReady: () => void }) {
       <mesh ref={leak} material={fx.leak.material}>
         <planeGeometry args={[1, 1]} />
       </mesh>
-      <points
-        ref={dustCloud}
-        geometry={dust.geometry}
-        material={dust.material}
-        visible={false}
-        frustumCulled={false}
-      />
       <mesh ref={warmGlow} material={fx.warm.material}>
         <planeGeometry args={[1, 1]} />
       </mesh>
       <mesh ref={coolGlow} material={fx.cool.material}>
         <planeGeometry args={[1, 1]} />
       </mesh>
-      <group ref={prismBeams} visible={false}>
+      <group ref={beams} visible={false}>
         <mesh material={fx.beamIn.material} position={[-1.75, 0.02, 0]} rotation={[0, 0, 0.1]}>
           <planeGeometry args={[2.8, 0.12]} />
         </mesh>
@@ -349,79 +518,15 @@ function Film({ onReady }: { onReady: () => void }) {
           </mesh>
         ))}
       </group>
-      <group ref={glassRoot}>
-        {motifs.map((motif) => {
-          const Node = motifNodes[motif];
-          return (
-            <group
-              key={motif}
-              visible={false}
-              ref={(node) => {
-                if (node) motifGroups.current[motif] = node;
-              }}
-            >
-              <Node glass={glass} />
-            </group>
-          );
-        })}
-      </group>
+      <mesh ref={body} material={raymarch.material} frustumCulled={false}>
+        <planeGeometry args={[1, 1]} />
+      </mesh>
     </>
   );
 }
 
-const domeFragment = /* glsl */ `
-  ${flowGlsl}
-  varying vec3 vDirection;
-
-  void main() {
-    vec3 d = normalize(vDirection);
-    float angle = atan(d.z, d.x) / 6.28318 + 0.5;
-    vec3 hue = flow(angle + d.y * 0.18);
-    float light = 0.4 + 0.6 * smoothstep(-0.8, 0.6, d.y);
-    hue = mix(hue, vec3(1.0, 0.94, 0.9), smoothstep(0.55, 0.98, d.y) * 0.55);
-    gl_FragColor = vec4(hue * light * 1.6, 1.0);
-  }
-`;
-
-const domeVertex = /* glsl */ `
-  varying vec3 vDirection;
-  void main() {
-    vDirection = position;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-function Lights() {
-  const dome = useMemo(
-    () =>
-      new ShaderMaterial({
-        uniforms: {
-          uStops: {
-            value: FLOW_STOPS.map((hex) => new Color(hex)),
-          },
-        },
-        vertexShader: domeVertex,
-        fragmentShader: domeFragment,
-        side: BackSide,
-        depthWrite: false,
-      }),
-    [],
-  );
-
-  return (
-    <Environment resolution={512} frames={1}>
-      <mesh scale={40} material={dome}>
-        <sphereGeometry args={[1, 64, 32]} />
-      </mesh>
-      <Lightformer form="rect" intensity={6} position={[0, 6, 2]} scale={[12, 0.8, 1]} />
-      <Lightformer form="rect" intensity={3} position={[-6, 0, 3]} scale={[0.6, 10, 1]} />
-      <Lightformer form="rect" intensity={1.5} position={[4, -2, 6]} scale={[3, 0.4, 1]} />
-    </Environment>
-  );
-}
-
 export default function FilmScene({ onReady }: { onReady: () => void }) {
-  const [maxDpr, setMaxDpr] = useState(1.75);
+  const [maxDpr, setMaxDpr] = useState(1.5);
 
   return (
     <Canvas
@@ -434,7 +539,6 @@ export default function FilmScene({ onReady }: { onReady: () => void }) {
     >
       <PerformanceMonitor onDecline={() => setMaxDpr(1)} />
       <Film onReady={onReady} />
-      <Lights />
     </Canvas>
   );
 }
