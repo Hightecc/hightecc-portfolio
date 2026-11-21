@@ -47,7 +47,7 @@ export async function Hero() {
           </Col>
         </Row>
       </Container>
-      <div className={styles.stage}>
+      <div className={styles.stage} data-film-slot="mark">
         <Image
           src={glassHero}
           alt=""

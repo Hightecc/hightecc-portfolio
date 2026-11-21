@@ -5,15 +5,15 @@ import { getMessages, getTranslations } from "next-intl/server";
 import grow from "@/assets/imagery/glass-grow.jpg";
 import listen from "@/assets/imagery/glass-listen.jpg";
 import small from "@/assets/imagery/glass-small.jpg";
-import { Col, Container, Row } from "@/components/ui/grid";
+import { Chapter } from "@/components/chapter";
 
 import { SectionHead } from "../section-head";
 import styles from "./pillars.module.css";
 
 const pillars = [
-  { key: "one", image: listen },
-  { key: "two", image: small },
-  { key: "three", image: grow },
+  { key: "one", image: listen, motif: "listen", side: "start" },
+  { key: "two", image: small, motif: "small", side: "end" },
+  { key: "three", image: grow, motif: "grow", side: "start" },
 ] as const;
 
 export async function Pillars() {
@@ -29,39 +29,34 @@ export async function Pillars() {
         lede={t("section.lede")}
       />
 
-      <Container>
-        <Row rowGap={12} className={styles.grid}>
-          {pillars.map(({ key, image }) => (
-            <Col key={key} span={12} md={4} className={styles.cell}>
-              <article className={styles.pillar}>
-                <div className={styles.media}>
-                  <Image
-                    src={image}
-                    alt=""
-                    fill
-                    sizes="(min-width: 720px) 33vw, 100vw"
-                    placeholder="blur"
-                    className={styles.img}
-                  />
-                </div>
-                <div className={styles.content}>
-                  <h3 className={styles.title}>
-                    {t.rich(`${key}.title`, {
-                      em: (chunks) => <em>{chunks}</em>,
-                    })}
-                  </h3>
-                  <p className={styles.body}>{t(`${key}.body`)}</p>
-                  <ul className={styles.list}>
-                    {messages.pillars[key].items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            </Col>
-          ))}
-        </Row>
-      </Container>
+      {pillars.map(({ key, image, motif, side }) => (
+        <Chapter
+          key={key}
+          motif={motif}
+          side={side}
+          media={
+            <Image
+              src={image}
+              alt=""
+              fill
+              sizes="(min-width: 720px) 50vw, 80vw"
+              placeholder="blur"
+            />
+          }
+        >
+          <h3 className={styles.title}>
+            {t.rich(`${key}.title`, {
+              em: (chunks) => <em>{chunks}</em>,
+            })}
+          </h3>
+          <p className={styles.body}>{t(`${key}.body`)}</p>
+          <ul className={styles.list}>
+            {messages.pillars[key].items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </Chapter>
+      ))}
     </section>
   );
 }

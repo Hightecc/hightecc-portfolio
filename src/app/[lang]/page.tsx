@@ -6,6 +6,7 @@ import { setRequestLocale } from "next-intl/server";
 import { About } from "@/components/about";
 import { Capabilities } from "@/components/capabilities";
 import { Contact } from "@/components/contact";
+import { Film } from "@/components/film";
 import { Hero } from "@/components/hero";
 import { Pillars } from "@/components/pillars";
 import { SiteFooter } from "@/components/site-footer";
@@ -19,6 +20,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
+      <Film />
       <SiteHeader />
       <Hero />
       <main id="main">

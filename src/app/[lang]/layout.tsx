@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { localeAlternates, openGraphMetadata } from "@/i18n/metadata";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
@@ -85,7 +86,7 @@ export default async function LocaleLayout({
           {process.env.NODE_ENV === "development" ? (
             <div className="grid-overlay" aria-hidden />
           ) : null}
-          {children}
+          <SmoothScroll>{children}</SmoothScroll>
         </NextIntlClientProvider>
       </body>
     </html>

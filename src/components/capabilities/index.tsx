@@ -6,16 +6,17 @@ import bridge from "@/assets/imagery/glass-bridge.jpg";
 import check from "@/assets/imagery/glass-check.jpg";
 import flows from "@/assets/imagery/glass-flows.jpg";
 import software from "@/assets/imagery/glass-software.jpg";
-import { Col, Container, Row } from "@/components/ui/grid";
+import { Chapter } from "@/components/chapter";
+import { Container } from "@/components/ui/grid";
 
 import { SectionHead } from "../section-head";
 import styles from "./capabilities.module.css";
 
 const capabilities = [
-  { key: "a", image: check },
-  { key: "b", image: flows },
-  { key: "c", image: bridge },
-  { key: "d", image: software },
+  { key: "a", image: check, motif: "lens", side: "start" },
+  { key: "b", image: flows, motif: "flows", side: "end" },
+  { key: "c", image: bridge, motif: "bridge", side: "start" },
+  { key: "d", image: software, motif: "software", side: "end" },
 ] as const;
 
 export async function Capabilities() {
@@ -30,30 +31,27 @@ export async function Capabilities() {
         lede={t("section.lede")}
       />
 
-      <Container>
-        <Row rowGap={12} className={styles.grid}>
-          {capabilities.map(({ key, image }) => (
-            <Col key={key} span={12} md={6} className={styles.cell}>
-              <article className={styles.cap}>
-                <div className={styles.media}>
-                  <Image
-                    src={image}
-                    alt=""
-                    fill
-                    sizes="(min-width: 720px) 50vw, 100vw"
-                    placeholder="blur"
-                    className={styles.img}
-                  />
-                </div>
-                <div className={styles.content}>
-                  <h3 className={styles.title}>{t(`${key}.title`)}</h3>
-                  <p className={styles.desc}>{t(`${key}.desc`)}</p>
-                </div>
-              </article>
-            </Col>
-          ))}
-        </Row>
+      {capabilities.map(({ key, image, motif, side }) => (
+        <Chapter
+          key={key}
+          motif={motif}
+          side={side}
+          media={
+            <Image
+              src={image}
+              alt=""
+              fill
+              sizes="(min-width: 720px) 50vw, 80vw"
+              placeholder="blur"
+            />
+          }
+        >
+          <h3 className={styles.title}>{t(`${key}.title`)}</h3>
+          <p className={styles.desc}>{t(`${key}.desc`)}</p>
+        </Chapter>
+      ))}
 
+      <Container>
         <p className={styles.note}>
           {t.rich("note", {
             strong: (chunks) => <strong>{chunks}</strong>,
