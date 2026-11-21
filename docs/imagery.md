@@ -38,3 +38,7 @@ All in `src/assets/imagery/`.
 | `glass-listen.jpg` | Process 1: Erst zuhören | Two soft glass blobs overlapping like bubbles in conversation |
 | `glass-small.jpg` | Process 2: Klein anfangen | A small glass sphere next to an even smaller glass cube |
 | `glass-grow.jpg` | Process 3: Nur ausbauen | Four rounded glass blocks forming rising steps |
+
+## Live 3D on the home page
+
+On the home page the same motifs are rendered live as one glass object that changes shape while you scroll (`src/components/film-scene`, shapes in `src/components/film-motifs`). Every chapter marks where its motif sits with a `data-film-slot` element. The JPEG inside that slot is the fallback: it shows until the scene is ready, and stays for visitors who prefer reduced motion or have no WebGL2. When you change a motif, change the image and the 3D shape together.

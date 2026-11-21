@@ -5,7 +5,6 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
 import glassHero from "@/assets/imagery/glass-hero.jpg";
-import { HeroStage } from "@/components/hero-stage";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
 
@@ -48,18 +47,16 @@ export async function Hero() {
           </Col>
         </Row>
       </Container>
-      <div className={styles.stage}>
-        <HeroStage>
-          <Image
-            src={glassHero}
-            alt=""
-            fill
-            sizes="(min-width: 1440px) 1440px, 100vw"
-            placeholder="blur"
-            fetchPriority="high"
-            className={styles.img}
-          />
-        </HeroStage>
+      <div className={styles.stage} data-film-slot="ring">
+        <Image
+          src={glassHero}
+          alt=""
+          fill
+          sizes="(min-width: 1440px) 1440px, 100vw"
+          placeholder="blur"
+          fetchPriority="high"
+          className={styles.img}
+        />
         <span className={styles.grain} aria-hidden />
       </div>
     </header>

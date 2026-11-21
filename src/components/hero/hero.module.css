@@ -3,7 +3,6 @@
   padding: 148px 28px 0;
   overflow: hidden;
   isolation: isolate;
-  background: var(--background);
 }
 
 .axis {
