@@ -12,151 +12,39 @@ import {
   Color,
   type Group,
   MathUtils,
-  Mesh,
+  type Mesh,
   NeutralToneMapping,
-  OrthographicCamera,
-  PlaneGeometry,
   type Points,
-  Scene,
   ShaderMaterial,
   type Texture,
 } from "three";
 
 import { type GlassProps, motifNodes } from "@/components/film-motifs";
 import { type Motif, motifs } from "@/lib/film";
+import {
+  BACKGROUND,
+  BLUE,
+  beamFragment,
+  CAMERA_Z,
+  CORAL,
+  EMBER,
+  easeOut,
+  FLOW_STOPS,
+  FOV,
+  flowGlsl,
+  framing,
+  fxMaterial,
+  glowFragment,
+  leakFragment,
+  MAGENTA,
+  ORANGE,
+  PEACH,
+  PINK,
+  useComposite,
+  VIOLET,
+  WORLD_HEIGHT,
+} from "@/lib/film-fx";
 import { measureSlots, type Slot, shotAt } from "@/lib/film-track";
-
-const FOV = 30;
-const CAMERA_Z = 10;
-const WORLD_HEIGHT = 2 * CAMERA_Z * Math.tan(MathUtils.degToRad(FOV / 2));
-
-const BACKGROUND = "#07070a";
-const ORANGE = "#ff6b35";
-const EMBER = "#ff4d1f";
-const PEACH = "#ffb48f";
-const CORAL = "#ff7a5c";
-const PINK = "#ff5f8f";
-const MAGENTA = "#e04fd4";
-const VIOLET = "#8b5cf6";
-const BLUE = "#3b82f6";
-
-type Framing = { fill: number; offsetY: number; tilt: [number, number, number] };
-
-const framing: Record<Motif, Framing> = {
-  mark: { fill: 0.72, offsetY: 0.06, tilt: [0.15, 0, 0] },
-  lens: { fill: 0.78, offsetY: 0, tilt: [0, 0, 0] },
-  flows: { fill: 0.74, offsetY: 0, tilt: [0.2, 0, 0] },
-  bridge: { fill: 0.78, offsetY: 0.04, tilt: [0.15, 0, 0] },
-  software: { fill: 0.7, offsetY: 0, tilt: [0, 0, 0] },
-  listen: { fill: 0.86, offsetY: 0, tilt: [0, 0, 0] },
-  small: { fill: 0.9, offsetY: 0, tilt: [0.15, 0, 0] },
-  grow: { fill: 0.8, offsetY: 0, tilt: [0, 0, 0] },
-  prism: { fill: 0.74, offsetY: 0, tilt: [0.08, 0.42, 0] },
-};
-
-const passVertex = /* glsl */ `
-  varying vec2 vUv;
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const glowFragment = /* glsl */ `
-  uniform vec3 uColor;
-  uniform vec3 uEdge;
-  uniform float uIntensity;
-  varying vec2 vUv;
-  void main() {
-    float falloff = clamp(1.0 - distance(vUv, vec2(0.5)) * 2.0, 0.0, 1.0);
-    vec3 color = mix(uEdge, uColor, smoothstep(0.0, 0.9, falloff));
-    gl_FragColor = vec4(color, pow(falloff, 2.0) * uIntensity);
-  }
-`;
-
-const leakFragment = /* glsl */ `
-  uniform vec3 uColor;
-  uniform vec3 uEdge;
-  uniform float uIntensity;
-  varying vec2 vUv;
-  void main() {
-    float across = pow(clamp(1.0 - abs(vUv.y - 0.5) * 2.0, 0.0, 1.0), 2.4);
-    float along = smoothstep(0.0, 0.6, vUv.x);
-    vec3 color = mix(uColor, uEdge, smoothstep(0.35, 1.0, vUv.x));
-    color = mix(color, vec3(1.0), pow(across, 6.0) * along * 0.85);
-    gl_FragColor = vec4(color, across * along * uIntensity);
-  }
-`;
-
-const beamFragment = /* glsl */ `
-  uniform vec3 uColor;
-  uniform float uIntensity;
-  varying vec2 vUv;
-  void main() {
-    float across = pow(clamp(1.0 - abs(vUv.y - 0.5) * 2.0, 0.0, 1.0), 2.0);
-    float along = smoothstep(0.0, 0.25, vUv.x) * smoothstep(1.0, 0.75, vUv.x);
-    gl_FragColor = vec4(uColor, across * along * uIntensity);
-  }
-`;
-
-const compositeFragment = /* glsl */ `
-  uniform sampler2D tScene;
-  uniform float uGrain;
-  uniform float uPixel;
-  varying vec2 vUv;
-
-  float hash(vec2 p) {
-    p = fract(p * vec2(123.34, 456.21));
-    p += dot(p, p + 45.32);
-    return fract(p.x * p.y);
-  }
-
-  void main() {
-    gl_FragColor = texture2D(tScene, vUv);
-    #include <tonemapping_fragment>
-    #include <colorspace_fragment>
-    float light = dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114));
-    float noise = hash(floor(gl_FragCoord.xy / uPixel)) - 0.5;
-    gl_FragColor.rgb += noise * uGrain * (0.45 + light);
-  }
-`;
-
-function fxMaterial(fragmentShader: string, color: string, edge = color) {
-  const intensity = { value: 0 };
-  const material = new ShaderMaterial({
-    uniforms: {
-      uColor: { value: new Color(color) },
-      uEdge: { value: new Color(edge) },
-      uIntensity: intensity,
-    },
-    vertexShader: passVertex,
-    fragmentShader,
-    transparent: true,
-    depthWrite: false,
-    blending: AdditiveBlending,
-  });
-  return { material, intensity };
-}
-
-function useComposite() {
-  return useMemo(() => {
-    const uniforms = {
-      tScene: { value: null as Texture | null },
-      uGrain: { value: 0.11 },
-      uPixel: { value: 1 },
-    };
-    const material = new ShaderMaterial({
-      uniforms,
-      vertexShader: passVertex,
-      fragmentShader: compositeFragment,
-      depthTest: false,
-      depthWrite: false,
-    });
-    const scene = new Scene();
-    scene.add(new Mesh(new PlaneGeometry(2, 2), material));
-    return { scene, camera: new OrthographicCamera(-1, 1, 1, -1, 0, 1), uniforms };
-  }, []);
-}
 
 const dustVertex = /* glsl */ `
   attribute float aRadius;
@@ -245,8 +133,6 @@ function useDust(count: number) {
     return { geometry, material, uniforms };
   }, [count]);
 }
-
-const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
 function Film({ onReady }: { onReady: () => void }) {
   const size = useThree((state) => state.size);
@@ -484,19 +370,8 @@ function Film({ onReady }: { onReady: () => void }) {
 }
 
 const domeFragment = /* glsl */ `
-  uniform vec3 uStops[6];
+  ${flowGlsl}
   varying vec3 vDirection;
-
-  vec3 flow(float t) {
-    float scaled = fract(t) * 5.0;
-    int index = int(floor(scaled));
-    float blend = smoothstep(0.0, 1.0, fract(scaled));
-    vec3 color = uStops[0];
-    for (int i = 0; i < 5; i++) {
-      if (i == index) color = mix(uStops[i], uStops[i + 1], blend);
-    }
-    return color;
-  }
 
   void main() {
     vec3 d = normalize(vDirection);
@@ -522,7 +397,7 @@ function Lights() {
       new ShaderMaterial({
         uniforms: {
           uStops: {
-            value: [ORANGE, PINK, MAGENTA, VIOLET, PEACH, ORANGE].map((hex) => new Color(hex)),
+            value: FLOW_STOPS.map((hex) => new Color(hex)),
           },
         },
         vertexShader: domeVertex,
