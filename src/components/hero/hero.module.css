@@ -31,11 +31,15 @@
 }
 
 .amp {
+  padding-right: 0.06em;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.01em;
   color: var(--accent-ink);
+  background: var(--holo);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .sub {
@@ -73,12 +77,13 @@
 
 .img {
   object-fit: cover;
+  filter: invert(1) hue-rotate(180deg) saturate(1.3);
 }
 
 .grain {
   position: absolute;
   inset: 0;
-  background-image: var(--grain-ink);
+  background-image: var(--grain);
   background-size: 220px 220px;
   opacity: 0.32;
   pointer-events: none;

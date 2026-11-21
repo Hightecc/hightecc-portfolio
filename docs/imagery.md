@@ -1,15 +1,36 @@
 # Imagery
 
-Every image on the site belongs to one series: abstract frosted-glass forms on white, lit from within in the brand orange with cool mint refractions, under a fine film grain. No people, no scenes, no text. The forms hint at the topic of each section (a ring for the check, an arch between two spheres for the IT bridge) without illustrating it literally.
+The home page is one scroll-driven 3D film (`src/components/film-scene`, shapes in `src/components/film-motifs`). One holographic object changes shape from chapter to chapter. No people, no scenes, no text. The forms hint at the topic of each chapter (a lens for the check, chain links for the workflows, two blobs joined by an arch for the IT bridge) without illustrating it literally.
 
 ## Style
 
-- **Material:** soft frosted glass that glows from within. Smooth gradients, gentle soft shadows, lots of white space.
-- **Colours:** warm orange `#FF6B35`, soft peach and mint teal `#1F8A84`. Everything else white.
-- **Grain:** the model adds almost none, so the site lays a fine dark noise texture (`--grain-ink` in `globals.css`) over every image at about 30% opacity. Keep it there rather than baking it into the files.
+- **Materials:** liquid chrome (`MeshDistortMaterial`, fully metallic, iridescent), dispersive glass with strong chromatic aberration for links, lens and prism, and inflated pearlescent forms (rounded panels, capsule arrow).
+- **Colours:** violet `#8b5cf6`, magenta `#e04fd4`, blue `#3b82f6`, cyan `#5eead4` and orange `#ff6b35`. They come from a gradient dome in the environment map, so the shapes reflect them rather than being painted with them. A violet to magenta light leak sits in the top right corner.
+- **Background:** near-black `#07070a`, the same as `--background`.
+- **Grain:** added in the film's final pass over the whole frame, slightly stronger on bright areas. Keep it there rather than in the materials.
 - **No meaning:** no text, letters, numbers, logos, icons, symbols or people.
 
-## Generating
+## Chapters
+
+Every chapter marks where its motif sits with a `data-film-slot` element. The object follows those slots as you scroll, collapses into a chrome droplet between chapters and reforms as the next motif.
+
+| Slot | Chapter | Motif |
+| ---- | ------- | ----- |
+| `ring` | Hero | A thick liquid chrome torus |
+| `lens` | Service: KI-Check | A dispersive glass ring around a liquid disc, tilted like a lens |
+| `flows` | Service: Abläufe planen | Three interlocking glass chain links |
+| `bridge` | Service: Brücke zur IT | A rose and a blue liquid sphere joined by a chrome arch |
+| `software` | Service: Software nach Maß | Three inflated rounded panels, offset in depth |
+| `listen` | Process 1: Erst zuhören | Two liquid blobs overlapping |
+| `small` | Process 2: Klein anfangen | A chrome sphere next to a small inflated cube |
+| `grow` | Process 3: Nur ausbauen | An inflated arrow pointing up and to the right |
+| `prism` | Contact | A glass prism splitting a white beam into a spectrum |
+
+## Fallback images
+
+The JPEGs in `src/assets/imagery/` sit inside the slots. They show until the film is ready, and stay for visitors who prefer reduced motion or have no WebGL2. They are still the earlier frosted-glass series on white, shown inverted (`filter: invert(1) hue-rotate(180deg)`) so they read on the dark background. They should be regenerated in the holographic style; until then they do not match the 3D motifs.
+
+## Generating (earlier frosted-glass series)
 
 Model: `gemini-3.1-flash-lite-image`, the cheapest Gemini image model. It only supports `imageSize` 1K, which is enough for soft glass. Generate one image per motif and only re-roll the ones that fail review.
 

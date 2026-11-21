@@ -34,13 +34,14 @@
 
 .slot img {
   object-fit: cover;
+  filter: invert(1) hue-rotate(180deg) saturate(1.3);
 }
 
 .slot::after {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: var(--grain-ink);
+  background-image: var(--grain);
   background-size: 220px 220px;
   opacity: 0.3;
   pointer-events: none;

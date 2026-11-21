@@ -5,11 +5,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Environment, Lightformer, PerformanceMonitor, useFBO } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
+  AdditiveBlending,
+  BackSide,
   Color,
   type Group,
   MathUtils,
   Mesh,
-  NoToneMapping,
+  NeutralToneMapping,
   OrthographicCamera,
   PlaneGeometry,
   Scene,
@@ -17,7 +19,7 @@ import {
   type Texture,
 } from "three";
 
-import { type GlassProps, motifNodes } from "@/components/film-motifs";
+import { Droplet, type GlassProps, motifNodes } from "@/components/film-motifs";
 import { type Motif, motifs } from "@/lib/film";
 import { measureSlots, type Slot, shotAt } from "@/lib/film-track";
 
@@ -25,10 +27,12 @@ const FOV = 30;
 const CAMERA_Z = 10;
 const WORLD_HEIGHT = 2 * CAMERA_Z * Math.tan(MathUtils.degToRad(FOV / 2));
 
+const BACKGROUND = "#07070a";
 const ORANGE = "#ff6b35";
-const PEACH = "#ffb48f";
-const MINT = "#1f8a84";
-const MIST = "#a9ddd2";
+const VIOLET = "#8b5cf6";
+const MAGENTA = "#e04fd4";
+const BLUE = "#3b82f6";
+const CYAN = "#5eead4";
 
 type Framing = { fill: number; offsetY: number; tilt: [number, number, number] };
 
@@ -60,7 +64,21 @@ const glowFragment = /* glsl */ `
   void main() {
     float falloff = clamp(1.0 - distance(vUv, vec2(0.5)) * 2.0, 0.0, 1.0);
     vec3 color = mix(uEdge, uColor, smoothstep(0.0, 0.9, falloff));
-    gl_FragColor = vec4(color, pow(falloff, 1.6) * uIntensity);
+    gl_FragColor = vec4(color, pow(falloff, 2.0) * uIntensity);
+  }
+`;
+
+const leakFragment = /* glsl */ `
+  uniform vec3 uColor;
+  uniform vec3 uEdge;
+  uniform float uIntensity;
+  varying vec2 vUv;
+  void main() {
+    float across = pow(clamp(1.0 - abs(vUv.y - 0.5) * 2.0, 0.0, 1.0), 2.4);
+    float along = smoothstep(0.0, 0.6, vUv.x);
+    vec3 color = mix(uColor, uEdge, smoothstep(0.35, 1.0, vUv.x));
+    color = mix(color, vec3(1.0), pow(across, 6.0) * along * 0.85);
+    gl_FragColor = vec4(color, across * along * uIntensity);
   }
 `;
 
@@ -89,10 +107,11 @@ const compositeFragment = /* glsl */ `
 
   void main() {
     gl_FragColor = texture2D(tScene, vUv);
+    #include <tonemapping_fragment>
     #include <colorspace_fragment>
-    float ink = smoothstep(0.0, 0.1, 1.0 - dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114)));
+    float light = dot(gl_FragColor.rgb, vec3(0.299, 0.587, 0.114));
     float noise = hash(floor(gl_FragCoord.xy / uPixel)) - 0.5;
-    gl_FragColor.rgb -= abs(noise) * uGrain * ink;
+    gl_FragColor.rgb += noise * uGrain * (0.45 + light);
   }
 `;
 
@@ -108,6 +127,7 @@ function fxMaterial(fragmentShader: string, color: string, edge = color) {
     fragmentShader,
     transparent: true,
     depthWrite: false,
+    blending: AdditiveBlending,
   });
   return { material, intensity };
 }
@@ -116,7 +136,7 @@ function useComposite() {
   return useMemo(() => {
     const uniforms = {
       tScene: { value: null as Texture | null },
-      uGrain: { value: 0.16 },
+      uGrain: { value: 0.11 },
       uPixel: { value: 1 },
     };
     const material = new ShaderMaterial({
@@ -125,7 +145,6 @@ function useComposite() {
       fragmentShader: compositeFragment,
       depthTest: false,
       depthWrite: false,
-      toneMapped: false,
     });
     const scene = new Scene();
     scene.add(new Mesh(new PlaneGeometry(2, 2), material));
@@ -153,33 +172,37 @@ function Film({ onReady }: { onReady: () => void }) {
 
   const fx = useMemo(
     () => ({
-      warm: fxMaterial(glowFragment, ORANGE, PEACH),
-      cool: fxMaterial(glowFragment, MIST, "#ffffff"),
-      beamIn: fxMaterial(beamFragment, "#fff3ea"),
-      beamWarm: fxMaterial(beamFragment, ORANGE),
-      beamCool: fxMaterial(beamFragment, MINT),
+      warm: fxMaterial(glowFragment, VIOLET, BLUE),
+      cool: fxMaterial(glowFragment, MAGENTA, ORANGE),
+      leak: fxMaterial(leakFragment, VIOLET, MAGENTA),
+      beamIn: fxMaterial(beamFragment, "#ffffff"),
+      spectrum: [ORANGE, MAGENTA, VIOLET, BLUE, CYAN].map((color) =>
+        fxMaterial(beamFragment, color),
+      ),
     }),
     [],
   );
   const warmGlow = useRef<Mesh>(null);
   const coolGlow = useRef<Mesh>(null);
+  const leak = useRef<Mesh>(null);
 
   const glass = useMemo<GlassProps>(
     () => ({
       buffer: buffer.texture as Texture,
       resolution: 32,
       backsideResolution: 32,
-      samples: 6,
-      thickness: 0.35,
-      roughness: 0.3,
-      ior: 1.3,
-      chromaticAberration: 0.1,
-      anisotropicBlur: 0.2,
-      distortion: 0.18,
-      distortionScale: 0.4,
-      temporalDistortion: 0.04,
+      samples: 8,
+      thickness: 0.6,
+      roughness: 0.04,
+      ior: 1.5,
+      chromaticAberration: 0.9,
+      anisotropicBlur: 0.06,
+      distortion: 0.08,
+      distortionScale: 0.3,
+      temporalDistortion: 0.02,
       clearcoat: 1,
-      clearcoatRoughness: 0.15,
+      clearcoatRoughness: 0.04,
+      envMapIntensity: 1.4,
     }),
     [buffer],
   );
@@ -211,6 +234,17 @@ function Film({ onReady }: { onReady: () => void }) {
     const anchor = size.width < 720 ? 0.4 : 0.5;
     const scrollY = window.scrollY;
     const shot = shotAt(slots.current, scrollY + size.height * anchor);
+
+    if (leak.current) {
+      const depth = CAMERA_Z + 6;
+      const halfH = depth * Math.tan(MathUtils.degToRad(FOV / 2));
+      const halfW = halfH * (size.width / size.height);
+      const drift = Math.sin(t * 0.15 + scrollY * 0.0004) * 0.06;
+      leak.current.position.set(halfW * 0.72, halfH * 0.86, -6);
+      leak.current.rotation.z = -0.42 + drift;
+      leak.current.scale.set(halfW * 1.5, halfH * 0.55, 1);
+      fx.leak.intensity.value = 0.85;
+    }
 
     const sway = Math.min(delta * 3, 1);
     const lean = leaning.current;
@@ -254,7 +288,7 @@ function Film({ onReady }: { onReady: () => void }) {
       if (bead.current) {
         bead.current.visible = between > 0.001;
         bead.current.position.set(wx, wy, 0);
-        bead.current.scale.setScalar(Math.max(worldSize * 0.09 * between, 1e-4));
+        bead.current.scale.setScalar(Math.max(worldSize * 0.1 * between, 1e-4));
       }
 
       const glow = Math.max(presence[from.motif] ?? 0, presence[to.motif] ?? 0, between * 0.7);
@@ -263,8 +297,8 @@ function Film({ onReady }: { onReady: () => void }) {
       warmGlow.current?.scale.setScalar(worldSize * 1.5);
       coolGlow.current?.position.set(wx + worldSize * 0.42, anchorY + worldSize * 0.3, -3.5);
       coolGlow.current?.scale.setScalar(worldSize * 1.1);
-      fx.warm.intensity.value = 0.6 * glow;
-      fx.cool.intensity.value = 0.45 * glow;
+      fx.warm.intensity.value = 0.42 * glow;
+      fx.cool.intensity.value = 0.3 * glow;
 
       const prism = motifGroups.current.prism;
       const beams = prismBeams.current;
@@ -275,8 +309,7 @@ function Film({ onReady }: { onReady: () => void }) {
         beams.position.z = -1.2;
         beams.scale.setScalar((worldSize / 2) * framing.prism.fill);
         fx.beamIn.intensity.value = 0.9 * prismAmount;
-        fx.beamWarm.intensity.value = 0.8 * prismAmount;
-        fx.beamCool.intensity.value = 0.7 * prismAmount;
+        for (const beam of fx.spectrum) beam.intensity.value = 0.75 * prismAmount;
       }
     }
 
@@ -297,7 +330,10 @@ function Film({ onReady }: { onReady: () => void }) {
 
   return (
     <>
-      <color attach="background" args={["#ffffff"]} />
+      <color attach="background" args={[BACKGROUND]} />
+      <mesh ref={leak} material={fx.leak.material}>
+        <planeGeometry args={[1, 1]} />
+      </mesh>
       <mesh ref={warmGlow} material={fx.warm.material}>
         <planeGeometry args={[1, 1]} />
       </mesh>
@@ -308,12 +344,16 @@ function Film({ onReady }: { onReady: () => void }) {
         <mesh material={fx.beamIn.material} position={[-1.9, -0.05, 0]} rotation={[0, 0, 0.08]}>
           <planeGeometry args={[2.8, 0.12]} />
         </mesh>
-        <mesh material={fx.beamWarm.material} position={[1.7, -0.3, 0]} rotation={[0, 0, -0.2]}>
-          <planeGeometry args={[2.6, 0.28]} />
-        </mesh>
-        <mesh material={fx.beamCool.material} position={[1.75, 0.15, 0]} rotation={[0, 0, -0.04]}>
-          <planeGeometry args={[2.6, 0.24]} />
-        </mesh>
+        {fx.spectrum.map((beam, i) => (
+          <mesh
+            key={beam.material.uuid}
+            material={beam.material}
+            position={[1.75, 0.2 - i * 0.13, 0]}
+            rotation={[0, 0, 0.02 - i * 0.07]}
+          >
+            <planeGeometry args={[2.6, 0.16]} />
+          </mesh>
+        ))}
       </group>
       <group ref={glassRoot}>
         {motifs.map((motif) => {
@@ -331,32 +371,69 @@ function Film({ onReady }: { onReady: () => void }) {
           );
         })}
         <group ref={bead} visible={false}>
-          <mesh>
-            <sphereGeometry args={[1, 48, 24]} />
-            <meshPhysicalMaterial
-              color={PEACH}
-              transmission={0}
-              roughness={0.25}
-              clearcoat={1}
-              emissive={ORANGE}
-              emissiveIntensity={0.35}
-            />
-          </mesh>
+          <Droplet />
         </group>
       </group>
     </>
   );
 }
 
+const domeFragment = /* glsl */ `
+  uniform vec3 uViolet;
+  uniform vec3 uMagenta;
+  uniform vec3 uBlue;
+  uniform vec3 uCyan;
+  uniform vec3 uOrange;
+  varying vec3 vDirection;
+  void main() {
+    vec3 d = normalize(vDirection);
+    float angle = atan(d.z, d.x) / 6.28318 + 0.5;
+    vec3 hue = mix(uViolet, uMagenta, smoothstep(0.0, 0.25, angle));
+    hue = mix(hue, uOrange, smoothstep(0.25, 0.42, angle));
+    hue = mix(hue, uMagenta, smoothstep(0.42, 0.55, angle));
+    hue = mix(hue, uBlue, smoothstep(0.55, 0.75, angle));
+    hue = mix(hue, uCyan, smoothstep(0.75, 0.88, angle));
+    hue = mix(hue, uViolet, smoothstep(0.88, 1.0, angle));
+    float band = 0.35 + 0.65 * smoothstep(-0.7, 0.5, d.y);
+    gl_FragColor = vec4(hue * band * 1.6, 1.0);
+  }
+`;
+
+const domeVertex = /* glsl */ `
+  varying vec3 vDirection;
+  void main() {
+    vDirection = position;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
 function Lights() {
+  const dome = useMemo(
+    () =>
+      new ShaderMaterial({
+        uniforms: {
+          uViolet: { value: new Color(VIOLET) },
+          uMagenta: { value: new Color(MAGENTA) },
+          uBlue: { value: new Color(BLUE) },
+          uCyan: { value: new Color(CYAN) },
+          uOrange: { value: new Color(ORANGE) },
+        },
+        vertexShader: domeVertex,
+        fragmentShader: domeFragment,
+        side: BackSide,
+        depthWrite: false,
+      }),
+    [],
+  );
+
   return (
-    <Environment resolution={256} frames={1}>
-      <color attach="background" args={["#f6f4f1"]} />
-      <Lightformer form="rect" intensity={2.4} position={[0, 4, 3]} scale={[8, 2, 1]} />
-      <Lightformer form="rect" intensity={1.2} position={[-5, 0, 2]} scale={[2, 6, 1]} />
-      <Lightformer form="ring" intensity={2.2} color={MINT} position={[4, 1, 2]} scale={2.4} />
-      <Lightformer form="circle" intensity={3} color={ORANGE} position={[0, -3, 1]} scale={3} />
-      <Lightformer form="circle" intensity={1.4} color={PEACH} position={[-3, -2, -3]} scale={3} />
+    <Environment resolution={512} frames={1}>
+      <mesh scale={40} material={dome}>
+        <sphereGeometry args={[1, 64, 32]} />
+      </mesh>
+      <Lightformer form="rect" intensity={6} position={[0, 6, 2]} scale={[12, 0.8, 1]} />
+      <Lightformer form="rect" intensity={3} position={[-6, 0, 3]} scale={[0.6, 10, 1]} />
+      <Lightformer form="rect" intensity={1.5} position={[4, -2, 6]} scale={[3, 0.4, 1]} />
     </Environment>
   );
 }
@@ -370,7 +447,7 @@ export default function FilmScene({ onReady }: { onReady: () => void }) {
       camera={{ position: [0, 0, CAMERA_Z], fov: FOV, near: 0.1, far: 40 }}
       gl={{ antialias: false, powerPreference: "high-performance" }}
       onCreated={({ gl }) => {
-        gl.toneMapping = NoToneMapping;
+        gl.toneMapping = NeutralToneMapping;
       }}
     >
       <PerformanceMonitor onDecline={() => setMaxDpr(1)} />

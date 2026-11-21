@@ -3,164 +3,253 @@
 import { type ReactNode, useMemo } from "react";
 
 import {
+  MeshDistortMaterial,
   MeshTransmissionMaterial,
   type MeshTransmissionMaterialProps,
   RoundedBox,
 } from "@react-three/drei";
-import { CatmullRomCurve3, Vector3 } from "three";
+import { CatmullRomCurve3, ExtrudeGeometry, Shape, Vector3 } from "three";
 
 import type { Motif } from "@/lib/film";
 
 export type GlassProps = Omit<MeshTransmissionMaterialProps, "color">;
 
-const CLEAR = "#ffffff";
-const WARM = "#ffd4c2";
-const COOL = "#cdeee7";
+const SILVER = "#e6e4ee";
+const LILAC = "#d9c8ff";
+const ROSE = "#ffc4ec";
+const SKY = "#bcd6ff";
+const PEACH = "#ffd0bd";
 
 type MotifProps = { glass: GlassProps };
 
-function Glass({ glass, tint = CLEAR }: MotifProps & { tint?: string }) {
-  return <MeshTransmissionMaterial {...glass} color={tint} />;
+const iridescent = {
+  iridescence: 1,
+  iridescenceIOR: 1.6,
+  iridescenceThicknessMinimum: 120,
+  iridescenceThicknessMaximum: 480,
+};
+
+function Chrome({ tint = SILVER, roughness = 0.18 }: { tint?: string; roughness?: number }) {
+  return (
+    <meshPhysicalMaterial
+      color={tint}
+      metalness={1}
+      roughness={roughness}
+      clearcoat={1}
+      clearcoatRoughness={0.08}
+      envMapIntensity={1.5}
+      {...iridescent}
+    />
+  );
 }
 
-function Ring({ glass }: MotifProps) {
+function Liquid({ tint = SILVER, distort = 0.32 }: { tint?: string; distort?: number }) {
+  return (
+    <MeshDistortMaterial
+      color={tint}
+      metalness={1}
+      roughness={0.2}
+      clearcoat={1}
+      clearcoatRoughness={0.04}
+      envMapIntensity={1.3}
+      distort={distort}
+      speed={1.4}
+      {...iridescent}
+    />
+  );
+}
+
+function Pearl({ tint = LILAC }: { tint?: string }) {
+  return (
+    <meshPhysicalMaterial
+      color={tint}
+      metalness={0.85}
+      roughness={0.22}
+      clearcoat={1}
+      clearcoatRoughness={0.04}
+      envMapIntensity={1.3}
+      sheen={1}
+      sheenColor="#ff9be6"
+      {...iridescent}
+    />
+  );
+}
+
+function HoloGlass({ glass }: MotifProps) {
+  return (
+    <MeshTransmissionMaterial {...glass} color="#ffffff" {...iridescent} iridescenceIOR={1.4} />
+  );
+}
+
+function usePuffy(shape: Shape, depth = 0.12, bevel = 0.16) {
+  return useMemo(() => {
+    const geometry = new ExtrudeGeometry(shape, {
+      depth,
+      bevelEnabled: true,
+      bevelThickness: bevel,
+      bevelSize: bevel * 0.85,
+      bevelSegments: 18,
+      curveSegments: 48,
+    });
+    geometry.center();
+    geometry.computeVertexNormals();
+    return geometry;
+  }, [shape, depth, bevel]);
+}
+
+function roundedRect(width: number, height: number, radius: number) {
+  const shape = new Shape();
+  const x = -width / 2;
+  const y = -height / 2;
+  shape.moveTo(x + radius, y);
+  shape.lineTo(x + width - radius, y);
+  shape.quadraticCurveTo(x + width, y, x + width, y + radius);
+  shape.lineTo(x + width, y + height - radius);
+  shape.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  shape.lineTo(x + radius, y + height);
+  shape.quadraticCurveTo(x, y + height, x, y + height - radius);
+  shape.lineTo(x, y + radius);
+  shape.quadraticCurveTo(x, y, x + radius, y);
+  return shape;
+}
+
+function linkCurve(length: number, radius: number) {
+  const points: Vector3[] = [];
+  const half = length / 2;
+  const steps = 18;
+  for (let i = 0; i < steps; i++) {
+    const a = -Math.PI / 2 + (i / steps) * Math.PI;
+    points.push(new Vector3(half + Math.cos(a) * radius, Math.sin(a) * radius, 0));
+  }
+  for (let i = 0; i < steps; i++) {
+    const a = Math.PI / 2 + (i / steps) * Math.PI;
+    points.push(new Vector3(-half + Math.cos(a) * radius, Math.sin(a) * radius, 0));
+  }
+  return new CatmullRomCurve3(points, true);
+}
+
+function Ring() {
   return (
     <mesh>
-      <torusGeometry args={[0.74, 0.26, 64, 192]} />
-      <Glass glass={glass} />
+      <torusGeometry args={[0.72, 0.3, 96, 256]} />
+      <Liquid tint={LILAC} distort={0.18} />
     </mesh>
   );
 }
 
 function Lens({ glass }: MotifProps) {
   return (
-    <group rotation={[-0.5, 0.45, 0]}>
+    <group rotation={[-0.45, 0.5, 0]}>
       <mesh>
-        <torusGeometry args={[0.8, 0.13, 48, 192]} />
-        <Glass glass={glass} />
+        <torusGeometry args={[0.78, 0.2, 64, 192]} />
+        <HoloGlass glass={glass} />
       </mesh>
-      <mesh scale={[0.68, 0.68, 0.14]}>
-        <sphereGeometry args={[1, 64, 32]} />
-        <Glass glass={glass} tint={WARM} />
+      <mesh scale={[0.6, 0.6, 0.2]}>
+        <sphereGeometry args={[1, 96, 48]} />
+        <Liquid tint={ROSE} distort={0.22} />
       </mesh>
     </group>
   );
 }
 
 function Flows({ glass }: MotifProps) {
-  const ribbon = useMemo(
-    () =>
-      new CatmullRomCurve3([
-        new Vector3(-1.05, -0.35, 0.1),
-        new Vector3(-0.68, 0.2, 0.25),
-        new Vector3(0, -0.22, 0.3),
-        new Vector3(0.68, 0.24, 0.25),
-        new Vector3(1.05, -0.3, 0.1),
-      ]),
-    [],
-  );
+  const link = useMemo(() => linkCurve(0.46, 0.3), []);
 
   return (
-    <group>
-      {[-0.68, 0, 0.68].map((x, i) => (
-        <mesh key={x} position={[x, i === 1 ? -0.08 : 0.08, 0]}>
-          <capsuleGeometry args={[0.2, 0.42, 16, 48]} />
-          <Glass glass={glass} tint={i === 1 ? WARM : CLEAR} />
+    <group rotation={[0.3, -0.35, 0.5]}>
+      {[-1, 0, 1].map((i) => (
+        <mesh key={i} position={[i * 0.62, 0, 0]} rotation={[i === 0 ? Math.PI / 2 : 0, 0, 0]}>
+          <tubeGeometry args={[link, 220, 0.085, 32, true]} />
+          <HoloGlass glass={glass} />
         </mesh>
       ))}
-      <mesh>
-        <tubeGeometry args={[ribbon, 160, 0.055, 24, false]} />
-        <Glass glass={glass} tint={COOL} />
-      </mesh>
     </group>
   );
 }
 
-function Bridge({ glass }: MotifProps) {
+function Bridge() {
   return (
     <group position={[0, -0.18, 0]}>
       <mesh position={[-0.66, -0.12, 0]}>
-        <sphereGeometry args={[0.36, 64, 32]} />
-        <Glass glass={glass} tint={WARM} />
+        <sphereGeometry args={[0.36, 96, 48]} />
+        <Liquid tint={ROSE} distort={0.3} />
       </mesh>
       <mesh position={[0.66, -0.12, 0]}>
-        <sphereGeometry args={[0.36, 64, 32]} />
-        <Glass glass={glass} tint={COOL} />
+        <sphereGeometry args={[0.36, 96, 48]} />
+        <Liquid tint={SKY} distort={0.3} />
       </mesh>
       <mesh position={[0, -0.12, 0]}>
-        <torusGeometry args={[0.66, 0.075, 32, 128, Math.PI]} />
-        <Glass glass={glass} />
+        <torusGeometry args={[0.66, 0.11, 48, 160, Math.PI]} />
+        <Chrome />
       </mesh>
     </group>
   );
 }
 
-function Software({ glass }: MotifProps) {
+function Software() {
+  const panel = useMemo(() => roundedRect(1.0, 0.64, 0.14), []);
+  const geometry = usePuffy(panel, 0.02, 0.07);
+
   return (
     <group rotation={[0.12, -0.5, 0]}>
       {[-1, 0, 1].map((i) => (
-        <RoundedBox
-          key={i}
-          args={[1.15, 0.74, 0.06]}
-          radius={0.03}
-          smoothness={4}
-          position={[i * 0.32, i * -0.24, i * 0.42]}
-        >
-          <Glass glass={glass} tint={i === 0 ? WARM : CLEAR} />
-        </RoundedBox>
+        <mesh key={i} geometry={geometry} position={[i * 0.3, i * -0.24, i * 0.42]}>
+          <Pearl tint={[LILAC, ROSE, SKY][i + 1]} />
+        </mesh>
       ))}
     </group>
   );
 }
 
-function Listen({ glass }: MotifProps) {
+function Listen() {
   return (
     <group>
-      <mesh position={[-0.3, 0.06, 0]} scale={[0.56, 0.5, 0.5]}>
-        <sphereGeometry args={[1, 64, 32]} />
-        <Glass glass={glass} tint={WARM} />
+      <mesh position={[-0.3, 0.06, 0]} scale={0.5}>
+        <icosahedronGeometry args={[1, 24]} />
+        <Liquid tint={ROSE} distort={0.42} />
       </mesh>
-      <mesh position={[0.32, -0.06, 0.2]} scale={[0.5, 0.46, 0.46]}>
-        <sphereGeometry args={[1, 64, 32]} />
-        <Glass glass={glass} tint={COOL} />
+      <mesh position={[0.32, -0.06, 0.2]} scale={0.46}>
+        <icosahedronGeometry args={[1, 24]} />
+        <Liquid tint={SKY} distort={0.42} />
       </mesh>
     </group>
   );
 }
 
-function Small({ glass }: MotifProps) {
+function Small() {
   return (
     <group>
-      <mesh position={[-0.28, 0.02, 0]}>
-        <sphereGeometry args={[0.42, 64, 32]} />
-        <Glass glass={glass} tint={WARM} />
+      <mesh position={[-0.26, 0.04, 0]}>
+        <sphereGeometry args={[0.42, 96, 48]} />
+        <Chrome tint={LILAC} roughness={0.08} />
       </mesh>
       <RoundedBox
-        args={[0.34, 0.34, 0.34]}
-        radius={0.06}
-        smoothness={4}
-        position={[0.4, -0.22, 0.2]}
+        args={[0.36, 0.36, 0.36]}
+        radius={0.13}
+        smoothness={8}
+        position={[0.42, -0.22, 0.22]}
         rotation={[0.4, 0.6, 0]}
       >
-        <Glass glass={glass} />
+        <Pearl tint={PEACH} />
       </RoundedBox>
     </group>
   );
 }
 
-function Grow({ glass }: MotifProps) {
+const arrowStrokes: { length: number; position: [number, number, number]; angle: number }[] = [
+  { length: 1.05, position: [0, -0.12, 0], angle: 0 },
+  { length: 0.42, position: [-0.16, 0.38, 0.02], angle: -0.85 },
+  { length: 0.42, position: [0.16, 0.38, 0.02], angle: 0.85 },
+];
+
+function Grow() {
   return (
-    <group rotation={[0.25, 0.5, 0]}>
-      {[0.32, 0.56, 0.8, 1.04].map((height, i) => (
-        <RoundedBox
-          key={height}
-          args={[0.36, height, 0.36]}
-          radius={0.06}
-          smoothness={4}
-          position={[-0.6 + i * 0.4, -0.55 + height / 2, 0]}
-        >
-          <Glass glass={glass} tint={i === 3 ? WARM : CLEAR} />
-        </RoundedBox>
+    <group rotation={[0.25, -0.4, -0.75]}>
+      {arrowStrokes.map(({ length, position, angle }) => (
+        <mesh key={angle} position={position} rotation={[0, 0, angle]}>
+          <capsuleGeometry args={[0.15, length, 24, 64]} />
+          <Pearl tint={ROSE} />
+        </mesh>
       ))}
     </group>
   );
@@ -170,7 +259,16 @@ function Prism({ glass }: MotifProps) {
   return (
     <mesh rotation={[Math.PI / 2, 0, 0.12]}>
       <cylinderGeometry args={[0.66, 0.66, 1.1, 3, 1]} />
-      <Glass glass={glass} tint={WARM} />
+      <HoloGlass glass={glass} />
+    </mesh>
+  );
+}
+
+export function Droplet() {
+  return (
+    <mesh>
+      <icosahedronGeometry args={[1, 16]} />
+      <Liquid tint={SILVER} distort={0.35} />
     </mesh>
   );
 }
