@@ -2,9 +2,9 @@ import Image from "next/image";
 
 import { getMessages, getTranslations } from "next-intl/server";
 
-import grow from "@/assets/imagery/glass-grow.jpg";
-import listen from "@/assets/imagery/glass-listen.jpg";
-import small from "@/assets/imagery/glass-small.jpg";
+import grow from "@/assets/imagery/grow.jpg";
+import listen from "@/assets/imagery/listen.jpg";
+import small from "@/assets/imagery/small.jpg";
 import { Chapter } from "@/components/chapter";
 
 import { SectionHead } from "../section-head";

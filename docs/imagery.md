@@ -30,42 +30,15 @@ Every chapter marks where its motif sits with a `data-film-slot` element. The ob
 | `listen` | Process 1: Erst zuhören | Three concentric rings spreading like ripples |
 | `small` | Process 2: Klein anfangen | A sphere next to a small rounded cube |
 | `grow` | Process 3: Nur ausbauen | A capsule arrow pointing up and to the right |
-| `prism` | Contact | A rounded triangular prism splitting a white beam into a spectrum |
+| `knot` | Contact | A trefoil knot, for "wo es hakt" |
 
 ## Fallback images
 
-The JPEGs in `src/assets/imagery/` sit inside the slots. They show until the film is ready, and stay for visitors who prefer reduced motion or have no WebGL2. They are still the earlier frosted-glass series on white, shown inverted (`filter: invert(1) hue-rotate(180deg)`) so they read on the dark background. They should be regenerated in the holographic style; until then they do not match the 3D motifs.
+Each slot holds a still of its motif from the film, in `src/assets/imagery/<slot>.jpg` (`mark.jpg` is 21:9 for the hero, the chapter stills are square). They show until the film is ready, and stay for visitors who prefer reduced motion or have no WebGL2. They already carry the film's grain and dark background, so no filter or overlay goes on top. `mark.jpg` is also the picture in the link preview (`src/lib/og-image.tsx`).
 
-## Generating (earlier frosted-glass series)
+When a motif changes, capture its still again:
 
-Model: `gemini-3.1-flash-lite-image`, the cheapest Gemini image model. It only supports `imageSize` 1K, which is enough for soft glass. Generate one image per motif and only re-roll the ones that fail review.
-
-Every prompt starts with the base line:
-
-> Abstract 3D render, minimal and premium. Soft frosted-glass sculptural forms on a pure white background, lit so they glow softly from within. Colours only: warm orange #FF6B35, soft peach, and a cool mint teal #1F8A84 refracting through the glass; everything else white. Smooth soft gradients, gentle soft shadow, fine film grain. No text, no letters, no numbers, no logos, no people, no symbols, no icons.
-
-Then the motif. Cards are 16:9 (the card shows a centred strip), the hero is 21:9 and the contact image 4:5.
-
-## Post-processing
-
-The model renders on a light grey studio backdrop. Take the median colour of the image edges and scale each channel so that colour becomes white (`pixel * 255 / backdrop`, clipped). Save as JPEG q86 at the generated size; the files come out around 35 KB.
-
-## Files
-
-All in `src/assets/imagery/`.
-
-| File | Use | Motif |
-| ---- | --- | ----- |
-| `glass-hero.jpg` | Hero (21:9, full width, edges masked into white) | A monumental frosted-glass ring rising from the bottom edge like a sunrise, glowing orange inside, mint at its edges, a soft warm halo |
-| `glass-contact.jpg` | Contact (4:5) and the link preview | A frosted glass prism splitting a beam of white light into orange and mint |
-| `glass-check.jpg` | Service: KI-Check | A smooth glass ring, like a lens, slightly tilted |
-| `glass-flows.jpg` | Service: Abläufe planen | Three rounded glass capsules joined by one flowing glass ribbon |
-| `glass-bridge.jpg` | Service: Brücke zur IT | An orange and a mint glass sphere connected by an arched glass bridge |
-| `glass-software.jpg` | Service: Software nach Maß | Three thin rounded glass panels, like floating screens, offset in depth |
-| `glass-listen.jpg` | Process 1: Erst zuhören | Two soft glass blobs overlapping like bubbles in conversation |
-| `glass-small.jpg` | Process 2: Klein anfangen | A small glass sphere next to an even smaller glass cube |
-| `glass-grow.jpg` | Process 3: Nur ausbauen | Four rounded glass blocks forming rising steps |
-
-## Live 3D on the home page
-
-On the home page the same motifs are rendered live as one glass object that changes shape while you scroll (`src/components/film-scene`, shapes in `src/components/film-motifs`). Every chapter marks where its motif sits with a `data-film-slot` element. The JPEG inside that slot is the fallback: it shows until the scene is ready, and stays for visitors who prefer reduced motion or have no WebGL2. When you change a motif, change the image and the 3D shape together.
+1. Temporarily pin the film to a device pixel ratio of 2 (`useState(2)` and `onDecline` in `FilmScene`) and set the light leak's intensity to 0. Do not commit this.
+2. Build and start the site, open `/de` at 1440×900 with a device scale factor of 2, and hide everything except the film (`body * { visibility: hidden }`, then make `[data-ready]` and its children visible again).
+3. For each slot, scroll until its centre sits at half the viewport height, wait a few seconds for the shape to settle, and screenshot the slot's bounding box.
+4. Save as JPEG q86 (the hero at 1920 px wide, the chapter stills at their captured size).

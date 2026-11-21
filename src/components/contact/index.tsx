@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ArrowRight, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import kontakt from "@/assets/imagery/glass-contact.jpg";
+import knot from "@/assets/imagery/knot.jpg";
 import { Chapter } from "@/components/chapter";
 import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
@@ -18,13 +18,7 @@ export async function Contact() {
       <Chapter
         motif="knot"
         media={
-          <Image
-            src={kontakt}
-            alt=""
-            fill
-            sizes="(min-width: 720px) 50vw, 80vw"
-            placeholder="blur"
-          />
+          <Image src={knot} alt="" fill sizes="(min-width: 720px) 50vw, 80vw" placeholder="blur" />
         }
       >
         <h2 className={styles.heading}>
