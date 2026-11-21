@@ -9,18 +9,17 @@ import {
   RoundedBox,
 } from "@react-three/drei";
 import { CatmullRomCurve3, ExtrudeGeometry, Shape, Vector3 } from "three";
-import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
+import { ParametricGeometry } from "three/examples/jsm/geometries/ParametricGeometry.js";
 
-import { MARK_CENTER, MARK_OFFSET, MARK_PATH, MARK_SCALE } from "@/lib/brand-mark";
+import { MARK_ARC } from "@/lib/brand-mark";
 import type { Motif } from "@/lib/film";
 
 export type GlassProps = Omit<MeshTransmissionMaterialProps, "color">;
 
-const SILVER = "#f4eeea";
-const EMBER = "#ffd2bd";
-const ROSE = "#ffd9e6";
-const PEACH = "#ffe6d8";
-const CORAL = "#ffc9b6";
+const SILVER = "#f7f3f1";
+const EMBER = "#ffe2d4";
+const ROSE = "#ffe6ef";
+const PEACH = "#fff0e8";
 
 type MotifProps = { glass: GlassProps };
 
@@ -65,22 +64,18 @@ function Pearl({ tint = EMBER }: { tint?: string }) {
   return (
     <meshPhysicalMaterial
       color={tint}
-      metalness={0.85}
-      roughness={0.22}
+      metalness={1}
+      roughness={0.13}
       clearcoat={1}
       clearcoatRoughness={0.04}
-      envMapIntensity={1.3}
-      sheen={1}
-      sheenColor="#ffb38a"
+      envMapIntensity={1.4}
       {...iridescent}
     />
   );
 }
 
-function HoloGlass({ glass }: MotifProps) {
-  return (
-    <MeshTransmissionMaterial {...glass} color="#ffffff" {...iridescent} iridescenceIOR={1.4} />
-  );
+function HoloGlass({ glass, tint = "#ffffff" }: MotifProps & { tint?: string }) {
+  return <MeshTransmissionMaterial {...glass} color={tint} {...iridescent} iridescenceIOR={1.4} />;
 }
 
 function usePuffy(shape: Shape, depth = 0.12, bevel = 0.16) {
@@ -130,39 +125,52 @@ function linkCurve(length: number, radius: number) {
   return new CatmullRomCurve3(points, true);
 }
 
-function useMarkGeometry() {
-  return useMemo(() => {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg"><path d="${MARK_PATH}"/></svg>`;
-    const shapes = new SVGLoader().parse(svg).paths.flatMap((path) => path.toShapes());
-    const geometry = new ExtrudeGeometry(shapes, {
-      depth: 60,
-      bevelEnabled: true,
-      bevelThickness: 70,
-      bevelSize: 46,
-      bevelSegments: 16,
-      curveSegments: 64,
-    });
-    geometry.translate(0, 0, -30);
-    geometry.scale(MARK_SCALE, MARK_SCALE, MARK_SCALE);
-    geometry.translate(MARK_OFFSET.x - MARK_CENTER.x, MARK_OFFSET.y - MARK_CENTER.y, 0);
-    const unit = 1 / 760;
-    geometry.scale(unit, -unit, -unit);
-    geometry.computeVertexNormals();
-    return geometry;
-  }, []);
+function arcCurve(radius: number, from: number, to: number) {
+  const points: Vector3[] = [];
+  const steps = 48;
+  for (let i = 0; i <= steps; i++) {
+    const angle = from + ((to - from) * i) / steps;
+    points.push(new Vector3(Math.cos(angle) * radius, Math.sin(angle) * radius, 0));
+  }
+  return new CatmullRomCurve3(points);
 }
 
-function Mark() {
-  const geometry = useMarkGeometry();
+const markCurve = arcCurve(MARK_ARC.radius, MARK_ARC.from, MARK_ARC.to);
+
+const markEnds = [MARK_ARC.from, MARK_ARC.to].map(
+  (angle) => [Math.cos(angle) * MARK_ARC.radius, Math.sin(angle) * MARK_ARC.radius, 0] as const,
+);
+
+function MarkC({ glass, tint }: MotifProps & { tint: string }) {
+  return (
+    <>
+      <mesh>
+        <tubeGeometry args={[markCurve, 160, MARK_ARC.tube, 48, false]} />
+        <HoloGlass glass={glass} tint={tint} />
+      </mesh>
+      {markEnds.map(([x, y, z]) => (
+        <mesh key={`${x}:${y}`} position={[x, y, z]}>
+          <sphereGeometry args={[MARK_ARC.tube, 48, 24]} />
+          <HoloGlass glass={glass} tint={tint} />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+function Mark({ glass }: MotifProps) {
+  const { x, y } = MARK_ARC.center;
 
   return (
     <group>
-      <mesh geometry={geometry} rotation={[0, 0.22, 0]}>
-        <Chrome tint={SILVER} roughness={0.14} />
-      </mesh>
-      <mesh geometry={geometry} rotation={[0, -0.22, Math.PI]}>
-        <Chrome tint={PEACH} roughness={0.16} />
-      </mesh>
+      <group position={[x, y, 0]} rotation={[0.18, 0.16, 0]}>
+        <MarkC glass={glass} tint={PEACH} />
+      </group>
+      <group rotation={[0, 0, Math.PI]}>
+        <group position={[x, y, 0]} rotation={[0.18, 0.16, 0]}>
+          <MarkC glass={glass} tint={ROSE} />
+        </group>
+      </group>
     </group>
   );
 }
@@ -197,22 +205,38 @@ function Flows({ glass }: MotifProps) {
   );
 }
 
+function useMobius(radius: number, width: number, thickness: number) {
+  return useMemo(
+    () =>
+      new ParametricGeometry(
+        (u, v, target) => {
+          const angle = u * Math.PI * 2;
+          const around = v * Math.PI * 2;
+          const twist = angle / 2;
+          const a = Math.cos(around) * width;
+          const b = Math.sin(around) * thickness;
+          const radial = a * Math.cos(twist) - b * Math.sin(twist);
+          const lift = a * Math.sin(twist) + b * Math.cos(twist);
+          target.set(
+            (radius + radial) * Math.cos(angle),
+            (radius + radial) * Math.sin(angle),
+            lift,
+          );
+        },
+        320,
+        48,
+      ),
+    [radius, width, thickness],
+  );
+}
+
 function Bridge() {
+  const geometry = useMobius(0.66, 0.24, 0.06);
+
   return (
-    <group position={[0, -0.18, 0]}>
-      <mesh position={[-0.66, -0.12, 0]}>
-        <sphereGeometry args={[0.36, 96, 48]} />
-        <Liquid tint={ROSE} distort={0.3} />
-      </mesh>
-      <mesh position={[0.66, -0.12, 0]}>
-        <sphereGeometry args={[0.36, 96, 48]} />
-        <Liquid tint={CORAL} distort={0.3} />
-      </mesh>
-      <mesh position={[0, -0.12, 0]}>
-        <torusGeometry args={[0.66, 0.11, 48, 160, Math.PI]} />
-        <Chrome />
-      </mesh>
-    </group>
+    <mesh geometry={geometry} rotation={[-0.9, 0.2, 0.3]}>
+      <Chrome tint={SILVER} roughness={0.12} />
+    </mesh>
   );
 }
 
@@ -224,24 +248,28 @@ function Software() {
     <group rotation={[0.12, -0.5, 0]}>
       {[-1, 0, 1].map((i) => (
         <mesh key={i} geometry={geometry} position={[i * 0.3, i * -0.24, i * 0.42]}>
-          <Pearl tint={[EMBER, ROSE, CORAL][i + 1]} />
+          <Pearl tint={[SILVER, PEACH, ROSE][i + 1]} />
         </mesh>
       ))}
     </group>
   );
 }
 
-function Listen() {
+const ripples = [
+  { radius: 0.3, tube: 0.075, z: 0.12 },
+  { radius: 0.6, tube: 0.06, z: 0 },
+  { radius: 0.9, tube: 0.045, z: -0.12 },
+];
+
+function Listen({ glass }: MotifProps) {
   return (
-    <group>
-      <mesh position={[-0.3, 0.06, 0]} scale={0.5}>
-        <icosahedronGeometry args={[1, 24]} />
-        <Liquid tint={ROSE} distort={0.42} />
-      </mesh>
-      <mesh position={[0.32, -0.06, 0.2]} scale={0.46}>
-        <icosahedronGeometry args={[1, 24]} />
-        <Liquid tint={CORAL} distort={0.42} />
-      </mesh>
+    <group rotation={[-1.05, 0, 0.25]}>
+      {ripples.map(({ radius, tube, z }, i) => (
+        <mesh key={radius} position={[0, 0, z]}>
+          <torusGeometry args={[radius, tube, 48, 192]} />
+          {i === 1 ? <Chrome tint={EMBER} roughness={0.1} /> : <HoloGlass glass={glass} />}
+        </mesh>
+      ))}
     </group>
   );
 }
@@ -251,7 +279,7 @@ function Small() {
     <group>
       <mesh position={[-0.26, 0.04, 0]}>
         <sphereGeometry args={[0.42, 96, 48]} />
-        <Chrome tint={EMBER} roughness={0.08} />
+        <Chrome tint={SILVER} roughness={0.1} />
       </mesh>
       <RoundedBox
         args={[0.36, 0.36, 0.36]}
@@ -305,15 +333,6 @@ function Prism({ glass }: MotifProps) {
   return (
     <mesh geometry={geometry}>
       <HoloGlass glass={glass} />
-    </mesh>
-  );
-}
-
-export function Droplet() {
-  return (
-    <mesh>
-      <icosahedronGeometry args={[1, 16]} />
-      <Liquid tint={SILVER} distort={0.35} />
     </mesh>
   );
 }

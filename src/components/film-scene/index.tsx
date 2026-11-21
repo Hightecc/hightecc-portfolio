@@ -7,6 +7,8 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   AdditiveBlending,
   BackSide,
+  BufferAttribute,
+  BufferGeometry,
   Color,
   type Group,
   MathUtils,
@@ -14,12 +16,13 @@ import {
   NeutralToneMapping,
   OrthographicCamera,
   PlaneGeometry,
+  type Points,
   Scene,
   ShaderMaterial,
   type Texture,
 } from "three";
 
-import { Droplet, type GlassProps, motifNodes } from "@/components/film-motifs";
+import { type GlassProps, motifNodes } from "@/components/film-motifs";
 import { type Motif, motifs } from "@/lib/film";
 import { measureSlots, type Slot, shotAt } from "@/lib/film-track";
 
@@ -32,6 +35,7 @@ const ORANGE = "#ff6b35";
 const EMBER = "#ff4d1f";
 const PEACH = "#ffb48f";
 const CORAL = "#ff7a5c";
+const PINK = "#ff5f8f";
 const MAGENTA = "#e04fd4";
 const VIOLET = "#8b5cf6";
 const BLUE = "#3b82f6";
@@ -154,6 +158,80 @@ function useComposite() {
   }, []);
 }
 
+const dustVertex = /* glsl */ `
+  attribute vec3 aDirection;
+  attribute float aSeed;
+  uniform float uSpread;
+  uniform float uTime;
+  uniform float uSize;
+  uniform vec3 uColors[4];
+  varying vec3 vColor;
+  varying float vAlpha;
+
+  void main() {
+    float spin = uTime * (0.4 + aSeed * 0.8) + aSeed * 40.0;
+    float reach = mix(0.15, 1.0, uSpread) * (0.55 + 0.45 * fract(aSeed * 7.13));
+    vec3 p = aDirection * reach;
+    float c = cos(spin * uSpread);
+    float s = sin(spin * uSpread);
+    p.xz = mat2(c, -s, s, c) * p.xz;
+    p.y *= mix(1.0, 0.65, uSpread);
+    vec4 view = modelViewMatrix * vec4(p, 1.0);
+    gl_Position = projectionMatrix * view;
+    gl_PointSize = uSize * (0.4 + fract(aSeed * 3.7)) / -view.z;
+    float pick = fract(aSeed * 13.7) * 3.0;
+    vColor = mix(uColors[int(pick)], uColors[int(pick) + 1], fract(pick));
+    vAlpha = 0.35 + 0.65 * fract(aSeed * 11.1);
+  }
+`;
+
+const dustFragment = /* glsl */ `
+  uniform float uIntensity;
+  varying vec3 vColor;
+  varying float vAlpha;
+
+  void main() {
+    float d = length(gl_PointCoord - 0.5) * 2.0;
+    float dot = pow(clamp(1.0 - d, 0.0, 1.0), 1.4);
+    gl_FragColor = vec4(vColor, dot * vAlpha * uIntensity);
+  }
+`;
+
+function useDust(count: number) {
+  return useMemo(() => {
+    const directions = new Float32Array(count * 3);
+    const seeds = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      directions[i * 3] = Math.sin(phi) * Math.cos(theta);
+      directions[i * 3 + 1] = Math.cos(phi);
+      directions[i * 3 + 2] = Math.sin(phi) * Math.sin(theta);
+      seeds[i] = Math.random();
+    }
+    const geometry = new BufferGeometry();
+    geometry.setAttribute("position", new BufferAttribute(new Float32Array(count * 3), 3));
+    geometry.setAttribute("aDirection", new BufferAttribute(directions, 3));
+    geometry.setAttribute("aSeed", new BufferAttribute(seeds, 1));
+    const uniforms = {
+      uSpread: { value: 0 },
+      uTime: { value: 0 },
+      uSize: { value: 60 },
+      uIntensity: { value: 0 },
+      uColors: { value: [PEACH, ORANGE, PINK, VIOLET].map((hex) => new Color(hex)) },
+    };
+    const material = new ShaderMaterial({
+      uniforms,
+      vertexShader: dustVertex,
+      fragmentShader: dustFragment,
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+    });
+    return { geometry, material, uniforms };
+  }, [count]);
+}
+
 const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
 function Film({ onReady }: { onReady: () => void }) {
@@ -166,7 +244,8 @@ function Film({ onReady }: { onReady: () => void }) {
   const glassRoot = useRef<Group>(null);
   const motifGroups = useRef<Partial<Record<Motif, Group>>>({});
   const prismBeams = useRef<Group>(null);
-  const bead = useRef<Group>(null);
+  const dustCloud = useRef<Points>(null);
+  const dust = useDust(1600);
   const slots = useRef<Slot[]>([]);
   const pointer = useRef({ x: 0, y: 0 });
   const leaning = useRef({ x: 0, y: 0 });
@@ -287,10 +366,15 @@ function Film({ onReady }: { onReady: () => void }) {
       }
 
       const between = from === to ? 0 : (4 * u * (1 - u)) ** 3;
-      if (bead.current) {
-        bead.current.visible = between > 0.001;
-        bead.current.position.set(wx, wy, 0);
-        bead.current.scale.setScalar(Math.max(worldSize * 0.1 * between, 1e-4));
+      if (dustCloud.current) {
+        const spread = from === to ? 0 : Math.sin(Math.PI * u);
+        dustCloud.current.visible = spread > 0.001;
+        dustCloud.current.position.set(wx, wy, 0.4);
+        dustCloud.current.scale.setScalar(worldSize * 0.55);
+        dust.uniforms.uSpread.value = spread;
+        dust.uniforms.uTime.value = t;
+        dust.uniforms.uSize.value = 80 * dpr * (size.height / 900);
+        dust.uniforms.uIntensity.value = 1.1 * MathUtils.smoothstep(spread, 0, 0.35);
       }
 
       const glow = Math.max(presence[from.motif] ?? 0, presence[to.motif] ?? 0, between * 0.7);
@@ -336,6 +420,13 @@ function Film({ onReady }: { onReady: () => void }) {
       <mesh ref={leak} material={fx.leak.material}>
         <planeGeometry args={[1, 1]} />
       </mesh>
+      <points
+        ref={dustCloud}
+        geometry={dust.geometry}
+        material={dust.material}
+        visible={false}
+        frustumCulled={false}
+      />
       <mesh ref={warmGlow} material={fx.warm.material}>
         <planeGeometry args={[1, 1]} />
       </mesh>
@@ -372,32 +463,33 @@ function Film({ onReady }: { onReady: () => void }) {
             </group>
           );
         })}
-        <group ref={bead} visible={false}>
-          <Droplet />
-        </group>
       </group>
     </>
   );
 }
 
 const domeFragment = /* glsl */ `
-  uniform vec3 uOrange;
-  uniform vec3 uPeach;
-  uniform vec3 uCoral;
-  uniform vec3 uMagenta;
-  uniform vec3 uViolet;
+  uniform vec3 uStops[6];
   varying vec3 vDirection;
+
+  vec3 flow(float t) {
+    float scaled = fract(t) * 5.0;
+    int index = int(floor(scaled));
+    float blend = smoothstep(0.0, 1.0, fract(scaled));
+    vec3 color = uStops[0];
+    for (int i = 0; i < 5; i++) {
+      if (i == index) color = mix(uStops[i], uStops[i + 1], blend);
+    }
+    return color;
+  }
+
   void main() {
     vec3 d = normalize(vDirection);
     float angle = atan(d.z, d.x) / 6.28318 + 0.5;
-    vec3 hue = mix(uOrange, uPeach, smoothstep(0.0, 0.18, angle));
-    hue = mix(hue, uOrange, smoothstep(0.18, 0.36, angle));
-    hue = mix(hue, uMagenta, smoothstep(0.36, 0.5, angle));
-    hue = mix(hue, uCoral, smoothstep(0.5, 0.62, angle));
-    hue = mix(hue, uViolet, smoothstep(0.66, 0.74, angle) * (1.0 - smoothstep(0.74, 0.82, angle)));
-    hue = mix(hue, uOrange, smoothstep(0.82, 1.0, angle));
-    float band = 0.35 + 0.65 * smoothstep(-0.7, 0.5, d.y);
-    gl_FragColor = vec4(hue * band * 1.6, 1.0);
+    vec3 hue = flow(angle + d.y * 0.18);
+    float light = 0.4 + 0.6 * smoothstep(-0.8, 0.6, d.y);
+    hue = mix(hue, vec3(1.0, 0.94, 0.9), smoothstep(0.55, 0.98, d.y) * 0.55);
+    gl_FragColor = vec4(hue * light * 1.6, 1.0);
   }
 `;
 
@@ -414,11 +506,9 @@ function Lights() {
     () =>
       new ShaderMaterial({
         uniforms: {
-          uOrange: { value: new Color(ORANGE) },
-          uPeach: { value: new Color(PEACH) },
-          uCoral: { value: new Color(CORAL) },
-          uMagenta: { value: new Color(MAGENTA) },
-          uViolet: { value: new Color(VIOLET) },
+          uStops: {
+            value: [ORANGE, PINK, MAGENTA, VIOLET, PEACH, ORANGE].map((hex) => new Color(hex)),
+          },
         },
         vertexShader: domeVertex,
         fragmentShader: domeFragment,

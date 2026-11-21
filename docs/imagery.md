@@ -5,23 +5,23 @@ The home page is one scroll-driven 3D film (`src/components/film-scene`, shapes 
 ## Style
 
 - **Materials:** liquid chrome (`MeshDistortMaterial`, fully metallic, iridescent), dispersive glass with strong chromatic aberration for links, lens and prism, and inflated pearlescent forms (rounded panels, capsule arrow).
-- **Colours:** orange `#ff6b35` leads, with ember `#ff4d1f`, peach `#ffb48f` and coral `#ff7a5c` around it and magenta `#e04fd4` and a narrow band of violet `#8b5cf6` for the holographic shift. They come from a gradient dome in the environment map, so the shapes reflect them rather than being painted with them; the material tints stay near silver and peach. An orange light leak sits in the top right corner, and the glows behind each shape are orange first.
+- **Colours:** orange `#ff6b35` leads, with ember `#ff4d1f`, peach `#ffb48f` and coral `#ff7a5c` around it and magenta `#e04fd4` and a narrow band of violet `#8b5cf6` for the holographic shift. They come from a gradient dome in the environment map that blends through orange, pink, magenta, violet and peach in long, even steps, so the shapes reflect flowing gradients rather than being painted. The material tints stay near silver and peach; strong tints flatten the gradients. An orange light leak sits in the top right corner, and the glows behind each shape are orange first.
 - **Background:** near-black `#07070a`, the same as `--background`.
 - **Grain:** added in the film's final pass over the whole frame, slightly stronger on bright areas. Keep it there rather than in the materials.
 - **No meaning:** no text, letters, numbers, logos, icons, symbols or people.
 
 ## Chapters
 
-Every chapter marks where its motif sits with a `data-film-slot` element. The object follows those slots as you scroll, collapses into a chrome droplet between chapters and reforms as the next motif.
+Every chapter marks where its motif sits with a `data-film-slot` element. The object follows those slots as you scroll. Between chapters it shrinks away inside a swirling cloud of orange, pink and violet dust that travels to the next slot, where the next motif grows back out of it.
 
 | Slot | Chapter | Motif |
 | ---- | ------- | ----- |
-| `mark` | Hero | The two Cs of the logo mark in chrome, interlocked like an infinity sign |
+| `mark` | Hero | The two Cs of the logo mark as round glass tubes, interlocked like an infinity sign (`MARK_ARC` in `src/lib/brand-mark.ts`) |
 | `lens` | Service: KI-Check | A dispersive glass ring around a liquid disc, tilted like a lens |
 | `flows` | Service: Abläufe planen | Three interlocking glass chain links |
-| `bridge` | Service: Brücke zur IT | Two liquid spheres joined by a chrome arch |
+| `bridge` | Service: Brücke zur IT | A chrome Möbius band, one surface that joins both sides |
 | `software` | Service: Software nach Maß | Three inflated rounded panels, offset in depth |
-| `listen` | Process 1: Erst zuhören | Two liquid blobs overlapping |
+| `listen` | Process 1: Erst zuhören | Three concentric rings spreading like ripples, glass and chrome |
 | `small` | Process 2: Klein anfangen | A chrome sphere next to a small inflated cube |
 | `grow` | Process 3: Nur ausbauen | An inflated arrow pointing up and to the right |
 | `prism` | Contact | A triangular glass prism splitting a white beam into a spectrum |
