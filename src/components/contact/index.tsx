@@ -16,7 +16,7 @@ export async function Contact() {
   return (
     <section id="contact" className={styles.section}>
       <Chapter
-        motif="prism"
+        motif="knot"
         media={
           <Image
             src={kontakt}

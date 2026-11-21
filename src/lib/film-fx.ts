@@ -40,7 +40,7 @@ export const framing: Record<Motif, Framing> = {
   listen: { fill: 0.86, offsetY: 0 },
   small: { fill: 0.9, offsetY: 0 },
   grow: { fill: 0.8, offsetY: 0 },
-  prism: { fill: 0.74, offsetY: 0 },
+  knot: { fill: 0.8, offsetY: 0 },
 };
 
 const passVertex = /* glsl */ `
@@ -74,17 +74,6 @@ export const leakFragment = /* glsl */ `
     vec3 color = mix(uColor, uEdge, smoothstep(0.35, 1.0, vUv.x));
     color = mix(color, vec3(1.0), pow(across, 6.0) * along * 0.85);
     gl_FragColor = vec4(color, across * along * uIntensity);
-  }
-`;
-
-export const beamFragment = /* glsl */ `
-  uniform vec3 uColor;
-  uniform float uIntensity;
-  varying vec2 vUv;
-  void main() {
-    float across = pow(clamp(1.0 - abs(vUv.y - 0.5) * 2.0, 0.0, 1.0), 2.0);
-    float along = smoothstep(0.0, 0.25, vUv.x) * smoothstep(1.0, 0.75, vUv.x);
-    gl_FragColor = vec4(uColor, across * along * uIntensity);
   }
 `;
 

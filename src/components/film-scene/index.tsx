@@ -7,8 +7,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   Color,
   Euler,
-  type Group,
-  MathUtils,
   Matrix3,
   Matrix4,
   type Mesh,
@@ -22,8 +20,6 @@ import { MARK_ARC } from "@/lib/brand-mark";
 import { motifs } from "@/lib/film";
 import {
   BACKGROUND,
-  BLUE,
-  beamFragment,
   CAMERA_Z,
   EMBER,
   easeOut,
@@ -106,11 +102,6 @@ const raymarchFragment = /* glsl */ `
     vec3 ba = b - a;
     float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
     return length(pa - ba * h) - radius;
-  }
-
-  float sdTriPrism(vec3 p, vec2 h) {
-    vec3 q = abs(p);
-    return max(q.z - h.y, max(q.x * 0.866025 + p.y * 0.5, -p.y) - h.x * 0.5);
   }
 
   float sdC(vec3 p) {
@@ -198,10 +189,17 @@ const raymarchFragment = /* glsl */ `
     return d;
   }
 
-  float sdPrism(vec3 p) {
-    p.xz *= rot(-0.42);
-    p.yz *= rot(-0.08);
-    return sdTriPrism(p, vec2(0.5, 0.26)) - 0.1;
+  float sdKnot(vec3 p) {
+    p.yz *= rot(0.35);
+    p.xz *= rot(-0.25);
+    float around = atan(p.y, p.x);
+    vec2 section = vec2(length(p.xy) - 0.6, p.z);
+    float d = 1e9;
+    for (int k = 0; k < 2; k++) {
+      float phase = (around + 6.28318 * float(k)) * 1.5;
+      d = min(d, length(section - vec2(cos(phase), sin(phase)) * 0.3));
+    }
+    return d - 0.15;
   }
 
   float sdMotif(int id, vec3 p) {
@@ -213,7 +211,7 @@ const raymarchFragment = /* glsl */ `
     if (id == 5) return sdListen(p);
     if (id == 6) return sdSmall(p);
     if (id == 7) return sdGrow(p);
-    return sdPrism(p);
+    return sdKnot(p);
   }
 
   vec3 sway(vec3 p) {
@@ -351,7 +349,6 @@ function Film({ onReady }: { onReady: () => void }) {
   const warmGlow = useRef<Mesh>(null);
   const coolGlow = useRef<Mesh>(null);
   const leak = useRef<Mesh>(null);
-  const beams = useRef<Group>(null);
   const slots = useRef<Slot[]>([]);
   const pointer = useRef({ x: 0, y: 0 });
   const leaning = useRef({ x: 0, y: 0 });
@@ -362,10 +359,6 @@ function Film({ onReady }: { onReady: () => void }) {
       warm: fxMaterial(glowFragment, ORANGE, EMBER),
       cool: fxMaterial(glowFragment, MAGENTA, ORANGE),
       leak: fxMaterial(leakFragment, EMBER, ORANGE),
-      beamIn: fxMaterial(beamFragment, "#ffffff"),
-      spectrum: [EMBER, ORANGE, MAGENTA, VIOLET, BLUE].map((color) =>
-        fxMaterial(beamFragment, color),
-      ),
     }),
     [],
   );
@@ -468,17 +461,6 @@ function Film({ onReady }: { onReady: () => void }) {
       coolGlow.current?.scale.setScalar(worldSize * 1.1);
       fx.warm.intensity.value = 0.5;
       fx.cool.intensity.value = 0.22;
-
-      const prism =
-        (from.motif === "prism" ? 1 - u : 0) + (to.motif === "prism" && from !== to ? u : 0);
-      const shine = MathUtils.smoothstep(prism, 0.55, 1);
-      if (beams.current) {
-        beams.current.visible = shine > 0.001;
-        beams.current.position.set(wx, wy, -1.2);
-        beams.current.scale.setScalar(scale);
-      }
-      fx.beamIn.intensity.value = 0.9 * shine;
-      for (const beam of fx.spectrum) beam.intensity.value = 0.75 * shine;
     }
 
     composite.uniforms.uPixel.value = dpr;
@@ -503,21 +485,6 @@ function Film({ onReady }: { onReady: () => void }) {
       <mesh ref={coolGlow} material={fx.cool.material}>
         <planeGeometry args={[1, 1]} />
       </mesh>
-      <group ref={beams} visible={false}>
-        <mesh material={fx.beamIn.material} position={[-1.75, 0.02, 0]} rotation={[0, 0, 0.1]}>
-          <planeGeometry args={[2.8, 0.12]} />
-        </mesh>
-        {fx.spectrum.map((beam, i) => (
-          <mesh
-            key={beam.material.uuid}
-            material={beam.material}
-            position={[1.7, 0.08 - i * 0.12, 0]}
-            rotation={[0, 0, -0.06 - i * 0.07]}
-          >
-            <planeGeometry args={[2.6, 0.16]} />
-          </mesh>
-        ))}
-      </group>
       <mesh ref={body} material={raymarch.material} frustumCulled={false}>
         <planeGeometry args={[1, 1]} />
       </mesh>

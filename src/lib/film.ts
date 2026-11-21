@@ -7,7 +7,7 @@ export const motifs = [
   "listen",
   "small",
   "grow",
-  "prism",
+  "knot",
 ] as const;
 
 export type Motif = (typeof motifs)[number];
