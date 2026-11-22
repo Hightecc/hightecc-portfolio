@@ -8,9 +8,9 @@ const messages = {
   },
   metadata: {
     home: {
-      title: "Hightecc · KI-Beratung und Software nach Maß für KMU in Köln",
+      title: "Hightecc · Software und KI nach Maß in Köln",
       description:
-        "Basile Bong findet heraus, wo KI in deinem Betrieb Zeit spart, plant die Umsetzung mit deiner IT und baut Software nach Maß.",
+        "Basile Bong macht aus deiner Idee funktionierende Software, mit KI, wo sie wirklich hilft. Für Gründerinnen, Gründer und kleine Unternehmen.",
     },
     impressum: {
       title: "Impressum · Hightecc",
@@ -23,46 +23,46 @@ const messages = {
   },
   hero: {
     headline: {
-      line1: "KI, die deinem Betrieb",
-      line2: "<amp>wirklich</amp> Arbeit abnimmt.",
+      line1: "Deine Idee wird Software.",
+      line2: "Mit KI, wo sie <amp>wirklich</amp> hilft.",
     },
-    sub: "Ich bin Basile aus Köln und berate kleine und mittlere Betriebe zu KI. Ich finde heraus, wo bei dir Zeit verloren geht, etwa bei Anfragen, Angeboten oder Papierkram, und <strong>plane mit dir und deiner IT, wie KI diese Arbeit übernimmt</strong>. Passt kein fertiges Programm, baue ich dir eins.",
+    sub: "Ich bin Basile, Softwareentwickler in Köln, und baue KI-Produkte, die jeden Tag im echten Einsatz sind. Ich helfe Startups und kleinen Unternehmen, <strong>aus einer Idee funktionierende Software zu machen</strong>. Technisches Vorwissen brauchst du dafür nicht.",
     cta: {
-      primary: "Erstgespräch anfragen",
+      primary: "Erzähl mir von deiner Idee",
       secondary: "Was ich anbiete",
     },
   },
   capabilities: {
     section: {
-      title: "Was ich für dich <em>tun kann.</em>",
-      lede: "Vom genauen Blick auf deinen Betrieb bis zum fertigen Plan oder Programm. Du kannst mit dem Check anfangen oder gleich mit einer konkreten Frage kommen.",
+      title: "Was ich <em>für dich bauen kann.</em>",
+      lede: "Von der ersten Idee bis zur fertigen Software. Du kannst mit dem Ideen-Check anfangen oder gleich mit einer konkreten Frage kommen.",
     },
     a: {
-      title: "KI-Check",
-      desc: "Ich schaue mir an, wie in deinem Betrieb gearbeitet wird, und sage dir ehrlich, wo KI Zeit spart und wo nicht. Danach weißt du, womit du anfängst und was es dir bringt.",
+      title: "Ideen-Check",
+      desc: "Wir gehen deine Idee zusammen durch. Ich sage dir ehrlich, was sich zu bauen lohnt, wo KI wirklich hilft und was es kostet.",
     },
     b: {
-      title: "Abläufe planen",
-      desc: "Ich skizziere, wie die Arbeit künftig läuft: welche Programme Daten austauschen und wo KI einen Schritt übernimmt, etwa beim Vorsortieren von Anfragen oder beim ersten Entwurf eines Angebots. Am Ende hast du einen Plan, den deine IT umsetzen kann.",
+      title: "MVP für dein Startup",
+      desc: "Eine erste, schlanke Version, die schon funktioniert. Klein genug, um sie schnell echten Leuten zu zeigen. So merkst du früh, was wirklich gebraucht wird.",
     },
     c: {
-      title: "Brücke zur IT",
-      desc: "Ich setze mich mit deiner IT oder deinem IT-Dienstleister an einen Tisch, übersetze zwischen dir und der Technik und prüfe Vorschläge und Angebote. So wird am Ende das gebaut, was du brauchst.",
+      title: "KI-Funktionen",
+      desc: "KI, die dir echte Arbeit abnimmt. Sie beantwortet Fragen, sortiert Anfragen, formuliert Texte vor und durchsucht deine Dokumente.",
     },
     d: {
       title: "Software nach Maß",
-      desc: "Wenn kein fertiges Programm passt, baue ich dir eins: zum Beispiel ein Portal, über das deine Kundschaft Aufträge schickt, eine Einsatzplanung im Browser oder eine App fürs Handy.",
+      desc: "Software für eine ganz bestimmte Aufgabe. Zum Beispiel ein Bestellportal für deine Kundschaft, ein Buchungstool oder eine interne App für dein Team.",
     },
-    note: "Du weißt noch nicht, was davon passt? <strong>Das klären wir im ersten Gespräch.</strong>",
+    note: "Noch unsicher, was passt? <strong>Genau dafür ist das erste Gespräch da.</strong>",
   },
   pillars: {
     section: {
-      title: "So läuft's ab. <em>Ohne Fachjargon.</em>",
+      title: "Von der Idee zur Software. <em>Ohne Fachchinesisch.</em>",
       lede: "Kein Konzept für alles auf einmal. Drei Schritte, und nach jedem entscheidest du, ob es weitergeht.",
     },
     one: {
-      title: "Erst zuhören, <em>dann vorschlagen.</em>",
-      body: "Wir sprechen darüber, wie dein Betrieb arbeitet und wo es hakt. Ich frage nach, bis ich es verstanden habe, und erkläre alles so, dass du kein Technikstudium brauchst.",
+      title: "Erst verstehen, <em>dann bauen.</em>",
+      body: "Du erklärst mir deine Idee mit deinen eigenen Worten. Ich frage so lange nach, bis ich sie verstanden habe. Und wenn du gar keine eigene Software brauchst, sage ich dir das auch.",
       items: [
         "In Köln oder per Video",
         "Kein Verkaufsgespräch",
@@ -70,17 +70,17 @@ const messages = {
       ],
     },
     two: {
-      title: "Klein anfangen, <em>früh ausprobieren.</em>",
-      body: "Wir suchen die Aufgabe aus, bei der KI am meisten bringt, und kümmern uns erst um die. Je nach Aufgabe setzt deine IT den Plan um oder ich baue ein passendes Programm selbst. Hauptsache, dein Team kann früh ausprobieren, ob das im Alltag hilft.",
+      title: "Klein anfangen, <em>früh testen.</em>",
+      body: "Wir bauen die kleinste Version, mit der sich deine Idee prüfen lässt. Die geben wir dann schnell echten Menschen in die Hand.",
       items: [
-        "Eine Aufgabe nach der anderen",
-        "Im Kleinen testen",
+        "Die kleinste Version zuerst",
+        "Früh mit echten Menschen testen",
         "Kein Großprojekt mit offenem Ende",
       ],
     },
     three: {
-      title: "Nur ausbauen, <em>was sich rechnet.</em>",
-      body: "Ich denke wie ein Unternehmer, nicht nur wie ein Techniker. Jeder Schritt muss sich für dich lohnen: weniger Aufwand, schnellere Abläufe oder zufriedenere Kundschaft. Wenn nicht, merken wir das früh und lassen es.",
+      title: "Ausbauen, <em>was funktioniert.</em>",
+      body: "Jeder Schritt hat einen festen Umfang und ein festes Budget. Klappt es, bauen wir weiter. Wenn nicht, hören wir rechtzeitig auf.",
       items: [
         "Klare Ziele für jeden Schritt",
         "Budget, das planbar bleibt",
@@ -92,12 +92,12 @@ const messages = {
     section: {
       title: "Hallo, ich bin <em>Basile.</em>",
     },
-    lede: "Ich baue Software, seit ich denken kann: Websites, Web-Anwendungen und Apps. <em>Mich interessiert dabei vor allem, ob es am Ende wirklich hilft.</em> <muted>Weil ich selbst entwickle, weiß ich, was technisch machbar ist. So kann ich mit deiner IT auf Augenhöhe reden und dir trotzdem alles so erklären, dass du gut entscheiden kannst.</muted>",
+    lede: "Ich baue KI-Produkte, die Unternehmen jeden Tag nutzen, und habe dabei viel direkt mit diesen Kunden zu tun. <em>Ich höre mir an, was sie brauchen, erkläre Technik ohne Fachbegriffe und frage mich immer, was sich fürs Geschäft lohnt.</em> <muted>Nicht nur, was technisch möglich ist. Genau so arbeite ich auch mit dir.</muted>",
     credo: {
-      contactK: "Ansprechpartner",
-      contactV: "Immer ich, vom ersten Gespräch an",
       focusK: "Schwerpunkte",
-      focusV: "KI-Check · Abläufe planen · Brücke zur IT · Software nach Maß",
+      focusV: "Ideen-Check · MVP · KI-Funktionen · Software nach Maß",
+      audienceK: "Für wen",
+      audienceV: "Gründerinnen, Gründer und kleine Unternehmen",
       basedInK: "Standort",
       basedInV: "Köln · vor Ort oder per Video",
       languagesK: "Sprachen",
@@ -105,8 +105,8 @@ const messages = {
     },
   },
   contact: {
-    heading: "Erzähl mir, <em>wo es hakt.</em>",
-    lede: "Schreib mir kurz, was dein Betrieb macht und welche Aufgaben euch am meisten Zeit kosten. Ich melde mich bei dir, und wir schauen gemeinsam, ob und wie KI helfen kann.",
+    heading: "Erzähl mir <em>von deiner Idee.</em>",
+    lede: "Ein paar Sätze reichen: Was willst du bauen, und für wen? Ich melde mich bei dir, und wir schauen gemeinsam, wie es weitergeht.",
     linkedinLabel: "LinkedIn",
     mailNote: "Per Mail geht's am schnellsten.",
   },

@@ -10,9 +10,9 @@ const messages: MessageShape = {
   },
   metadata: {
     home: {
-      title: "Hightecc · AI consulting and custom software for SMEs in Cologne",
+      title: "Hightecc · Custom software and AI in Cologne",
       description:
-        "Basile Bong works out where AI can save your business time, plans the changes with your IT and builds custom software.",
+        "Basile Bong turns your idea into working software, with AI where it actually helps. For founders and small businesses.",
     },
     impressum: {
       title: "Legal notice · Hightecc",
@@ -25,56 +25,60 @@ const messages: MessageShape = {
   },
   hero: {
     headline: {
-      line1: "Put AI to work",
-      line2: "where it <amp>actually</amp> helps.",
+      line1: "Your idea, built.",
+      line2: "With AI where it <amp>actually</amp> helps.",
     },
-    sub: "I'm Basile, an AI consultant for small and mid-sized businesses, based in Cologne. I work out where your business loses time, whether that's enquiries, quotes or paperwork, and <strong>plan with you and your IT team how AI can take that work on</strong>. Where nothing off the shelf fits, I build the software myself.",
+    sub: "I'm Basile, a software engineer in Cologne who builds AI products that customers use every day. I help founders and businesses <strong>turn an idea into working software</strong>, even if they've never worked with tech before.",
     cta: {
-      primary: "Arrange an intro call",
+      primary: "Tell me your idea",
       secondary: "What I offer",
     },
   },
   capabilities: {
     section: {
-      title: "What I can <em>do for you.</em>",
-      lede: "From a first look at your business to a clear plan, or software I build for you. Start with the check, or come straight to me with a specific question.",
+      title: "What I can <em>build for you.</em>",
+      lede: "From a first idea to finished software. Start with the idea check, or come straight to me with a specific question.",
     },
     a: {
-      title: "AI check",
-      desc: "I look at how your business runs day to day and tell you honestly where AI saves time and where it doesn't. You come away knowing where to start and what you'll get out of it.",
+      title: "Idea check",
+      desc: "We go through your idea together. I tell you honestly what's worth building, where AI really helps, and what it will cost.",
     },
     b: {
-      title: "Workflow planning",
-      desc: "I map out how work should move through your business: which programs need to talk to each other, and where AI could take over a step, such as sorting incoming enquiries or drafting a first quote. You end up with a clear plan your IT can build from.",
+      title: "MVP for your startup",
+      desc: "A first working version, small enough to put in front of real users fast. Then you learn what people actually want.",
     },
     c: {
-      title: "Bridge to your IT",
-      desc: "I sit down with your IT team or provider, translate between you and the technical side, and review their proposals and quotes. That way, what gets built is what you need.",
+      title: "AI features",
+      desc: "AI that does real work: it answers questions, sorts enquiries, drafts texts and searches your documents.",
     },
     d: {
-      title: "Custom software",
-      desc: "When nothing off the shelf fits, I build something that does: a portal where customers send in orders, a mobile app or a scheduling tool your team uses in the browser.",
+      title: "Custom tools",
+      desc: "Software for one specific job, like an order portal for your customers, a booking tool or an internal app for your team.",
     },
-    note: "Not sure which of these fits? <strong>That's what the first call is for.</strong>",
+    note: "Not sure which fits? <strong>That's what the first call is for.</strong>",
   },
   pillars: {
     section: {
-      title: "How it works. <em>No jargon.</em>",
+      title: "From idea to software. <em>No jargon.</em>",
       lede: "No plan that tries to do everything at once. Three steps, and after each one you decide whether to keep going.",
     },
     one: {
-      title: "Listen first, <em>advise second.</em>",
-      body: "We talk about how your business works and where things get stuck. I keep asking until I understand, and explain everything so you don't need a technical background.",
+      title: "Understand first, <em>build second.</em>",
+      body: "You explain your idea in your own words. I ask questions until I get it, and I'll tell you if it doesn't need custom software.",
       items: ["In Cologne or by video call", "No sales pitch", "Honest advice, even if it's no"],
     },
     two: {
-      title: "Start small, <em>try it early.</em>",
-      body: "We pick the one task where AI makes the biggest difference and tackle that first. Depending on the task, your IT puts the plan into practice or I build the software myself. Either way, your team gets to try it early and see whether it helps day to day.",
-      items: ["One task at a time", "Early feedback from your team", "No never-ending big project"],
+      title: "Start small, <em>test early.</em>",
+      body: "We build the smallest version that proves the idea and get it in front of real people quickly.",
+      items: [
+        "The smallest version first",
+        "Tested early with real people",
+        "No never-ending big project",
+      ],
     },
     three: {
-      title: "Only build on <em>what pays off.</em>",
-      body: "I think like a business owner, not just an engineer. Every step has to be worth it for you: less effort, quicker turnaround or happier customers. If it isn't, we'll know early and stop.",
+      title: "Grow <em>what works.</em>",
+      body: "Every step has a fixed scope and budget. If it works we build more, if it doesn't we stop early.",
       items: [
         "A clear goal for every step",
         "A budget you can plan around",
@@ -86,12 +90,12 @@ const messages: MessageShape = {
     section: {
       title: "Hi, I'm <em>Basile.</em>",
     },
-    lede: "I've been building software for as long as I can remember: websites, web apps and mobile apps. <em>What I care about most is whether it really helps.</em> <muted>Because I build software myself, I know what's technically possible. That lets me talk to your IT as an equal and still explain everything so you can make a good decision.</muted>",
+    lede: "I build AI products that real customers use every day, and I spend much of my time working directly with those customers. <em>I listen to what they need, explain tech in plain words and think about what pays off for the business.</em> <muted>Not just what's technically possible. That's how I work with you too.</muted>",
     credo: {
-      contactK: "Your contact",
-      contactV: "Always me, from the first call onwards",
       focusK: "Focus",
-      focusV: "AI check · Workflow planning · Bridge to your IT · Custom software",
+      focusV: "Idea check · MVP · AI features · Custom tools",
+      audienceK: "Works with",
+      audienceV: "Founders and small businesses",
       basedInK: "Based in",
       basedInV: "Cologne · on site or by video call",
       languagesK: "Languages",
@@ -99,8 +103,8 @@ const messages: MessageShape = {
     },
   },
   contact: {
-    heading: "Tell me <em>what's slowing you down.</em>",
-    lede: "Send me a few lines about what your business does and which tasks eat up the most time. I'll get back to you, and together we'll work out whether AI can help, and how.",
+    heading: "Tell me <em>about your idea.</em>",
+    lede: "A few sentences is enough: what you want to build and who it's for. I'll get back to you, and we'll work out the next step together.",
     linkedinLabel: "LinkedIn",
     mailNote: "Email is the fastest way to reach me.",
   },
