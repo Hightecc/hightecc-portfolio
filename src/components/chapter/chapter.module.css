@@ -1,0 +1,51 @@
+.chapter {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding: 48px 0;
+}
+
+.chapter > * {
+  flex: 1;
+}
+
+.row {
+  grid-auto-flow: dense;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.slot {
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+}
+
+.slot img {
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+  .chapter {
+    padding: 32px 0 56px;
+  }
+
+  .slotCol {
+    order: -1;
+  }
+
+  .slot {
+    max-width: 78vw;
+  }
+}

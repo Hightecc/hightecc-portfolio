@@ -15,11 +15,11 @@ export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_CONTENT_TYPE = "image/png";
 
 const PALETTE = {
-  bg: "#ffffff",
-  ink: "#171614",
-  mute: "#6b6a64",
-  line: "#dcdbd6",
-  accentInk: "#d9531e",
+  bg: "#07070a",
+  ink: "#f3f1f6",
+  mute: "#9d9aa8",
+  line: "#2e2e37",
+  accentInk: "#ff8a5c",
 } as const;
 
 const FONT = {
@@ -42,7 +42,7 @@ function getAssets(): Promise<Assets> {
     const [sans, display, photo] = await Promise.all([
       readFile(path.join(ASSETS_DIR, "fonts/inter-400.woff")),
       readFile(path.join(ASSETS_DIR, "fonts/inter-tight-300.woff")),
-      readFile(path.join(ASSETS_DIR, "imagery/glass-contact.jpg")),
+      readFile(path.join(ASSETS_DIR, "imagery/mark.jpg")),
     ]);
     return {
       sans,

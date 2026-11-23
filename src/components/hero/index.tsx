@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { getTranslations } from "next-intl/server";
 
-import glassHero from "@/assets/imagery/glass-hero.jpg";
+import mark from "@/assets/imagery/mark.jpg";
 import { Button } from "@/components/ui/button";
 import { Col, Container, Row } from "@/components/ui/grid";
 
@@ -47,9 +47,9 @@ export async function Hero() {
           </Col>
         </Row>
       </Container>
-      <div className={styles.stage}>
+      <div className={styles.stage} data-film-slot="mark">
         <Image
-          src={glassHero}
+          src={mark}
           alt=""
           fill
           sizes="(min-width: 1440px) 1440px, 100vw"
@@ -57,7 +57,6 @@ export async function Hero() {
           fetchPriority="high"
           className={styles.img}
         />
-        <span className={styles.grain} aria-hidden />
       </div>
     </header>
   );
